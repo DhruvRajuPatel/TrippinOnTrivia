@@ -10,5 +10,33 @@
   <%= @question.rating %>
 </p>
 
+<h2>Answers</h2>
+<% @question.answers.each do |answers| %>
+    <p>
+      <strong>Title:</strong>
+      <%= answers.title %>
+    </p>
+
+    <p>
+      <strong>Is it the correct answer:</strong>
+      <%= answers.is_correct %>
+    </p>
+<% end %>
+
+<h2>Add a answer:</h2>
+<%= form_for([@question, @question.answers.create]) do |f| %>
+    <p>
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </p>
+    <p>
+      <%= f.label :is_correct %><br>
+      <%= f.text_field :is_correct %>
+    </p>
+    <p>
+      <%= f.submit %>
+    </p>
+<% end %>
+
 <%= link_to 'Edit', edit_question_path(@question) %> |
 <%= link_to 'Back', questions_path %>

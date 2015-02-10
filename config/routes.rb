@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   get 'play/index'
 
+  resources :questions do
+    resources :answers
+  end
+
   resources :categories do
     resources :questions do
       resources :answers

@@ -3,6 +3,7 @@
 <p>
   <strong>Title:</strong>
   <%= @category.title %>
+
 </p>
 
 <h2>Questions</h2>
@@ -16,8 +17,15 @@
       <strong>Rating:</strong>
       <%= question.rating %>
     </p>
-<% end %>
 
+    <% question.answers.each do |answer| %>
+        <p>
+          <strong>Title:</strong>
+          <%= answer.title %>
+        </p>
+    <% end %>
+
+<% end %>
 
 <h2>Add a question:</h2>
 <%= form_for([@category, @category.questions.new]) do |f| %>
@@ -33,7 +41,6 @@
       <%= f.submit %>
     </p>
 <% end %>
-
 
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>

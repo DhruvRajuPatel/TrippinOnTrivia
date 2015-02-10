@@ -24,7 +24,10 @@ class AnswersController < ApplicationController
   # POST /answers
   # POST /answers.json
   def create
-    @answer = Answer.new(answer_params)
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.create(answer_params)
+    redirect_to question_path(@question)
+    return
 
     respond_to do |format|
       if @answer.save
