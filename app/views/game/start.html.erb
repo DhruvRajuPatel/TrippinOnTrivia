@@ -3,7 +3,7 @@
 <ol>
   <li>Select a random category</li>
   <li>Select a random question from the specified category</li>
-  <li>Display the question along with the answers associate with it.</li>
+  <li>Display the question along with the answers associated with it.</li>
   <li>Wait for user to select an answer</li>
   <li>Check if the answer is correct</li>
   <li>If true, alert the player the question is correct repeat the above steps.</li>
@@ -13,8 +13,17 @@
 <p><%= @random_question.title %></p>
 <tbody>
 <% @random_question.answers.all.shuffle.each do |answer| %>
-      <button type="button" name=answer.title value=answer.is_correct><%= answer.title %></button><br>
+    <button id=<%= answer.title.gsub(/\s+/, "") %> type="button" name=<%= answer.title %> value=<%= answer.is_correct %>><%= answer.title %></button><br>
+    <label ID="value" text =""></label>
+    <script type ="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            alert('Document loaded!');
+            $(<%= answer.title.gsub(/\s+/, "") %>).click(function() {
+                alert(<%= answer.is_correct %>);
+            })
+        });
+    </script>
 <% end %>
-<h3>feedback goes here</h3>
 </tbody>
+
 

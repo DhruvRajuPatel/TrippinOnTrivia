@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'result/index'
+
   get 'game/start'
 
   get 'play/index'
