@@ -27,6 +27,7 @@ class QuestionsController < ApplicationController
     @category = Category.find(params[:category_id])
     @question = @category.questions.create(question_params)
     redirect_to category_path(@category)
+    return
 
     respond_to do |format|
       if @question.save

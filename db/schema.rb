@@ -32,11 +32,13 @@ ActiveRecord::Schema.define(version: 20150210025635) do
   create_table "questions", force: :cascade do |t|
     t.string   "title"
     t.integer  "rating"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "answer_id"
   end
 
   add_index "questions", ["answer_id"], name: "index_questions_on_answer_id"
+  add_index "questions", ["category_id"], name: "index_questions_on_category_id"
 
 end
