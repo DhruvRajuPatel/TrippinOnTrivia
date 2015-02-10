@@ -5,10 +5,35 @@
   <%= @category.title %>
 </p>
 
-<p>
-  <strong>Questions associated with category:</strong>
-  <%= @categories.title %>
-</p>
+<h2>Questions</h2>
+<% @category.questions.each do |question| %>
+    <p>
+      <strong>Title:</strong>
+      <%= question.title %>
+    </p>
+
+    <p>
+      <strong>Rating:</strong>
+      <%= question.rating %>
+    </p>
+<% end %>
+
+
+<h2>Add a question:</h2>
+<%= form_for([@category, @category.questions.new]) do |f| %>
+    <p>
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </p>
+    <p>
+      <%= f.label :rating %><br>
+      <%= f.text_field :rating %>
+    </p>
+    <p>
+      <%= f.submit %>
+    </p>
+<% end %>
+
 
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>
