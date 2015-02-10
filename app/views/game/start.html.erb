@@ -10,4 +10,11 @@
   <li>If false, pass the question on to the next player (get to this part in next milestone)</li>
 </ol>
 <h2><%= @random_category.title %></h2>
+<p><%= @random_question.title %></p>
+<tbody>
+<% @random_question.answers.all.shuffle.each do |answer| %>
+      <button type="button" name=answer.title value=answer.is_correct><%= answer.title %></button><br>
+<% end %>
+<h3>feedback goes here</h3>
+</tbody>
 
