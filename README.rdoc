@@ -1,28 +1,8 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby on Rails Web Application - Trippin' On Trivia
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+To run: download the project and run a local server from the bin folder of the project directory 
+  1. Command to start server: 'rails server' (no quotes)
+  2. Open your web browser and navigate to localhost:3000 
+  3. Click the link to start playing the game! 
