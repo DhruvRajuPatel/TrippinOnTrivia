@@ -1,13 +1,12 @@
-<h2><%= @random_category.title %></h2>
-<p><%= @random_question.title %></p>
+<h2 class="text-center"><%= @random_category.title %></br>
+  <small><%= @random_question.title %></small></h2>
 
 <tbody>
 <% @random_question.answers.all.shuffle.each do |answer| %>
-
-    <button id=<%= answer.title.gsub(/\s+/, "") %> type="button" name=<%= answer.title %> value=<%= answer.is_correct %>>
+    <div class="text-center">
+    <button id=<%= answer.title.gsub(/\s+/, "") %> type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
       <%= answer.title %></button><br>
-    <label ID="value"></label>
-
+    </div>
     <script type ="text/javascript" charset="utf-8">
         $(document).ready(function() {
             $(<%= answer.title.gsub(/\s+/, "") %>).click(function() {
