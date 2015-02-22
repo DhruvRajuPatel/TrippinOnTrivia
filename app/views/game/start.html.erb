@@ -1,4 +1,4 @@
-<h2 class="text-center"><%= @random_category.title %></br>
+<h2 class="text-center"><%= $random_category.title %></br>
   <small><%= @random_question.title %></small></h2>
 
 <tbody>
@@ -12,10 +12,10 @@
             $(<%= answer.title.gsub(/\s+/, "") %>).click(function() {
                 <% if answer.is_correct %>
                     alert('Congrats, you were right!!!!');
-                    location.reload();
+                    window.location.href="/game/category_selection.html"
                 <% else %>
                     alert('Wrong! Next players turn!!!!');
-                    location.reload();
+                    window.location.href="/game/category_selection.html"
                 <% end %>
             })
         });

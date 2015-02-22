@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'game/start'
-
+  get 'game/category_selection'
   get 'play/index'
 
   resources :questions do
