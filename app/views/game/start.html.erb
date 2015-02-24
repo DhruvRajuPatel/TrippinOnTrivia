@@ -56,7 +56,9 @@
         document.getElementById('countdown').innerHTML = minutes + ":" + remainingSeconds;
         if (seconds == 0) {
             clearInterval(countdownTimer);
-            document.getElementById('countdown').innerHTML = "Buzz Buzz";
+            document.getElementById('countdown').innerHTML = "Time up!";
+            alert('Times up! You got it wrong! Next players turn!!!!');
+            window.location.href="/game/category_selection.html"
         } else {
             seconds--;
         }
