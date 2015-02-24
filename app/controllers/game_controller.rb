@@ -2,8 +2,8 @@ class GameController < ApplicationController
 
   def category_selection
 
-    $rotations = rand(80000...100000)
-    @category_number = $rotations%360
+    @rotations = rand(80000...100000)
+    @category_number = @rotations%360
     case @category_number
       when 0..53
         $random_category = Category.all[1]
