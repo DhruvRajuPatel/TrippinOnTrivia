@@ -1,17 +1,26 @@
 // Place all the styles related to the game controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+h1 {
+  text-align: center;
+}
 #spinner {
 	height: 368px;
 	width: 368px;
 	z-index: -1;
 	position: relative;
-	top: 0px;
-	left: 0px;
+	top: -100px;
+	left: 20px;
 }
 #center {
 	z-index: 1;
 	position: relative;
-	top: 245px;
-	left: 130px;
+	top: 145px;
+	left: 150px;
+}
+
+#questions {
+  position: relative;
+  top: -50px;
+  left: 0px;
 }
