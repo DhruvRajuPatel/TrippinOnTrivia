@@ -56,12 +56,14 @@
         $(document).ready(function() {
             $(<%= answer.title.gsub(/\s+/, "") %>).click(function() {
                 <% if answer.is_correct %>
-                correctSound.playclip();
+                <% randomize %>
                 alert('Congrats, you were right!!!!');
+                correctSound.playclip();
                 $('#question').toggle();
                 $('#spinner_image').toggle();
 
                 <% else %>
+                <% randomize %>
                 incorrectSound.playclip();
                 alert('Wrong! Next players turn!!!!');
                 $('#question').toggle();
