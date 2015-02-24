@@ -58,6 +58,7 @@
             document.getElementById('countdown').innerHTML = minutes + ":" + remainingSeconds;
             if (seconds == 0) {
                 clearInterval(countdownTimer);
+                incorrectSound.playclip();
                 document.getElementById('countdown').innerHTML = "Time up!";
                 alert('Times up! You got it wrong! Next players turn!!!!');
                 window.location.href = "/game/category_selection.html"
