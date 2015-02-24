@@ -1,9 +1,7 @@
 class GameController < ApplicationController
-  def welcome
-    randomize;
-  end
 
-  def randomize
+  def category_selection
+
     $rotations = rand(80000...100000)
     @category_number = $rotations%360
     case @category_number
@@ -21,17 +19,16 @@ class GameController < ApplicationController
         $random_category = Category.all[0]
       when 309..359
         $random_category = Category.all.shuffle[0]
-      else
-        $random_category = Category.all.shuffle[0]
-
     end
 
+  end
+
+  def start
     @random_question = $random_category.questions.all.shuffle[0]
 
     # This is just to demo we can query our database both ways... Implementation is in the game view/start.
     @answers = @random_question.answers
     @random_answer = Answer.all.shuffle[0]
   end
-  helper_method :randomize;
 
-end
+  end
