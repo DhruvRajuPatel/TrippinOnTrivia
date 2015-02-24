@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'game/start'
-  get 'game/category_selection'
   get 'play/index'
 
   resources :questions do
@@ -13,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'play#index'
+  root 'game#welcome'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

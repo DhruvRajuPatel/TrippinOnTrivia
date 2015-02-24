@@ -1,0 +1,14 @@
+
+<br/><br/>
+<h1>Below shows we can query both ways in our database.</h1></<br/>
+<p>These answers belong to the question: <%= @answers[0].question.to_s %></p>
+<p>This question belongs to the category: <%= @answers[0].question.category.to_s %></p>
+<br/>
+<p>This query retrieves all answers in the database, selects a random one, and gets the question and category associated with it.</p>
+<p>Random answer: <%= @random_answer.to_s %></p>
+<p>Question associate with answer: <%= @random_answer.question.to_s %></p>
+<p>Category associated with answer and question: <%= @random_answer.question.category.to_s %></p>
+<p>The answers to go along with the question:  <br/> <% @random_answer.question.answers.each do |answer| %>
+      <%= answer %><br> <%end %></p>
+
+

@@ -1,0 +1,26 @@
+<h2 class="text-center"><%= $random_category.title %></br>
+  <small><%= @random_question.title %></small></h2>
+
+<% @random_question.answers.all.shuffle.each do |answer| %>
+    <div class="text-center">
+      <button id=<%= answer.title.gsub(/\s+/, "") %> type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
+        <%= answer.title %></button><br>
+    </div>
+    <script type ="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $(<%= answer.title.gsub(/\s+/, "") %>).click(function() {
+                <% if answer.is_correct %>
+                alert('Congrats, you were right!!!!');
+                $('#question').toggle();
+                $('#spinner_image').toggle();
+
+                <% else %>
+                alert('Wrong! Next players turn!!!!');
+                $('#question').toggle();
+                $('#spinner_image').toggle();
+
+                <% end %>
+            })
+        });
+    </script>
+<% end %>
