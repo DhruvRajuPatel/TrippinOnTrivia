@@ -84,7 +84,15 @@
                 <% if answer.is_correct %>
                 correctSound.playclip();
                     alert('Congrats, you were right!!!!');
-                    window.location.href="/game/category_selection.html"
+                    <% if @going_for_trophy %>
+                        <%= Player.first.trophies << @random_question.category.trophy %>
+                        <%= @going_for_trophy = false %>
+                    <% else %>
+                        <% if @meter_status == 1 %>
+                            <%= @going_for_trophy = true %>
+                        <% end %>
+                    <% end %>
+                        window.location.href="/game/category_selection.html"
                 <% else %>
                 incorrectSound.playclip();
                     alert('Wrong! Next players turn!!!!');

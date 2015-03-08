@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :players
+
+  resources :trophies
+
   get 'game/start'
   get 'game/category_selection'
   get 'play/index'

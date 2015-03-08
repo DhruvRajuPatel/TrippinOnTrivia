@@ -1,0 +1,17 @@
+<%= form_for(@trophy) do |f| %>
+  <% if @trophy.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trophy.errors.count, "error") %> prohibited this trophy from being saved:</h2>
+
+      <ul>
+      <% @trophy.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
