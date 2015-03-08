@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'game/start'
   get 'game/category_selection'
   get 'play/index'
+  get 'play/display_spinner'
 
   resources :questions do
     resources :answers
