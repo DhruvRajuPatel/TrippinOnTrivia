@@ -51,8 +51,12 @@ ActiveRecord::Schema.define(version: 20150308175710) do
   add_index "questions", ["category_id"], name: "index_questions_on_category_id"
 
   create_table "trophies", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "category_id"
+    t.integer  "player_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
+
+  add_index "trophies", ["category_id"], name: "index_trophies_on_category_id"
 
 end

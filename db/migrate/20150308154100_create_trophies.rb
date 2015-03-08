@@ -3,7 +3,7 @@ class CreateTrophies < ActiveRecord::Migration
     create_table :trophies do |t|
 
       t.references :category, index: true
-
+      t.references :player, index: true
       t.timestamps null: false
     end
   end
