@@ -12,8 +12,18 @@
       <![endif]-->
     </head>
     <body>
+    <div id="user_nav">
+      <% if user_signed_in? %>
+          Signed in as <%= current_user.email %>. This cannot be cheese?
+          <%= link_to 'Sign out', destroy_user_session_path %>
+      <% else %>
+          <%= link_to 'Register', new_user_registration_path %> or <%= link_to 'Sign in', new_user_session_path %>
+      <% end %>
+    </div>
         <div class="container">
-            <%= yield %>
+          <p class="notice"><%= notice %></p>
+          <p class="alert"><%= alert %></p>
+          <%= yield %>
         </div>
     </body>
 </html>

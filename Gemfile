@@ -24,7 +24,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use bootstrap for front-end design.
 gem 'bootstrap-sass',       '3.2.0.0'
 gem 'rake', '10.4.2'
-
+gem 'devise'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
