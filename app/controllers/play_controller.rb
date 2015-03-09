@@ -29,4 +29,31 @@ class PlayController < ApplicationController
 
   end
 
+  def display_questions
+    @random_question = $random_category.questions.all.shuffle[0]
+    @meter = Player.first.meter
+
+    # This is just to demo we can query our database both ways... Implementation is in the game view/start.
+    @answers = @random_question.answers
+    @random_answer = Answer.all.shuffle[0]
+    @meter_status = check_meter
+    @going_for_trophy = false
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def check_meter
+    @meter = Player.first.meter
+    if @meter < 3
+      Player.first.update_attribute(:meter, @meter+1)
+      return 0
+    else
+      Player.first.update_attribute(:meter, 0)
+      return 1
+    end
+  end
+
 end
