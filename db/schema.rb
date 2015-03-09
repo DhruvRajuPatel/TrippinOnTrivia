@@ -58,5 +58,6 @@ ActiveRecord::Schema.define(version: 20150308175710) do
   end
 
   add_index "trophies", ["category_id"], name: "index_trophies_on_category_id"
+  add_index "trophies", ["player_id"], name: "index_trophies_on_player_id"
 
 end

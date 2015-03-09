@@ -61,7 +61,9 @@ $('body').load("play/display_spinner.html", function() {
 
 });
 
-
-
-function changePage() {
+function ChangePage()
+{
+    $.ajax({url: "display_spinner.js.erb", success: function(result){
+        $("#main").html(result);
+    }});
 }
