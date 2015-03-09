@@ -1,3 +1,4 @@
+
 <head>
   <script>
 
@@ -76,7 +77,7 @@
 <% @random_question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
       <button id=<%= answer.title.gsub(/\s+/, "") %> type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
-        <%= answer.title %></button><br>
+        <%= link_to answer.title , action: :display_spinner,class: "btn btn-inverse", remote: true%></button><br>
     </div>
     <script type ="text/javascript" charset="utf-8">
         $(document).ready(function() {
@@ -92,11 +93,10 @@
                 <%= @going_for_trophy = true %>
                 <% end %>
                 <% end %>
-                window.location.href="/game/category_selection.html"
+                <%= play_display_questions_path %>
                 <% else %>
                 incorrectSound.playclip();
                 alert('Wrong! Next players turn!!!!');
-                window.location.href="/game/category_selection.html"
                 <% end %>
             })
         });
