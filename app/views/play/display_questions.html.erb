@@ -1,4 +1,3 @@
-
 <head>
   <script>
 
@@ -77,23 +76,15 @@
 <% @random_question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
       <button id=<%= answer.title.gsub(/\s+/, "") %> type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
-        <%= link_to answer.title , action: :display_spinner,class: "btn btn-inverse", remote: true%></button><br>
+        <%= link_to answer.title , action: :display_spinner, class: "btn btn-inverse", remote: true%></button><br>
     </div>
     <script type ="text/javascript" charset="utf-8">
         $(document).ready(function() {
             $(<%= answer.title.gsub(/\s+/, "") %>).click(function() {
                 <% if answer.is_correct %>
+                <%= true_answer -%>
                 correctSound.playclip();
                 alert('Congrats, you were right!!!!');
-                <% if @going_for_trophy %>
-                <%= Player.first.trophies << @random_question.category.trophy %>
-                <%= @going_for_trophy = false %>
-                <% else %>
-                <% if @meter_status == 1 %>
-                <%= @going_for_trophy = true %>
-                <% end %>
-                <% end %>
-                <%= play_display_questions_path %>
                 <% else %>
                 incorrectSound.playclip();
                 alert('Wrong! Next players turn!!!!');
@@ -101,9 +92,9 @@
             })
         });
     </script>
-
 <% end %>
 
+<p>Going for trophy: <%= @going_for_trophy%></p>
 </tbody>
 <br/><br/>
 <h1>Below shows we can query both ways in our database.</h1></<br/>
