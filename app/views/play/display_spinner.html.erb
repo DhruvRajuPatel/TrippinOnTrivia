@@ -1,6 +1,75 @@
+<head>
+  <script>
+
+      // Mouseover/ Click sound effect- by JavaScript Kit (www.javascriptkit.com)
+      // Visit JavaScript Kit at http://www.javascriptkit.com/ for full source code
+
+      //** Usage: Instantiate script by calling: var uniquevar=createsoundbite("soundfile1", "fallbackfile2", "fallebacksound3", etc)
+      //** Call: uniquevar.playclip() to play sound
+
+      var html5_audiotypes={ //define list of audio file extensions and their associated audio types. Add to it if your specified audio file isn't on this list:
+          "mp3": "audio/mpeg",
+          "mp4": "audio/mp4",
+          "ogg": "audio/ogg",
+          "wav": "audio/wav"
+      }
+
+      function createsoundbite(sound){
+          var html5audio=document.createElement('audio')
+          if (html5audio.canPlayType){ //check support for HTML5 audio
+              for (var i=0; i<arguments.length; i++){
+                  var sourceel=document.createElement('source')
+                  sourceel.setAttribute('src', arguments[i])
+                  if (arguments[i].match(/\.(\w+)$/i))
+                      sourceel.setAttribute('type', html5_audiotypes[RegExp.$1])
+                  html5audio.appendChild(sourceel)
+              }
+              html5audio.load()
+              html5audio.playclip=function(){
+                  html5audio.pause()
+                  html5audio.currentTime=0
+                  html5audio.play()
+              }
+              return html5audio
+          }
+          else{
+              return {playclip:function(){throw new Error("Your browser doesn't support HTML5 audio unfortunately")}}
+          }
+      }
+
+      var spinSound=createsoundbite("/sounds/spin.mp3")
+
+  </script>
+</head>
 <h1>Spin the Wheel!</h1>
 <img src= "/images/centerspin.png" id="center">
 <img src= "/images/spinner.png" id="spinner">
-<button id="questions" type="questions" class="btn btn-primary btn-lg btn-block"><%= link_to "Get Questions" , action: :display_questions,class: "btn btn-inverse", remote: true%></button>
-<p>Meter: <%= Player.first.meter%></p>
-<p>Trophies: <%= Player.first.trophies.count%></p>
+<button onclick="ChangePage()" id="questions" type="questions" class="btn btn-primary btn-lg btn-block">Get Question</button>
+<p><%= Player.first.meter%></p>
+<p><%= Player.first.trophies.count%></p>
+
+<script type ="text/javascript" charset="utf-8">
+    jQuery(document).ready(function()
+    {
+        $("#center").rotate({
+            bind:
+            {
+                click: function(){
+                    $("#spinner").rotate({ angle:0,animateTo:<%= @rotations %>,easing: $.easing.easeInOutExpo })
+                    spinSound.playclip();
+                    $(function(){
+                        $('#questions').attr('disabled',false);
+                    });
+                }
+            }
+        });
+        $(function(){
+            $('#questions').attr('disabled',true);
+        });
+    });
+
+    function ChangePage()
+    {
+        $('body').load('/play/display_questions.html');
+    }
+</script>

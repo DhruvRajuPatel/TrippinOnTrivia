@@ -9,8 +9,6 @@ Rails.application.routes.draw do
   get 'play/display_spinner'
   get 'play/display_questions'
 
-  post 'play/display_questions'
-
   resources :questions do
     resources :answers
   end

@@ -1,6 +1,14 @@
 <div id="main" class="text-center">
-<h1>Welcome to Trippin' On Trivia</h1>
-<%= link_to "Play Trippin On Trivia" , action: :display_spinner,class: "btn btn-inverse", remote: true%>
+  <body>
+  <h1>Welcome to Trippin' On Trivia</h1>
+  <button onclick="ChangePage()" type="button" class="btn btn-primary btn-lg btn-block">
+    Go</button>
   <br/>  <br/>
-
+  </body>
 </div>
+<script>
+    function ChangePage()
+    {
+        $('body').load('/play/display_spinner.html');
+    }
+</script>
