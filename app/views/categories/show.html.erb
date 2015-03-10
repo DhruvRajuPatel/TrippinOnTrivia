@@ -43,7 +43,7 @@
 <% end %>
 
 <h2>Add a trophy:</h2>
-<%= form_for([@category, @category.trophy.new]) do |f| %>
+<%= form_for([@category, @category.trophies.new]) do |f| %>
       <%= f.submit %>
     </p>
 <% end %>
