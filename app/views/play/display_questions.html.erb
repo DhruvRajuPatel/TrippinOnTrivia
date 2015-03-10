@@ -59,48 +59,72 @@
         if (seconds == 0) {
             clearInterval(countdownTimer);
             incorrectSound.playclip();
+            $.ajax({
+                url: "play/false_answer",
+                type: 'PUT'
+            })
             document.getElementById('countdown').innerHTML = "Time up!";
             alert('Times up! You got it wrong! Next players turn!!!!');
-            window.location.href = "/game/category_selection.html"
+            ChangePage();
         } else {
             seconds--;
         }
     }
 
     var countdownTimer = setInterval('secondPassed()', 1000);
+    var correctAnswer = false;
+
 </script>
 <h2 class="text-center"><%= $random_category.title %></br>
-  <small><%= @random_question.title %></small></h2>
+  <small><%= $random_question.title %></small></h2>
 
 <tbody>
-<% @random_question.answers.all.shuffle.each do |answer| %>
+<% $random_question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
-      <button onclick="ChangePage()" id=<%= answer.title.gsub(/\s+/, "") %> type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
+      <button id=<%= answer.title.gsub(/\s+/, "") %> type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
         <%=answer.title %></button><br>
     </div>
     <script type ="text/javascript" charset="utf-8">
         $(document).ready(function() {
             $(<%= answer.title.gsub(/\s+/, "") %>).click(function() {
-                <% if answer.is_correct %>
-                <%= true_answer -%>
-                correctSound.playclip();
-                alert('Congrats, you were right!!!!');
-                <% else %>
-                incorrectSound.playclip();
-                alert('Wrong! Next players turn!!!!');
-                <% end %>
+                correctAnswer = <%=answer.is_correct %>;
+
+                if(correctAnswer) {
+                    $.ajax({
+                        url: "play/true_answer",
+                        type: 'PUT'
+                    })
+                    correctSound.playclip();
+                    alert('Congrats, you were right!!!!');
+                }
+                else {
+                    $.ajax({
+                        url: "play/false_answer",
+                        type: 'PUT'
+                    })
+                    incorrectSound.playclip();
+                    alert('Wrong! Next players turn!!!!');
+                }
+                clearInterval(countdownTimer);
+                ChangePage();
             })
         });
     </script>
 <% end %>
 
-<p>Going for trophy: <%= @going_for_trophy%></p>
+<p>Going for trophy: <%= $going_for_trophy%></p>
 </tbody>
 
 <script>
     function ChangePage()
     {
-        $('body').load('/play/display_spinner.html');
+        var meter = <%=$meter%>;
+        if ((meter == 2) && correctAnswer) {
+            $('body').load('/play/display_trophy_select.html');
+        }
+        else {
+            $('body').load('/play/display_spinner.html');
+        }
     }
 </script>
 

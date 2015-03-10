@@ -1,0 +1,45 @@
+<div id="main" class="text-center">
+
+  <h1>Pick a trophy</h1>
+
+  <tbody>
+  <% @categories.each do |category| %>
+    <% Player.first.trophies.each do |trophy| %>
+        <% if category == trophy.category %>
+          <% @contains = true %>
+  <% else %>
+    <% @contains = false %>
+          <%end%>
+    <% end %>
+      <% if @contains %>
+        <% next %>
+  <%end%>
+      <div class="text-center">
+        <button id=<%= category.title.gsub(/\s+/, "") %> type="button" name=<%= category.title %> value= <%=category.id%>>
+          <%=category.title %></button><br>
+      </div>
+      <script type ="text/javascript" charset="utf-8">
+          $(document).ready(function() {
+              $(<%= category.title.gsub(/\s+/, "") %>).click(function() {
+                  var currentCategory = this.value;
+                  $.ajax({
+                      url: "play/get_trophy_category",
+                      type: 'PUT',
+                      dataType: 'json',
+                      data: {'category_id' : currentCategory},
+                      complete: ChangePage
+                  }
+                  )
+              })
+          });
+      </script>
+  <% end %>
+  </tbody>
+</div>
+
+<script>
+    function ChangePage() {
+                $('body').load('/play/display_questions.html');
+
+    }
+</script>

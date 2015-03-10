@@ -9,6 +9,15 @@ Rails.application.routes.draw do
   get 'play/index'
   get 'play/display_spinner'
   get 'play/display_questions'
+  get 'play/display_trophy_select'
+
+  resources :play do
+    collection do
+      put 'true_answer'
+      put 'false_answer'
+      put 'get_trophy_category'
+    end
+  end
 
   resources :questions do
     resources :answers

@@ -1,5 +1,6 @@
 class PlayController < ApplicationController
   def index
+    $going_for_trophy = false
   end
 
   def display_spinner
@@ -19,7 +20,7 @@ class PlayController < ApplicationController
       when 258..308
         $random_category = Category.all[0]
       when 309..359
-        $random_category = Category.all.shuffle[0]
+        Player.first.update_attribute(:meter, $meter + 1)
     end
 
     respond_to do |format|
@@ -30,17 +31,39 @@ class PlayController < ApplicationController
   end
 
   def display_questions
-    @random_question = $random_category.questions.all.shuffle[0]
-    @meter = Player.first.meter
+    $random_question = $random_category.questions.all.shuffle[0]
+    $meter = Player.first.meter
     # This is just to demo we can query our database both ways... Implementation is in the game view/start.
-    @answers = @random_question.answers
+    @answers = $random_question.answers
     @random_answer = Answer.all.shuffle[0]
-    @going_for_trophy = false
 
     respond_to do |format|
       format.html
       format.js
     end
+  end
+
+  def display_trophy_select
+    @categories = Category.all
+    $going_for_trophy = true
+    Player.first.update_attribute(:meter, 0)
+  end
+
+  def get_trophy_category
+    $random_category = Category.find(params[:category_id])
+  end
+
+  def true_answer
+    if ($going_for_trophy == true)
+      Player.first.trophies << $random_question.category.trophies.first
+      $going_for_trophy = false
+    else
+      Player.first.update_attribute(:meter, $meter + 1)
+    end
+  end
+
+  def false_answer
+    $going_for_trophy = false
   end
 
 end
