@@ -42,5 +42,11 @@
     </p>
 <% end %>
 
+<h2>Add a trophy:</h2>
+<%= form_for([@category, @category.trophy.new]) do |f| %>
+      <%= f.submit %>
+    </p>
+<% end %>
+
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>
