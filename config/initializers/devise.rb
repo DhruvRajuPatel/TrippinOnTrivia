@@ -234,7 +234,8 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :facebook, "722391551191324", "86daf4cc428cc03385c58db683304038"
-
+  config.omniauth :google_oauth2, "973443164429-28h14bbdirbmaut9jq9h2utjgkpmfa3f.apps.googleusercontent.com", "9uAhaR3G9sXKUjWyAfF5fAiQ"
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
