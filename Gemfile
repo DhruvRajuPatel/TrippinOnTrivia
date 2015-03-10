@@ -27,7 +27,7 @@ gem 'rake', '10.4.2'
 gem 'devise'
 
 #External login
-gem 'omniauth-facebook'
+gem 'omniauth-facebook' 
 gem "omniauth-google-oauth2"
 
 # Use ActiveModel has_secure_password
