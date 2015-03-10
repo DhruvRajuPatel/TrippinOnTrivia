@@ -14,6 +14,8 @@ basketball = Category.create(title: 'Basketball')
 lit = Category.create(title: 'Contemporary Literature')
 music = Category.create(title: 'Music')
 
+Player.create(meter: 0)
+
 cs.trophies.create
 aqua.trophies.create
 memes.trophies.create
