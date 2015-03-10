@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
-      user.name = auth.info.name   # assuming the user model has a name
-      user.image = auth.info.image # assuming the user model has an image
     end
   end
 
@@ -19,7 +17,7 @@ class User < ActiveRecord::Base
     user = User.where(:email => data["email"]).first
 
     unless user
-        user = User.create(name: data["name"],
+        user = User.create(
            email: data["email"],
            password: Devise.friendly_token[0,20]
         )
