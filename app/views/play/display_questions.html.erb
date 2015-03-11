@@ -42,39 +42,37 @@
       var correctSound=createsoundbite("/sounds/correct.mp3")
       var incorrectSound=createsoundbite("/sounds/incorrect.mp3")
 
+      var seconds = 30;
+
+      function secondPassed() {
+          var minutes = Math.round((seconds - 30) / 60);
+          var remainingSeconds = seconds % 60;
+          if (remainingSeconds < 10) {
+              remainingSeconds = "0" + remainingSeconds;
+          }
+          document.getElementById('countdown').innerHTML = minutes + ":" + remainingSeconds;
+          if (seconds == 0) {
+              clearInterval(countdownTimer);
+              incorrectSound.playclip();
+              $.ajax({
+                  url: "play/false_answer",
+                  type: 'PUT'
+              })
+              document.getElementById('countdown').innerHTML = "Time up!";
+              alert('Times up! You got it wrong! Next players turn!!!!');
+              ChangePage();
+          } else {
+              seconds--;
+          }
+      };
+
+      var countdownTimer = setInterval('secondPassed()', 1000);
+      var correctAnswer = false;
+
   </script>
 </head>
-<h1 id="countdown" class="timer"></h1>
-<script>
 
-    var seconds = 30;
-
-    function secondPassed() {
-        var minutes = Math.round((seconds - 30) / 60);
-        var remainingSeconds = seconds % 60;
-        if (remainingSeconds < 10) {
-            remainingSeconds = "0" + remainingSeconds;
-        }
-        document.getElementById('countdown').innerHTML = minutes + ":" + remainingSeconds;
-        if (seconds == 0) {
-            clearInterval(countdownTimer);
-            incorrectSound.playclip();
-            $.ajax({
-                url: "play/false_answer",
-                type: 'PUT'
-            })
-            document.getElementById('countdown').innerHTML = "Time up!";
-            alert('Times up! You got it wrong! Next players turn!!!!');
-            ChangePage();
-        } else {
-            seconds--;
-        }
-    }
-
-    var countdownTimer = setInterval('secondPassed()', 1000);
-    var correctAnswer = false;
-
-</script>
+<h1 id="countdown" class="timer">0:30</h1>
 <h2 class="text-center"><%= $random_category.title %></br>
   <small><%= $random_question.title %></small></h2>
 

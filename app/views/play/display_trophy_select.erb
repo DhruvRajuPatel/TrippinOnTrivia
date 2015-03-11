@@ -4,11 +4,10 @@
 
   <tbody>
   <% @categories.each do |category| %>
+    <% @contains = false %>
     <% Player.first.trophies.each do |trophy| %>
         <% if category == trophy.category %>
           <% @contains = true %>
-  <% else %>
-    <% @contains = false %>
           <%end%>
     <% end %>
       <% if @contains %>

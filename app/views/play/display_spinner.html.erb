@@ -44,7 +44,6 @@
 <h1>Spin the Wheel!</h1>
 <img src= "/images/centerspin.png" id="center">
 <img src= "/images/spinner.png" id="spinner">
-<button onclick="ChangePage()" id="questions" type="questions" class="btn btn-primary btn-lg btn-block">Get Question</button>
 <p>Meter: <%= Player.first.meter%></p>
 <p>Trophies: <%= Player.first.trophies.count%></p>
 
@@ -55,16 +54,13 @@
             bind:
             {
                 click: function(){
-                    $("#spinner").rotate({ angle:0,animateTo:<%= @rotations %>,easing: $.easing.easeInOutExpo })
+                    $("#spinner").rotate({ angle:0,animateTo:<%= @rotations %>,easing: $.easing.easeInOutExpo }, setTimeout(ChangePage, 1000))
                     spinSound.playclip();
                     $(function(){
                         $('#questions').attr('disabled',false);
                     });
                 }
             }
-        });
-        $(function(){
-            $('#questions').attr('disabled',true);
         });
     });
 
