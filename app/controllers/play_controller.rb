@@ -58,7 +58,7 @@ class PlayController < ApplicationController
       Player.first.trophies << $random_question.category.trophies.first
       $going_for_trophy = false
     else
-      Player.first.update_attribute(:meter, $meter + 1)
+      Player.first.update_attribute(:meter, 100)
     end
   end
 
