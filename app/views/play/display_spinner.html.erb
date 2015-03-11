@@ -70,6 +70,12 @@
 
     function ChangePage()
     {
-        $('body').load('/play/display_questions.html');
+        var meter = <%=Player.first.meter%>;
+        if ((meter == 3)) {
+            $('body').load('/play/display_trophy_select.html');
+        }
+        else {
+            $('body').load('/play/display_questions.html');
+        }
     }
 </script>

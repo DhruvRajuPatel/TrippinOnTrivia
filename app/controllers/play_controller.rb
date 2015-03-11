@@ -20,7 +20,7 @@ class PlayController < ApplicationController
       when 258..308
         $random_category = Category.all[0]
       when 309..359
-        Player.first.update_attribute(:meter, $meter + 1)
+        Player.first.update_attribute(:meter, 3)
     end
 
     respond_to do |format|
@@ -58,7 +58,7 @@ class PlayController < ApplicationController
       Player.first.trophies << $random_question.category.trophies.first
       $going_for_trophy = false
     else
-      Player.first.update_attribute(:meter, 100)
+      Player.first.update_attribute(:meter, $meter + 1)
     end
   end
 
