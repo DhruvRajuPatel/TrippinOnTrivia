@@ -14,7 +14,7 @@
           "wav": "audio/wav"
       }
 
-      function createsoundbite(sound){
+      function createSoundBite(sound){
           var html5audio=document.createElement('audio')
           if (html5audio.canPlayType){ //check support for HTML5 audio
               for (var i=0; i<arguments.length; i++){
@@ -39,8 +39,8 @@
 
       //Initialize two sound clips with 1 fallback file each:
 
-      var correctSound=createsoundbite("/sounds/correct.mp3")
-      var incorrectSound=createsoundbite("/sounds/incorrect.mp3")
+      var correctSound=createSoundBite("/sounds/correct.mp3")
+      var incorrectSound=createSoundBite("/sounds/incorrect.mp3")
 
       var seconds = 30;
 
@@ -68,7 +68,7 @@
 
       var countdownTimer = setInterval('secondPassed()', 1000);
       var correctAnswer = false;
-
+      var correctButton = 1;
   </script>
 </head>
 
@@ -79,21 +79,25 @@
 <tbody>
 <% $random_question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
-      <button id=<%= answer.title.gsub(/\s+/, "") %> type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
+      <button id="<%= answer.title.gsub(/\s+/, "") %>" type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
         <%=answer.title %></button><br>
     </div>
     <script type ="text/javascript" charset="utf-8">
         $(document).ready(function() {
+            correctAnswer = <%=answer.is_correct %>;
+            if (correctAnswer) {
+                correctButton = document.getElementById('<%= answer.title.gsub(/\s+/, "") %>');
+            }
             $(<%= answer.title.gsub(/\s+/, "") %>).click(function() {
                 correctAnswer = <%=answer.is_correct %>;
-
                 if(correctAnswer) {
                     $.ajax({
                         url: "play/true_answer",
                         type: 'PUT'
                     })
                     correctSound.playclip();
-                    alert('Congrats, you were right!!!!');
+                    this.style.background = '#00BB00';
+                    this.innerHTML = "Correct!!!";
                 }
                 else {
                     $.ajax({
@@ -101,10 +105,12 @@
                         type: 'PUT'
                     })
                     incorrectSound.playclip();
-                    alert('Wrong! Next players turn!!!!');
+                    this.style.background = '#FF0000';
+                    this.innerHTML = "Incorrect!!!";
+                    correctButton.style.background = '#00BB00';
                 }
                 clearInterval(countdownTimer);
-                ChangePage();
+                setTimeout(ChangePage, 500);
             })
         });
     </script>

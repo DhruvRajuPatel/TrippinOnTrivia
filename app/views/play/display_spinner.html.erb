@@ -14,7 +14,7 @@
           "wav": "audio/wav"
       }
 
-      function createsoundbite(sound){
+      function createSoundBite(sound){
           var html5audio=document.createElement('audio')
           if (html5audio.canPlayType){ //check support for HTML5 audio
               for (var i=0; i<arguments.length; i++){
@@ -37,7 +37,7 @@
           }
       }
 
-      var spinSound=createsoundbite("/sounds/spin.mp3")
+      var spinSound=createSoundBite("/sounds/spin.mp3")
 
   </script>
 </head>
