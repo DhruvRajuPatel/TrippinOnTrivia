@@ -41,11 +41,18 @@
 
   </script>
 </head>
-<h1>Spin the Wheel!</h1>
+
+<% if Player.first.isActivePlayer %>
+    <h1>Spin the Wheel!</h1>
+    <% else %>
+    <h1>Awaiting opponent's turn</h1>
+<% end %>
+
 <img src= "/images/centerspin.png" id="center">
 <img src= "/images/spinner.png" id="spinner">
 <p>Meter: <%= Player.first.meter%></p>
 <p>Trophies: <%= Player.first.trophies.count%></p>
+<p>Opponent's Trophies: <%= Player.first.player.trophies.count%></p>
 
 <script type ="text/javascript" charset="utf-8">
     jQuery(document).ready(function()
@@ -54,11 +61,10 @@
             bind:
             {
                 click: function(){
+                    <% if Player.first.isActivePlayer %>
                     $("#spinner").rotate({ angle:0,animateTo:<%= @rotations %>,easing: $.easing.easeInOutExpo }, setTimeout(ChangePage, 1000))
                     spinSound.playclip();
-                    $(function(){
-                        $('#questions').attr('disabled',false);
-                    });
+                    <% end %>
                 }
             }
         });
