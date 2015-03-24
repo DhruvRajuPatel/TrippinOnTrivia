@@ -16,7 +16,7 @@
       <%= f.button :submit, "Log In"%> or  <%= link_to "Sign up", new_registration_path(resource_name) %>
     </div>
     <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-        <%= link_to image_tag('images/spinner.png', :border=>0),"Forgot your password?", new_password_path(resource_name) %><br />
+        <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
     <% end -%>
     <hr style="border:1px solid #000;" />
 <% end %>
