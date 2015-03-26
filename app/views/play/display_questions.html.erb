@@ -60,7 +60,6 @@
               })
               document.getElementById('countdown').innerHTML = "Time up!";
               alert('Times up! You got it wrong! Next players turn!!!!');
-              <% Player.first.update_attribute(:isActivePlayer, false) %>
               ChangePage();
           } else {
               seconds--;
@@ -109,7 +108,6 @@
                     this.style.background = '#FF0000';
                     this.innerHTML = "Incorrect!!!";
                     correctButton.style.background = '#00BB00';
-                    <% Player.first.update_attribute(:isActivePlayer, false) %>
                 }
                 clearInterval(countdownTimer);
                 setTimeout(ChangePage, 500);

@@ -64,6 +64,7 @@ class PlayController < ApplicationController
 
   def false_answer
     $going_for_trophy = false
+    Player.first.update_attribute(:isActivePlayer, false)
   end
 
 end
