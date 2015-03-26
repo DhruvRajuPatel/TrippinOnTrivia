@@ -42,11 +42,11 @@
   </script>
 </head>
 
-<% if Player.first.isActivePlayer %>
+
     <h1>Spin the Wheel!</h1>
-    <% else %>
+
     <h1>Awaiting opponent's turn</h1>
-<% end %>
+
 
 <img src= "/images/centerspin.png" id="center">
 <img src= "/images/spinner.png" id="spinner">
@@ -61,10 +61,10 @@
             bind:
             {
                 click: function(){
-                    <% if Player.first.isActivePlayer %>
+
                     $("#spinner").rotate({ angle:0,animateTo:<%= @rotations %>,easing: $.easing.easeInOutExpo }, setTimeout(ChangePage, 1000))
                     spinSound.playclip();
-                    <% end %>
+
                 }
             }
         });
