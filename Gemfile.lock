@@ -162,6 +162,9 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    simple_form (3.1.0)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
     slop (3.6.0)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -212,6 +215,7 @@ DEPENDENCIES
   rake (= 10.4.2)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  simple_form
   sqlite3
   turbolinks
   tzinfo-data

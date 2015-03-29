@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="170266641">
+  <component name="DataSourceManagerImpl" format="xml" hash="607443756">
     <data-source source="LOCAL" name="Rails TrippinOnTrivia: development" uuid="4da18fb1-3327-4610-b42f-4234ad112a38">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>

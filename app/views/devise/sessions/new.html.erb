@@ -1,26 +1,24 @@
+
 <h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<br />
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= f.input :email, :required =>false, :label => 'Email Address',:placeholder => 'Email Address' %>
+    <%= f.input :password, :required =>false, :label => 'Password',:placeholder => 'Password' %>
+    <div>
+      <% if devise_mapping.rememberable? -%>
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+      <% end -%>
     </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-    <%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %>  </div>
+    <br/>
+    <div >
+      <%= f.button :submit, "Log In"%> or  <%= link_to "Sign up", new_registration_path(resource_name), class: "links" %>
+    </div>
+    <br />
+    <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+        <%= link_to "Forgot your password?", new_password_path(resource_name), class: "links" %><br />
+    <% end -%>
+    <hr style="border:1px solid #1A49B0;" />
 <% end %>
-
+<p style="font-size: large; margin-bottom: 1em;">Sign in with Facebook or Google+</p>
 <%= render "devise/shared/links" %>
