@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>TrippinOnTrivia</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">  <%= csrf_meta_tags %>
@@ -15,16 +15,16 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <section>
-      <p class="navbar-text navbar-form">
+      <p class="navbar-text">
         <% if user_signed_in? %>
+            <section style="text-align: center">
+              <strong> <%= current_user.email %></strong>
+              | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+            </section>
+            <section style="padding-top: 10px;text-align: center">
+              <a data-toggle="modal" data-target=".bs-example-modal-sm" href="#"><i class="fa fa-star fa-3x fa-fw"></i></a>
 
-            <strong><%= current_user.email %></strong>
-            <!-- <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>-->
-
-            <section style="padding-top: 10px;text-align: right">
-              <i class="fa fa-star fa-3x fa-fw"></i>
-              <i class="fa fa-cog fa-3x fa-fw"></i>
+              <a data-toggle="modal" data-target=".bs-example-modal-lg" href="<%= edit_user_registration_path %>"><i class="fa fa-cog fa-3x fa-fw"></i></a>
 
               <input type="checkbox" name="un-mute" id="un-mute">
               <label for="un-mute" class="unmute">
@@ -36,7 +36,7 @@
               <script>
                   var un_mute = document.getElementById('un-mute');
 
-                  un_mute.onclick = function() {
+                  un_mute.onclick = function () {
                   };
               </script>
             </section>
@@ -47,8 +47,17 @@
 
 <div class="container" id="main">
   <p class="notice"><%= notice %></p>
+
   <p class="alert"><%= alert %></p>
   <%= yield %>
+</div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    </div>
+  </div>
 </div>
 </body>
 </html>
