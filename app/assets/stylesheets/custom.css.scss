@@ -2,7 +2,8 @@
 @import "bootstrap";
 
 body {
-  padding-top: 30px;
+  padding-top: 70px;
+
 }
 
 .container{
@@ -12,4 +13,23 @@ body {
 .links {
   font-size: medium;
   color:Blue !important;
+}
+
+#main {
+}
+
+input#un-mute {
+  display: none;
+}
+
+.unmute i {
+  display: none;
+}
+
+input#un-mute:checked ~ .unmute i {
+  display: initial;
+}
+
+input#un-mute:checked ~ .mute i {
+  display: none;
 }

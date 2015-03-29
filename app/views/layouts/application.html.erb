@@ -5,24 +5,50 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= csrf_meta_tags %>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">  <%= csrf_meta_tags %>
   <!--[if lt IE 9]>
   <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
   </script>
   <![endif]-->
 </head>
 <body>
-<p class="navbar-text pull-left">
-  <% if user_signed_in? %>
-      Logged in as <strong><%= current_user.email %></strong>.
-      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-  <% end %>
-
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <section>
+      <p class="navbar-text navbar-form">
+        <% if user_signed_in? %>
+
+            <strong><%= current_user.email %></strong>
+            <!-- <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>-->
+
+            <section style="padding-top: 10px;text-align: right">
+              <i class="fa fa-star fa-3x fa-fw"></i>
+              <i class="fa fa-cog fa-3x fa-fw"></i>
+
+              <input type="checkbox" name="un-mute" id="un-mute">
+              <label for="un-mute" class="unmute">
+                <i title="Mute icon" class="fa fa-volume-off fa-3x fa-fw"></i>
+              </label>
+              <label for="un-mute" class="mute">
+                <i title="Unmute icon" class="fa fa-volume-up fa-3x fa-fw"></i>
+              </label>
+              <script>
+                  var un_mute = document.getElementById('un-mute');
+
+                  un_mute.onclick = function() {
+                  };
+              </script>
+            </section>
+        <% end %>
+        </section>
   </div>
-  </body>
+</nav>
+
+<div class="container" id="main">
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+  <%= yield %>
+</div>
+</body>
 </html>
