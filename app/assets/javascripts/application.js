@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jQueryRotate
 //= require turbolinks
+//= require bootstrap/modal
 //= require_tree .
 
 

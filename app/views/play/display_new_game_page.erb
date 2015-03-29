@@ -1,3 +1,47 @@
 <div class="page-header">
-  <h1>New Game</h1>
+  <h1 style=" text-align: center;">NEW GAME</h1>
 </div>
+
+<div class="panel panel-default" style="">
+  <div class="panel-heading">
+    <h3 class="panel-title" style="text-align: center;">OPPONENT</h3>
+  </div>
+  <div id="choices" class="panel-body">
+    <button id="friend" onclick="FriendOpp(this.id);" type="button" class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">
+      FRIEND<span id="friend-ok" style="display: none;" class="glyphicon glyphicon-ok"></span>
+    </button>
+    <button id="random" onclick="RandomOpp(this.id);" type="button" class="btn btn-default btn-lg btn-block">
+      RANDOM<span id="random-ok" style="display: none;" class="glyphicon glyphicon-ok"></span></button>
+  </div>
+</div>
+
+<div id="main" class="text-center">
+  <button onclick="PlayNow()" type="button" class="btn btn-primary btn-lg btn-block">
+    PLAY NOW</button>
+</div>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      ...
+    </div>
+  </div>
+</div>
+
+<script>
+    function PlayNow()
+    {
+        $('body').load('play/display_spinner.html');
+    }
+    function FriendOpp(element)
+    {
+        $('#choices #friend span').toggle();
+        $('#choices #random span').hide();
+    }
+
+    function RandomOpp(element)
+    {
+        $('#choices #random span').toggle();
+        $('#choices #friend span').hide();
+    }
+</script>

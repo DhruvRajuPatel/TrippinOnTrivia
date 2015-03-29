@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'play/display_spinner'
   get 'play/display_questions'
   get 'play/display_trophy_select'
+  get 'play/display_new_game_page'
+
 
   resources :play do
     collection do
