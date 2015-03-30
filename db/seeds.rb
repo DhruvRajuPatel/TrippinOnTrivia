@@ -14,12 +14,12 @@ basketball = Category.create(title: 'Basketball')
 lit = Category.create(title: 'Contemporary Literature')
 music = Category.create(title: 'Music')
 
-cs.trophy.create
-aqua.trophy.create
-memes.trophy.create
-basketball.trophy.create
-lit.trophy.create
-music.trophy.create
+cs.trophy = Trophy.create
+aqua.trophy = Trophy.create
+memes.trophy = Trophy.create
+basketball.trophy = Trophy.create
+lit.trophy = Trophy.create
+music.trophy = Trophy.create
 
 basketball_question1 = basketball.questions.create(title: "What team won the very first NBA game?", rating: 1)
 basketball_question2 = basketball.questions.create(title: "What NBA player scored 100 points on 3/2/62?", rating: 1)
