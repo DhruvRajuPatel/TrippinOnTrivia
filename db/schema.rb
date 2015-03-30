@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319025135) do
+ActiveRecord::Schema.define(version: 20150330092613) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -46,17 +46,25 @@ ActiveRecord::Schema.define(version: 20150319025135) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "question_id"
+    t.integer  "player_id"
   end
 
   add_index "categories", ["question_id"], name: "index_categories_on_question_id"
 
   create_table "players", force: :cascade do |t|
     t.integer  "meter"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.boolean  "isActivePlayer"
     t.integer  "player_id"
+    t.string   "uid"
+    t.integer  "active_player_id"
+    t.boolean  "going_for_trophy"
+    t.integer  "category_id"
+    t.integer  "question_id"
   end
+
+  add_index "players", ["uid"], name: "index_players_on_uid"
 
   create_table "questions", force: :cascade do |t|
     t.string   "title"
@@ -65,6 +73,7 @@ ActiveRecord::Schema.define(version: 20150319025135) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "answer_id"
+    t.integer  "player_id"
   end
 
   add_index "questions", ["answer_id"], name: "index_questions_on_answer_id"
@@ -95,6 +104,7 @@ ActiveRecord::Schema.define(version: 20150319025135) do
     t.datetime "updated_at"
     t.string   "provider"
     t.string   "uid"
+    t.integer  "player_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

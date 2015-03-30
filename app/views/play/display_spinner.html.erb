@@ -41,8 +41,9 @@
 
   </script>
 </head>
-
-<% if Player.first.isActivePlayer %>
+<button onclick="GoBack()" type="button" class="btn btn-primary">
+  BACK</button>
+<% if current_user.active_player.isActivePlayer %>
     <h1>Spin the Wheel!</h1>
     <% else %>
     <h1>Awaiting opponent's turn</h1>
@@ -50,9 +51,11 @@
 
 <img src= "/images/centerspin.png" id="center">
 <img src= "/images/spinner.png" id="spinner">
-<p>Meter: <%= Player.first.meter%></p>
-<p>Trophies: <%= Player.first.trophies.count%></p>
-<p>Opponent's Trophies: <%= Player.first.player.trophies.count%></p>
+<p>Meter: <%= current_user.active_player.meter%></p>
+<p>Trophies: <%= current_user.active_player.trophies.count%></p>
+<% if (!current_user.active_player.opponent.nil?) %>
+<p>Opponent: <%= current_user.active_player.opponent.user.email%></p>
+    <% end %>
 
 <script type ="text/javascript" charset="utf-8">
     jQuery(document).ready(function()
@@ -61,7 +64,7 @@
             bind:
             {
                 click: function(){
-                    <% if Player.first.isActivePlayer %>
+                    <% if current_user.active_player.isActivePlayer %>
                     $("#spinner").rotate({ angle:0,animateTo:<%= @rotations %>,easing: $.easing.easeInOutExpo }, setTimeout(ChangePage, 1000))
                     spinSound.playclip();
                     <% end %>
@@ -72,12 +75,16 @@
 
     function ChangePage()
     {
-        var meter = <%=Player.first.meter%>;
+        var meter = <%=current_user.active_player.meter%>;
         if ((meter == 3)) {
             $('body').load('/play/display_trophy_select.html');
         }
         else {
             $('body').load('/play/display_questions.html');
         }
+    }
+    function GoBack()
+    {
+        $('body').load('play/index');
     }
 </script>

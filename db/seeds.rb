@@ -14,9 +14,6 @@ basketball = Category.create(title: 'Basketball')
 lit = Category.create(title: 'Contemporary Literature')
 music = Category.create(title: 'Music')
 
-player = Player.create(meter: 0, isActivePlayer: true)
-opponent = Player.create(meter: 0, isActivePlayer: false)
-
 player.player = opponent
 
 cs.trophies.create

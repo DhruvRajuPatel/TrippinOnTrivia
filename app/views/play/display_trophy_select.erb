@@ -5,7 +5,7 @@
   <tbody>
   <% @categories.each do |category| %>
     <% @contains = false %>
-    <% Player.first.trophies.each do |trophy| %>
+    <% current_user.active_player.trophies.each do |trophy| %>
         <% if category == trophy.category %>
           <% @contains = true %>
           <%end%>
@@ -41,4 +41,5 @@
                 $('body').load('/play/display_questions.html');
 
     }
+
 </script>

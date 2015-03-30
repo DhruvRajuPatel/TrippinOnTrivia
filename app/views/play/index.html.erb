@@ -1,4 +1,31 @@
 <div id="main" class="text-center">
+  <% current_user.players.each do |player| %>
+      <div class="text-center">
+
+        <% @has_opponent = "none"%>
+        <% if (!player.opponent.nil?) %>
+            <% @has_opponent = player.opponent.user.email%>
+        <% end %>
+
+        <button id=<%= "a" + player.id.to_s %> type="button" name=<%= player.id %> value= <%=player.id%> class="btn btn-primary btn-lg btn-block">
+          Trophies: <%=player.trophies.count %> Opponent: <%=@has_opponent%></button><br>
+      </div>
+      <script type ="text/javascript" charset="utf-8">
+          $(document).ready(function() {
+              $(<%= "a" + player.id.to_s%>).click(function() {
+                  var currentPlayer = this.value;
+                  $.ajax({
+                              url: "play/get_selected_player",
+                              type: 'PUT',
+                              dataType: 'json',
+                              data: {'player_id' : currentPlayer},
+                              complete: PlayNow
+                          }
+                  )
+              })
+          });
+      </script>
+  <% end %>
   <button onclick="ChangePage()" type="button" class="btn btn-primary btn-lg btn-block">
     + NEW GAME</button>
   <br/>  <br/>
@@ -8,5 +35,10 @@
     function ChangePage()
     {
         $('body').load('play/display_new_game_page.html');
+    }
+
+    function PlayNow()
+    {
+        $('body').load('play/display_spinner.html');
     }
 </script>

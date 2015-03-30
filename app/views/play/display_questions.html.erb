@@ -73,11 +73,11 @@
 </head>
 
 <h1 id="countdown" class="timer">0:30</h1>
-<h2 class="text-center"><%= $random_category.title %></br>
-  <small><%= $random_question.title %></small></h2>
+<h2 class="text-center"><%= current_user.active_player.current_category.title %></br>
+  <small><%= @question.title %></small></h2>
 
 <tbody>
-<% $random_question.answers.all.shuffle.each do |answer| %>
+<% @question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
       <button id="<%= answer.title.gsub(/\s+/, "") %>" type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
         <%=answer.title %></button><br>
@@ -116,13 +116,13 @@
     </script>
 <% end %>
 
-<p>Going for trophy: <%= $going_for_trophy%></p>
+<p>Going for trophy: <%= current_user.active_player.going_for_trophy%></p>
 </tbody>
 
 <script>
     function ChangePage()
     {
-        var meter = <%=$meter%>;
+        var meter = <%=current_user.active_player.meter%>;
         if ((meter == 2) && correctAnswer) {
             $('body').load('/play/display_trophy_select.html');
         }

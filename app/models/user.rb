@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :players, foreign_key: "uid"
+  has_one :active_player, class_name: "Player", foreign_key: "active_player_id"
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

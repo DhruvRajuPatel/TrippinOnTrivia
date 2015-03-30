@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       put 'true_answer'
       put 'false_answer'
       put 'get_trophy_category'
+      put 'get_selected_player'
     end
   end
 
