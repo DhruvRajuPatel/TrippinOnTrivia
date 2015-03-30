@@ -2,17 +2,17 @@
   <% current_user.players.each do |player| %>
       <div class="text-center">
 
-        <% @has_opponent = "none"%>
+        <% @has_opponent = 'none'%>
         <% if (!player.opponent.nil?) %>
             <% @has_opponent = player.opponent.user.email%>
         <% end %>
 
-        <button id=<%= "a" + player.id.to_s %> type="button" name=<%= player.id %> value= <%=player.id%> class="btn btn-primary btn-lg btn-block">
+        <button id=<%= 'a' + player.id.to_s %> type="button" name=<%= player.id %> value= <%=player.id%> class="btn btn-primary btn-lg btn-block">
           Trophies: <%=player.trophies.count %> Opponent: <%=@has_opponent%></button><br>
       </div>
       <script type ="text/javascript" charset="utf-8">
           $(document).ready(function() {
-              $(<%= "a" + player.id.to_s%>).click(function() {
+              $(<%= 'a' + player.id.to_s%>).click(function() {
                   var currentPlayer = this.value;
                   $.ajax({
                               url: "play/get_selected_player",

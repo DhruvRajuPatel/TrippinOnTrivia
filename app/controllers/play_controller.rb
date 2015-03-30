@@ -5,22 +5,22 @@ class PlayController < ApplicationController
 
   def display_spinner
     current_user.active_player.update_attribute(:going_for_trophy, false)
-    if (current_user.active_player.isActivePlayer)
+    if current_user.active_player.isActivePlayer
     @rotations = rand(80000...100000)
     @category_number = @rotations%360
     case @category_number
       when 0..53
-        @random_category = Category.find_by_title("Aquatic Animals")
+        @random_category = Category.find_by_title('Aquatic Animals')
       when 54..104
-        @random_category = Category.find_by_title("Memes")
+        @random_category = Category.find_by_title('Memes')
       when 105..155
-        @random_category = Category.find_by_title("Basketball")
+        @random_category = Category.find_by_title('Basketball')
       when 156..206
-        @random_category = Category.find_by_title("Contemporary Literature")
+        @random_category = Category.find_by_title('Contemporary Literature')
       when 207..257
-        @random_category = Category.find_by_title("Music")
+        @random_category = Category.find_by_title('Music')
       when 258..308
-        @random_category = Category.find_by_title("Computer Science")
+        @random_category = Category.find_by_title('Computer Science')
       when 309..359
         current_user.active_player.update_attribute(:meter, 3)
     end
@@ -38,7 +38,7 @@ class PlayController < ApplicationController
     current_user.active_player = current_user.players.create(meter: 0, isActivePlayer: true)
 
     Player.all.each do |player|
-      if (player.user != current_user && player.opponent.nil? && !player.isActivePlayer)
+      if player.user != current_user && player.opponent.nil? && !player.isActivePlayer
         current_user.active_player.opponent = player
         player.opponent = current_user.active_player
         break
@@ -52,7 +52,7 @@ class PlayController < ApplicationController
 
     def true_answer
 
-      if (current_user.active_player.going_for_trophy)
+      if current_user.active_player.going_for_trophy
         current_user.active_player.trophies << current_user.active_player.current_question.category.trophy
         current_user.active_player.update_attribute(:going_for_trophy, false)
       else

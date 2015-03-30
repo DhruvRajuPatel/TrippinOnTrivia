@@ -79,7 +79,7 @@
 <tbody>
 <% @question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
-      <button id="<%= answer.title.gsub(/\s+/, "") %>" type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
+      <button id="<%= answer.title.gsub(/\s+/, '') %>" type="button" name=<%= answer.title %> value=<%= answer.is_correct %> class="btn btn-primary btn-lg btn-block">
         <%=answer.title %></button><br>
     </div>
     <script type ="text/javascript" charset="utf-8">
@@ -88,7 +88,7 @@
             if (correctAnswer) {
                 correctButton = document.getElementById('<%= answer.title.gsub(/\s+/, "") %>');
             }
-            $(<%= answer.title.gsub(/\s+/, "") %>).click(function() {
+            $(<%= answer.title.gsub(/\s+/, '') %>).click(function() {
                 correctAnswer = <%=answer.is_correct %>;
                 if(correctAnswer) {
                     $.ajax({
