@@ -37,21 +37,14 @@ class PlayController < ApplicationController
   def display_new_game_page
     current_user.active_player = current_user.players.create(meter: 0, isActivePlayer: true)
 
-    User.all.each do |user|
-      if (user.uid != current_user.uid)
-      user.players.each do |player|
-        if (player.opponent.nil? && !player.isActivePlayer)
-          current_user.active_player.opponent = player
-          player.opponent = current_user.active_player
-          break
-        end
-      end
-        if (!current_user.active_player.opponent.nil?)
-          break
-        end
+    Player.all.each do |player|
+      if (player.user != current_user && player.opponent.nil? && !player.isActivePlayer)
+        current_user.active_player.opponent = player
+        player.opponent = current_user.active_player
+        break
       end
     end
-  end
+    end
 
   def display_questions
     @question = current_user.active_player.current_category.questions.all.shuffle[0]
