@@ -10,17 +10,17 @@ class PlayController < ApplicationController
     @category_number = @rotations%360
     case @category_number
       when 0..53
-        @random_category = Category.all[1]
+        @random_category = Category.find_by_title("Aquatic Animals")
       when 54..104
-        @random_category = Category.all[2]
+        @random_category = Category.find_by_title("Memes")
       when 105..155
-        @random_category = Category.all[3]
+        @random_category = Category.find_by_title("Basketball")
       when 156..206
-        @random_category = Category.all[4]
+        @random_category = Category.find_by_title("Contemporary Literature")
       when 207..257
-        @random_category = Category.all[5]
+        @random_category = Category.find_by_title("Music")
       when 258..308
-        @random_category = Category.all[0]
+        @random_category = Category.find_by_title("Computer Science")
       when 309..359
         current_user.active_player.update_attribute(:meter, 3)
     end
