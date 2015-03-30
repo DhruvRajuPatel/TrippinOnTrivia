@@ -46,7 +46,7 @@ class PlayController < ApplicationController
           break
         end
       end
-        if (current_user.active_player.opponent != null)
+        if (!current_user.active_player.opponent.nil?)
           break
         end
       end
