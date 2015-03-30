@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330092613) do
+ActiveRecord::Schema.define(version: 20150330215443) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -53,10 +53,10 @@ ActiveRecord::Schema.define(version: 20150330092613) do
 
   create_table "players", force: :cascade do |t|
     t.integer  "meter"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
     t.boolean  "isActivePlayer"
     t.integer  "player_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "uid"
     t.integer  "active_player_id"
     t.boolean  "going_for_trophy"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20150330092613) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "player_id"
+    t.integer  "level"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
