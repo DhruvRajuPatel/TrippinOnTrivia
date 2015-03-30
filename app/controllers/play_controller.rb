@@ -43,7 +43,11 @@ class PlayController < ApplicationController
         if (player.opponent.nil? && !player.isActivePlayer)
           current_user.active_player.opponent = player
           player.opponent = current_user.active_player
+          break
         end
+      end
+        if (current_user.active_player.opponent != null)
+          break
         end
       end
     end
