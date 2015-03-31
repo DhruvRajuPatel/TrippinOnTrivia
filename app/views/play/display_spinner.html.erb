@@ -16,6 +16,7 @@
 
       function createSoundBite(sound){
           var html5audio=document.createElement('audio')
+          html5audio.attr('id', 'spinner_sound');
           if (html5audio.canPlayType){ //check support for HTML5 audio
               for (var i=0; i<arguments.length; i++){
                   var sourceel=document.createElement('source')
@@ -36,6 +37,8 @@
               return {playclip:function(){throw new Error("Your browser doesn't support HTML5 audio unfortunately")}}
           }
       }
+
+
 
       var spinSound=createSoundBite("/sounds/spin.mp3")
 

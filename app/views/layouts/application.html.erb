@@ -24,9 +24,17 @@
               | Level: <%= current_user.level %>
             </section>
             <section style="padding-top: 10px;text-align: center">
-              <a data-toggle="modal" data-target=".bs-example-modal-sm" href="#"><i class="fa fa-star fa-3x fa-fw"></i></a>
+              <a data-remote="<%= edit_user_registration_path %>"
+                 data-toggle="modal"
+                 data-target="#basicModal">
+                <i class="fa fa-star fa-3x fa-fw"></i>
+              </a>
 
-              <a data-toggle="modal" data-target=".bs-example-modal-lg" href="<%= edit_user_registration_path %>"><i class="fa fa-cog fa-3x fa-fw"></i></a>
+              <a data-remote="<%= edit_user_registration_path %>"
+                 data-toggle="modal"
+                 data-target="#basicModal">
+                    <i class="fa fa-cog fa-3x fa-fw"></i>
+              </a>
 
               <input type="checkbox" name="un-mute" id="un-mute">
               <label for="un-mute" class="unmute">
@@ -36,10 +44,14 @@
                 <i title="Unmute icon" class="fa fa-volume-up fa-3x fa-fw"></i>
               </label>
               <script>
-                  var un_mute = document.getElementById('un-mute');
+                  $(document).ready(function () {
 
-                  un_mute.onclick = function () {
-                  };
+                      var un_mute = document.getElementById('un-mute');
+
+                      un_mute.onclick = function () {
+                          alert("toggling sound");
+                      };
+                  });
               </script>
             </section>
         <% end %>
@@ -49,17 +61,16 @@
 
 <div class="container" id="main">
   <p class="notice"><%= notice %></p>
-
   <p class="alert"><%= alert %></p>
   <%= yield %>
 </div>
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
-
     </div>
   </div>
 </div>
+
 </body>
 </html>
