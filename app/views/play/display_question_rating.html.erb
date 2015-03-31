@@ -1,0 +1,23 @@
+Rating page.
+
+<a id="fun" href="#">Fun</a>
+
+<a id="boring" href="#">Boring</a>
+
+<a id="sumbit_question" href="#">Submit Question</a>
+
+<script>
+    $(function() {
+        $('#fun').click(function() {
+            <%= current_user.active_player.current_question.increment!(:rating) %>
+            $('body').load(<%= new_question_path %>);
+        });
+        $('#boring').click(function() {
+            <%= current_user.active_player.current_question.decrement!(:rating) %>
+            $('body').load(<%= new_question_path %>);
+        });
+        $('#submit_question').click(function() {
+            $('body').load(<%= new_question_path %>);
+        });
+    });
+</script>

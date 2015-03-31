@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331062055) do
+ActiveRecord::Schema.define(version: 20150331162733) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150331062055) do
     t.integer  "question_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "player_id"
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id"
@@ -76,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150331062055) do
     t.integer  "challenged_player_id"
     t.integer  "winner_player_id"
     t.integer  "challenge_score"
+    t.integer  "answer_id"
   end
 
   add_index "players", ["uid"], name: "index_players_on_uid"

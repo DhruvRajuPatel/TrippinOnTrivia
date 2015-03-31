@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'play/display_questions'
   get 'play/display_trophy_select'
   get 'play/display_new_game_page'
+  get 'play/display_question_rating'
 
 
   resources :play do
