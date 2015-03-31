@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331023730) do
+ActiveRecord::Schema.define(version: 20150331034928) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150331023730) do
     t.integer  "player_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "icon_path"
   end
 
   add_index "trophies", ["category_id"], name: "index_trophies_on_category_id"
