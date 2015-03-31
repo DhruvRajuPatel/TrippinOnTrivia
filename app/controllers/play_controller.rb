@@ -51,6 +51,11 @@ class PlayController < ApplicationController
     current_user.active_player.current_question = @question
 
     def true_answer
+      current_user.update_attribute(:total_correct, current_user.total_correct + 1)
+      level = current_user.total_correct % 20
+      if level == 0
+        current_user.update_attribute(:level, current_user.level + 1)
+      end
 
       if current_user.active_player.going_for_trophy
         current_user.active_player.trophies << current_user.active_player.current_question.category.trophy

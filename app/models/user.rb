@@ -12,12 +12,14 @@ class User < ActiveRecord::Base
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
       user.level = 1
+      user.total_correct = 0
 
       unless user
         user = User.create(
             email: data["email"],
             password: Devise.friendly_token[0,20],
-            level: 1
+            level: 1,
+            total_correct: 0
         )
       end
 
@@ -33,7 +35,8 @@ class User < ActiveRecord::Base
         user = User.create(
            email: data["email"],
            password: Devise.friendly_token[0,20],
-           level: 1
+           level: 1,
+           total_correct: 0
         )
     end
 

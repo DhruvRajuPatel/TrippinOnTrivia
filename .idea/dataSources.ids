@@ -105,7 +105,8 @@
       <column name="provider" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="uid" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="player_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
-      <column name="level" sqlType="INT" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="level" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="total_correct" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <primary-key columns="id"/>
       <index name="index_users_on_reset_password_token" unique="true" columns="reset_password_token"/>
       <index name="index_users_on_email" unique="true" columns="email"/>
