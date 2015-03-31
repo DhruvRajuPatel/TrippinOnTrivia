@@ -52,10 +52,9 @@ class PlayController < ApplicationController
 
     def true_answer
       current_user.update_attribute(:total_correct, current_user.total_correct + 1)
-      @level = current_user.total_correct % @next_level_threshold
-      if @level == 0
+
+      if (current_user.total_correct % current_user.next_level_threshold) == 0
         current_user.update_attribute(:level, current_user.level + 1)
-        @next_level_threshold = @next_level_threshold + 5
       end
 
       if current_user.active_player.going_for_trophy
