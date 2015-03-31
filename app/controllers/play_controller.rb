@@ -1,9 +1,15 @@
 class PlayController < ApplicationController
+
+  LEVEL_UP_STATIC_THRESHOLD = 3
+  LEVEL_UP_DYNAMIC_THRESHOLD = 2
+
   def index
 
   end
 
   def display_spinner
+    @until_level_up = get_current_player_level_up_threshold
+
     current_user.active_player.update_attribute(:going_for_trophy, false)
     if current_user.active_player.isActivePlayer
     @rotations = rand(80000...100000)
@@ -53,7 +59,7 @@ class PlayController < ApplicationController
     def true_answer
       current_user.update_attribute(:total_correct, current_user.total_correct + 1)
 
-      if (current_user.total_correct % current_user.next_level_threshold) == 0
+      if current_user.total_correct == get_current_player_level_up_threshold
         current_user.update_attribute(:level, current_user.level + 1)
       end
 
@@ -76,6 +82,7 @@ class PlayController < ApplicationController
     end
   end
 
+
   def display_trophy_select
     @categories = Category.all
     current_user.active_player.update_attribute(:going_for_trophy, true)
@@ -88,6 +95,29 @@ class PlayController < ApplicationController
 
   def get_selected_player
     current_user.active_player = current_user.players.find(params[:player_id])
+  end
+
+  private
+
+  def get_current_player_level_up_threshold
+
+    current_dynamic_threshold = get_recursive_definition(current_user.level, LEVEL_UP_DYNAMIC_THRESHOLD)
+    current_static_threshold = LEVEL_UP_STATIC_THRESHOLD * current_user.level
+
+    return current_dynamic_threshold + current_static_threshold
+
+  end
+
+  def get_recursive_definition(times_to_iterate, numeric_definition)
+    current_sum = 0
+
+    if times_to_iterate - 1 > 0
+
+      current_sum = get_recursive_definition(times_to_iterate - 1, numeric_definition)
+    end
+
+    return numeric_definition * times_to_iterate + current_sum
+
   end
 
 end

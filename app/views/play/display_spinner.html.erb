@@ -51,6 +51,8 @@
 <img src= "/images/centerspin.png" id="center">
 <img src= "/images/spinner.png" id="spinner">
 <p>Meter: <%= current_user.active_player.meter%></p>
+<p>#Correct: <%= current_user.total_correct%></p>
+<p>#Correct to Next Level: <%= @until_level_up%></p>
 <% if (!current_user.active_player.opponent.nil?) %>
 <p>Opponent: <%= current_user.active_player.opponent.user.email%></p>
     <% end %>
