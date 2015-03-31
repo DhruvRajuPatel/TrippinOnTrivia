@@ -2,7 +2,6 @@
 
   <h1>Pick a trophy</h1>
 
-  <tbody>
   <% @categories.each do |category| %>
     <% @contains = false %>
     <% current_user.active_player.trophies.each do |trophy| %>
@@ -14,12 +13,12 @@
         <% next %>
   <%end%>
       <div class="text-center">
-        <button id=<%= category.title.gsub(/\s+/, "") %> type="button" name=<%= category.title %> value= <%=category.id%> class="btn btn-primary btn-lg btn-block">
+        <button id=<%= category.title.gsub(/\s+/, '') %> type="button" name=<%= category.title %> value= <%=category.id%> class="btn btn-primary btn-lg btn-block">
           <%=category.title %></button><br>
       </div>
       <script type ="text/javascript" charset="utf-8">
           $(document).ready(function() {
-              $(<%= category.title.gsub(/\s+/, "") %>).click(function() {
+              $(<%= category.title.gsub(/\s+/, '') %>).click(function() {
                   var currentCategory = this.value;
                   $.ajax({
                       url: "play/get_trophy_category",
@@ -33,7 +32,6 @@
           });
       </script>
   <% end %>
-  </tbody>
 </div>
 
 <script>

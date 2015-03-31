@@ -12,24 +12,24 @@
           "mp4": "audio/mp4",
           "ogg": "audio/ogg",
           "wav": "audio/wav"
-      }
+      };
 
       function createSoundBite(sound){
-          var html5audio=document.createElement('audio')
+          var html5audio=document.createElement('audio');
           if (html5audio.canPlayType){ //check support for HTML5 audio
               for (var i=0; i<arguments.length; i++){
-                  var sourceel=document.createElement('source')
-                  sourceel.setAttribute('src', arguments[i])
+                  var sourceel=document.createElement('source');
+                  sourceel.setAttribute('src', arguments[i]);
                   if (arguments[i].match(/\.(\w+)$/i))
-                      sourceel.setAttribute('type', html5_audiotypes[RegExp.$1])
+                      sourceel.setAttribute('type', html5_audiotypes[RegExp.$1]);
                   html5audio.appendChild(sourceel)
               }
-              html5audio.load()
+              html5audio.load();
               html5audio.playclip=function(){
-                  html5audio.pause()
-                  html5audio.currentTime=0
-                  html5audio.play()
-              }
+                  html5audio.pause();
+                  html5audio.currentTime=0;
+                  html5audio.play();
+              };
               return html5audio
           }
           else{
@@ -39,8 +39,8 @@
 
       //Initialize two sound clips with 1 fallback file each:
 
-      var correctSound=createSoundBite("/sounds/correct.mp3")
-      var incorrectSound=createSoundBite("/sounds/incorrect.mp3")
+      var correctSound=createSoundBite("/sounds/correct.mp3");
+      var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
 
       var seconds = 30;
 
@@ -57,14 +57,14 @@
               $.ajax({
                   url: "play/false_answer",
                   type: 'PUT'
-              })
+              });
               document.getElementById('countdown').innerHTML = "Time up!";
               alert('Times up! You got it wrong! Next players turn!!!!');
               ChangePage();
           } else {
               seconds--;
           }
-      };
+      }
 
       var countdownTimer = setInterval('secondPassed()', 1000);
       var correctAnswer = false;
@@ -73,9 +73,11 @@
 </head>
 
 <h1 id="countdown" class="timer">0:30</h1>
-<h2 class="text-center"><%= current_user.active_player.current_category.title %></br>
-  <small><%= @question.title %></small></h2>
-
+<h2 class="text-center">
+<%= current_user.active_player.current_category.title %>
+<br>
+  <small><%= @question.title %></small>
+</h2>
 <tbody>
 <% @question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
@@ -86,7 +88,7 @@
         $(document).ready(function() {
             correctAnswer = <%=answer.is_correct %>;
             if (correctAnswer) {
-                correctButton = document.getElementById('<%= answer.title.gsub(/\s+/, "") %>');
+                correctButton = document.getElementById('<%= answer.title.gsub(/\s+/, '') %>');
             }
             $(<%= answer.title.gsub(/\s+/, '') %>).click(function() {
                 correctAnswer = <%=answer.is_correct %>;
@@ -94,7 +96,7 @@
                     $.ajax({
                         url: "play/true_answer",
                         type: 'PUT'
-                    })
+                    });
                     correctSound.playclip();
                     this.style.background = '#00BB00';
                     this.innerHTML = "Correct!!!";
@@ -103,7 +105,7 @@
                     $.ajax({
                         url: "play/false_answer",
                         type: 'PUT'
-                    })
+                    });
                     incorrectSound.playclip();
                     this.style.background = '#FF0000';
                     this.innerHTML = "Incorrect!!!";
@@ -122,7 +124,7 @@
 <script>
     function ChangePage()
     {
-        var meter = <%=current_user.active_player.meter%>;
+        var meter = <%= current_user.active_player.meter %>;
         if ((meter == 2) && correctAnswer) {
             $('body').load('/play/display_trophy_select.html');
         }
