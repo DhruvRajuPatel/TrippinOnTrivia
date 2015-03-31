@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331034928) do
+ActiveRecord::Schema.define(version: 20150331062055) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -51,17 +51,31 @@ ActiveRecord::Schema.define(version: 20150331034928) do
 
   add_index "categories", ["question_id"], name: "index_categories_on_question_id"
 
+  create_table "challenges", force: :cascade do |t|
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "player_id"
+    t.integer  "trophy_id"
+    t.integer  "challenger_score"
+    t.integer  "challenged_score"
+  end
+
   create_table "players", force: :cascade do |t|
     t.integer  "meter"
     t.boolean  "isActivePlayer"
     t.integer  "player_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "uid"
     t.integer  "active_player_id"
     t.boolean  "going_for_trophy"
     t.integer  "category_id"
     t.integer  "question_id"
+    t.integer  "challenge_id"
+    t.integer  "challenger_player_id"
+    t.integer  "challenged_player_id"
+    t.integer  "winner_player_id"
+    t.integer  "challenge_score"
   end
 
   add_index "players", ["uid"], name: "index_players_on_uid"
@@ -82,9 +96,12 @@ ActiveRecord::Schema.define(version: 20150331034928) do
   create_table "trophies", force: :cascade do |t|
     t.integer  "category_id"
     t.integer  "player_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "icon_path"
+    t.integer  "challenge_id"
+    t.integer  "bid_trophy_id"
+    t.integer  "challenged_trophy_id"
   end
 
   add_index "trophies", ["category_id"], name: "index_trophies_on_category_id"
