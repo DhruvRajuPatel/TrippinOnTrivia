@@ -1,5 +1,4 @@
 class PlayController < ApplicationController
-  @next_level = 20;
   def index
 
   end
@@ -53,8 +52,8 @@ class PlayController < ApplicationController
 
     def true_answer
       current_user.update_attribute(:total_correct, current_user.total_correct + 1)
-      level = current_user.total_correct % @next_level
-      if level == 0
+      @level = current_user.total_correct % @next_level
+      if @level == 0
         current_user.update_attribute(:level, current_user.level + 1)
         @next_level = @next_level + 5
       end

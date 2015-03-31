@@ -125,6 +125,10 @@
     function ChangePage()
     {
         var meter = <%= current_user.active_player.meter %>;
+        var number_of_trophies = <%= current_user.active_player.trophies.count %>;
+        if (number_of_trophies == 6) {
+            alert("Your win.");
+        }
         if ((meter == 2) && correctAnswer) {
             $('body').load('/play/display_trophy_select.html');
         }

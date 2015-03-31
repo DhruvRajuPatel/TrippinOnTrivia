@@ -13,13 +13,15 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,20]
       user.level = 1
       user.total_correct = 0
+      user.next_level_threshold = 20
 
       unless user
         user = User.create(
             email: data["email"],
             password: Devise.friendly_token[0,20],
             level: 1,
-            total_correct: 0
+            total_correct: 0,
+            next_level_threshold: 20
         )
       end
 
@@ -36,7 +38,8 @@ class User < ActiveRecord::Base
            email: data["email"],
            password: Devise.friendly_token[0,20],
            level: 1,
-           total_correct: 0
+           total_correct: 0,
+           next_level_threshold: 20
         )
     end
 
