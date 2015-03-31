@@ -10,7 +10,6 @@ class ChallengeMigrations < ActiveRecord::Migration
     add_column :trophies, :bid_trophy_id, :integer
     add_column :trophies, :challenged_trophy_id, :integer
     add_column :players, :challenge_score, :integer
-    add_column :challenges, :player_id, :integer
     add_column :challenges, :challenger_score, :integer
     add_column :challenges, :challenged_score, :integer
   end
