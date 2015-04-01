@@ -78,7 +78,6 @@
 <br>
   <small><%= @question.title %></small>
 </h2>
-<tbody>
 <% @question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
       <button id="<%= answer.title.gsub(/\s+/, '') %>"
@@ -121,25 +120,21 @@
         });
     </script>
 <% end %>
-
+<a id="phone_google" href="#">Phone a Google</a>
 <p>Going for trophy: <%= current_user.active_player.going_for_trophy%></p>
-</tbody>
 
 <script>
+    $(function() {
+        $('#phone_google').click(function(){
+            seconds = seconds + 30;
+            $('#phone_google').toggle();
+            var win = window.open('https://www.google.com/?gws_rd=ssl#q=' + '<%= @question.title %>', '_blank');
+            win.focus();
+        });
+    });
     function ChangePage()
     {
         $('body').load('/play/display_question_rating.html');
-        var meter = <%= current_user.active_player.meter %>;
-        var number_of_trophies = <%= current_user.active_player.trophies.count %>;
-        if (number_of_trophies == 6) {
-            alert("Your win.");
-        }
-        if ((meter == 2) && correctAnswer) {
-            $('body').load('/play/display_trophy_select.html');
-        }
-        else {
-            $('body').load('/play/display_spinner.html');
-        }
     }
 </script>
 

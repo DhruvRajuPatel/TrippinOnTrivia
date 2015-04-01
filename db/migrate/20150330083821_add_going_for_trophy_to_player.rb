@@ -3,5 +3,6 @@ class AddGoingForTrophyToPlayer < ActiveRecord::Migration
       add_column :players, :going_for_trophy, :boolean
       add_column :players, :category_id, :integer
       add_column :players, :question_id, :integer
+      add_column :players, :answer_id, :integer
   end
 end

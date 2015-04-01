@@ -1,5 +1,3 @@
-Rating page.
-
 <a id="fun" href="#">Fun</a>
 
 <a id="boring" href="#">Boring</a>
@@ -10,14 +8,27 @@ Rating page.
     $(function() {
         $('#fun').click(function() {
             <%= current_user.active_player.current_question.increment!(:rating) %>
-            $('body').load(<%= new_question_path %>);
+            ChangePage()
         });
         $('#boring').click(function() {
             <%= current_user.active_player.current_question.decrement!(:rating) %>
-            $('body').load(<%= new_question_path %>);
+            ChangePage()
         });
         $('#submit_question').click(function() {
             $('body').load(<%= new_question_path %>);
         });
+        function ChangePage() {
+            var meter = <%= current_user.active_player.meter %>;
+            var number_of_trophies = <%= current_user.active_player.trophies.count %>;
+            if (number_of_trophies == 6) {
+                alert("Your win.");
+            }
+            if ((meter == 2) && '<%= current_user.active_player.current_answer %>') {
+                $('body').load('/play/display_trophy_select.html');
+            }
+            else {
+                $('body').load('/play/display_spinner.html');
+            }
+        }
     });
 </script>
