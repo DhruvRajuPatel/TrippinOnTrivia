@@ -198,7 +198,7 @@
             while (parameters = this._onLoadDelegate.shift()) {
               this._handleRotation(parameters, true);	
             }
-          }
+          };
           else return function () {
             this._rootObj.setAttribute('id',this._img.getAttribute('id'));
             this._rootObj.className=this._img.className;
@@ -291,13 +291,13 @@
           this._container.style.top = this._rotationCenterY - this._imgHeight/2 + "px";
           this._container.style.left = this._rotationCenterX - this._imgWidth/2 + "px";
 
-        }
+        };
           else if (supportedCSS)
           return function(angle){
             this._angle = angle;
             this._img.style[supportedCSS]="rotate("+(angle%360)+"deg)";
             this._img.style[supportedCSSOrigin]=this._parameters.center.join(" ");
-          }
+          };
           else 
             return function(angle)
           {
@@ -317,7 +317,7 @@
           }
 
       })()
-      }
+      };
 
       if (IE)
       {

@@ -76,9 +76,9 @@
 <h2 class="text-center">
 <%= current_user.active_player.current_category.title %>
 <br>
-  <small><%= @question.title %></small>
+  <small><%= current_user.active_player.current_question.title %></small>
 </h2>
-<% @question.answers.all.shuffle.each do |answer| %>
+<% current_user.active_player.current_question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
       <button id="<%= answer.title.gsub(/\s+/, '') %>"
               type="button"
@@ -114,6 +114,12 @@
                     this.innerHTML = "Incorrect!!!";
                     correctButton.style.background = '#00BB00';
                 }
+                if (<%= current_user.active_player.isActivePlayer && !current_user.active_player.challenge.nil? %>){
+                    $.ajax({
+                        url: "play/get_next_challenge_question",
+                        type: 'PUT'
+                    });
+                }
                 clearInterval(countdownTimer);
                 setTimeout(ChangePage, 500);
             })
@@ -123,12 +129,16 @@
 <a id="phone_google" href="#">Phone a Google</a>
 <p>Going for trophy: <%= current_user.active_player.going_for_trophy%></p>
 
+<% if !current_user.active_player.challenge.nil?%>
+<p>Question counter: <%= current_user.active_player.challenge.question_counter%></p>
+<% end %>
+
 <script>
     $(function() {
         $('#phone_google').click(function(){
             seconds = seconds + 30;
             $('#phone_google').toggle();
-            var win = window.open('https://www.google.com/?gws_rd=ssl#q=' + '<%= @question.title %>', '_blank');
+            var win = window.open('https://www.google.com/?gws_rd=ssl#q=' + '<%= current_user.active_player.current_question.title %>', '_blank');
             win.focus();
         });
     });

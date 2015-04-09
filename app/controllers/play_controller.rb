@@ -12,24 +12,24 @@ class PlayController < ApplicationController
 
     current_user.active_player.update_attribute(:going_for_trophy, false)
     if current_user.active_player.isActivePlayer
-    @rotations = rand(80000...100000)
-    @category_number = @rotations%360
-    case @category_number
-      when 0..53
-        @random_category = Category.find_by_title('Aquatic Animals')
-      when 54..104
-        @random_category = Category.find_by_title('Memes')
-      when 105..155
-        @random_category = Category.find_by_title('Basketball')
-      when 156..206
-        @random_category = Category.find_by_title('Contemporary Literature')
-      when 207..257
-        @random_category = Category.find_by_title('Music')
-      when 258..308
-        @random_category = Category.find_by_title('Computer Science')
-      when 309..359
-        current_user.active_player.update_attribute(:meter, 3)
-    end
+      @rotations = rand(80000...100000)
+      @category_number = @rotations%360
+      case @category_number
+        when 0..53
+          @random_category = Category.find_by_title('Aquatic Animals')
+        when 54..104
+          @random_category = Category.find_by_title('Memes')
+        when 105..155
+          @random_category = Category.find_by_title('Basketball')
+        when 156..206
+          @random_category = Category.find_by_title('Contemporary Literature')
+        when 207..257
+          @random_category = Category.find_by_title('Music')
+        when 258..308
+          @random_category = Category.find_by_title('Computer Science')
+        when 309..359
+          current_user.active_player.update_attribute(:meter, 3)
+      end
       current_user.active_player.current_category = @random_category
     end
 
@@ -50,11 +50,10 @@ class PlayController < ApplicationController
         break
       end
     end
-    end
+  end
 
   def display_questions
-    @question = current_user.active_player.current_category.questions.all.shuffle[0]
-    current_user.active_player.current_question = @question
+    current_user.active_player.current_question = current_user.active_player.current_category.questions.all.shuffle[0]
 
     def true_answer
       current_user.update_attribute(:total_correct, current_user.total_correct + 1)
@@ -66,16 +65,20 @@ class PlayController < ApplicationController
       if current_user.active_player.going_for_trophy
         current_user.active_player.trophies << current_user.active_player.current_question.category.trophy
         current_user.active_player.update_attribute(:going_for_trophy, false)
-      else
+      else if current_user.active_player.challenge.nil?
         current_user.active_player.update_attribute(:meter, current_user.active_player.meter + 1)
+             end
       end
     end
 
     def false_answer
       current_user.active_player.update_attribute(:going_for_trophy, false)
+      if current_user.active_player.challenge.nil?
       current_user.active_player.update_attribute(:isActivePlayer, false)
       current_user.active_player.opponent.update_attribute(:isActivePlayer, true)
+        end
     end
+
     respond_to do |format|
       format.html
       format.js
@@ -89,12 +92,50 @@ class PlayController < ApplicationController
     current_user.active_player.update_attribute(:meter, 0)
   end
 
+  def display_full_meter_choice
+    current_user.active_player.update_attribute(:meter, 0)
+  end
+
   def get_trophy_category
     current_user.active_player.current_category = Category.find(params[:category_id])
   end
 
   def get_selected_player
     current_user.active_player = current_user.players.find(params[:player_id])
+  end
+
+  def make_new_challenge
+    challenge = Challenge.create(question_counter: 1)
+    challenge.challenger_player = current_user.active_player
+    current_user.active_player.challenge = challenge
+
+    current_user.active_player.challenge.questions << Category.find_by_title('Aquatic Animals').questions.all.shuffle[0]
+    current_user.active_player.challenge.questions << Category.find_by_title('Computer Science').questions.all.shuffle[0]
+    current_user.active_player.challenge.questions << Category.find_by_title('Music').questions.all.shuffle[0]
+    current_user.active_player.challenge.questions << Category.find_by_title('Contemporary Literature').questions.all.shuffle[0]
+    current_user.active_player.challenge.questions << Category.find_by_title('Basketball').questions.all.shuffle[0]
+    current_user.active_player.challenge.questions << Category.find_by_title('Memes').questions.all.shuffle[0]
+
+    #current_user.active_player.opponent.challenge = challenge
+    #challenge.challenged_player = current_user.active_player.opponent
+
+    current_user.active_player.current_question = current_user.active_player.challenge.questions[0]
+
+    current_user.active_player.current_category = current_user.active_player.current_question.category
+  end
+
+  def get_next_challenge_question
+    if current_user.active_player.challenge.question_counter < 6
+      current_user.active_player.current_question = current_user.active_player.challenge.questions[current_user.active_player.challenge.question_counter]
+      current_user.active_player.challenge.update_attribute(:question_counter, current_user.active_player.challenge.question_counter + 1)
+      current_user.active_player.current_category = current_user.active_player.current_question.category
+      else
+      current_user.active_player.update_attribute(:isActivePlayer, false)
+      if current_user.active_player.challenge.challenger_player == current_user.active_player
+        current_user.active_player.opponent.update_attribute(:isActivePlayer, true)
+      end
+      current_user.active_player.challenge.update_attribute(:question_counter, 0)
+    end
   end
 
   private

@@ -2,7 +2,7 @@
 
 <a id="boring" href="#">Boring</a>
 
-<a id="sumbit_question" href="#">Submit Question</a>
+<a id="submit_question" href="#">Submit Question</a>
 
 <script>
     $(function() {
@@ -17,14 +17,18 @@
         $('#submit_question').click(function() {
             $('body').load(<%= new_question_path %>);
         });
-        function ChangePage() {
+        function ChangePage()
+        {
             var meter = <%= current_user.active_player.meter %>;
             var number_of_trophies = <%= current_user.active_player.trophies.count %>;
             if (number_of_trophies == 6) {
                 alert("Your win.");
             }
-            if ((meter == 2) && '<%= current_user.active_player.current_answer %>') {
-                $('body').load('/play/display_trophy_select.html');
+            if (meter == 3) {
+                $('body').load('/play/display_full_meter_choice.html');
+            }
+            else if (<%= current_user.active_player.isActivePlayer && !current_user.active_player.challenge.nil? %>){
+                $('body').load('/play/display_questions.html');
             }
             else {
                 $('body').load('/play/display_spinner.html');

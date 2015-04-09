@@ -1,0 +1,22 @@
+
+  <h1>Go for a trophy or challenge your opponent?</h1>
+  <button onclick="ChangePageTrophy()" type="button" class="btn btn-primary">
+    Go For Trophy!</button>
+  <button onclick="ChangePageChallenge()" type="button" class="btn btn-primary">
+    Challenge!</button>
+
+  <script>
+    function ChangePageTrophy() {
+        $('body').load('/play/display_trophy_select.html');
+
+    }
+
+  function ChangePageChallenge() {
+      $.ajax({
+          url: "play/make_new_challenge",
+          type: 'PUT'
+      });
+      setTimeout($('body').load('/play/display_questions.html'), 200);
+  }
+
+</script>
