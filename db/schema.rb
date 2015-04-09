@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409054712) do
+ActiveRecord::Schema.define(version: 20150409082158) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -54,15 +54,17 @@ ActiveRecord::Schema.define(version: 20150409054712) do
   add_index "categories", ["question_id"], name: "index_categories_on_question_id"
 
   create_table "challenges", force: :cascade do |t|
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "question_counter"
-    t.integer  "player_id"
     t.integer  "trophy_id"
     t.integer  "challenger_score"
     t.integer  "challenged_score"
     t.integer  "question_id"
     t.integer  "answer_id"
+    t.integer  "challenger_player_id"
+    t.integer  "challenged_player_id"
+    t.integer  "winner_player_id"
   end
 
   create_table "players", force: :cascade do |t|
