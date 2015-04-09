@@ -2,7 +2,6 @@ class TheBigOne < ActiveRecord::Migration
   def change
     remove_column :users, :next_level_threshold
     add_column :challenges, :question_counter, :integer
-    add_column :challenges, :player_id, :integer
     add_column :players, :challenge_id, :integer
     add_column :challenges, :trophy_id, :integer
     add_column :trophies, :challenge_id, :integer
