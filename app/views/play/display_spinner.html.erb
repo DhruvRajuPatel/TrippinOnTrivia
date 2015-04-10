@@ -10,7 +10,7 @@
 <p>Meter: <%= current_user.active_player.meter%></p>
 <p>#Correct: <%= current_user.total_correct%></p>
 <p>#Correct to Next Level: <%= @until_level_up%></p>
-<p>#Is in challenge: <%= !current_user.active_player.challenge.nil?%></p>
+<p>Is in challenge: <%= !current_user.active_player.challenge.nil?%></p>
 <% if (!current_user.active_player.opponent.nil?) %>
 <p>Opponent: <%= current_user.active_player.opponent.user.email%></p>
     <% end %>
@@ -24,6 +24,9 @@
 </div>
 
 <script type ="text/javascript" charset="utf-8">
+    <% if !current_user.active_player.challenge.nil? && current_user.active_player.isActivePlayer %>
+        ChangePage;
+    <% end %>
     jQuery(document).ready(function()
     {
         $("#center").rotate({

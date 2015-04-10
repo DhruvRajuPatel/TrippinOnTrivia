@@ -1,0 +1,47 @@
+<div id="main" class="text-center">
+
+  <% if current_user.active_player.challenge.bid_trophy.nil? %>
+      <h1>Pick a trophy to bid</h1>
+      <% trophies = current_user.active_player.trophies %>
+  <% else %>
+      <h1>Pick a trophy to steal</h1>
+      <% trophies = current_user.active_player.opponent.trophies %>
+  <% end %>
+
+      <% trophies.each do |trophy| %>
+      <% if current_user.active_player.trophies.include? trophy && !current_user.active_player.challenge.bid_trophy.nil?%>
+        <% next %>
+      <% end %>
+
+      <div id="trophy">
+        <input id=<%= trophy.category.title.gsub(/\s+/, '') %> type="image" value=<%=trophy.id%> src=<%= trophy.icon_path%> >
+      </div>
+      <script type ="text/javascript" charset="utf-8">
+          $(document).ready(function() {
+              $(<%= trophy.category.title.gsub(/\s+/, '') %>).click(function() {
+                  var currentTrophy = this.value;
+                  $.ajax({
+                              url: "play/get_trophy_category",
+                              type: 'PUT',
+                              dataType: 'json',
+                              data: {'trophy_id' : currentTrophy},
+                              complete: ChangePage
+                          }
+                  )
+              })
+          });
+      </script>
+  <% end %>
+</div>
+
+<script>
+    function ChangePage() {
+        <% if current_user.active_player.challenge.challenged_trophy.nil? %>
+        $('body').load('/play/display_challenge_trophy_selection.html');
+        <% else %>
+        $('body').load('/play/display_questions.html');
+        <% end %>
+
+    }
+
+</script>

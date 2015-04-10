@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'play/display_new_game_page'
   get 'play/display_question_rating'
   get 'play/display_full_meter_choice'
+  get 'play/display_challenge_trophy_selection'
 
 
   resources :play do

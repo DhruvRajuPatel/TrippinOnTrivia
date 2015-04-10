@@ -28,6 +28,6 @@ function createSoundBite(sound){
     }
 }
 
-var spinSound=createSoundBite("/sounds/spin.mp3")
+var spinSound=createSoundBite("/sounds/spin.mp3");
 var correctSound=createSoundBite("/sounds/correct.mp3");
 var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
