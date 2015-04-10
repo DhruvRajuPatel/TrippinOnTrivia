@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1301289806">
+  <component name="DataSourceManagerImpl" format="xml" hash="1599675590">
     <data-source source="LOCAL" name="Rails TrippinOnTrivia: development" uuid="4da18fb1-3327-4610-b42f-4234ad112a38">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Tad\Documents\CS\Capstone\TrippinOnTrivia\db\development.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\Dhruv\Desktop\TrippinOnTrivia\db\development.sqlite3</jdbc-url>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/xerial-sqlite-license.txt</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/sqlite-jdbc-3.7.6.3-20110609.081603-3.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="Rails TrippinOnTrivia: test" uuid="3622c219-e87e-4f37-9072-a3fc87ebeb52">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\Dhruv\Desktop\TrippinOnTrivia\db\test.sqlite3</jdbc-url>
       <libraries />
     </data-source>
   </component>

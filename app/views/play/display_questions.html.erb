@@ -1,13 +1,5 @@
 <head>
   <script>
-
-      // Mouseover/ Click sound effect- by JavaScript Kit (www.javascriptkit.com)
-      // Visit JavaScript Kit at http://www.javascriptkit.com/ for full source code
-
-      //** Usage: Instantiate script by calling: var uniquevar=createsoundbite("soundfile1", "fallbackfile2", "fallebacksound3", etc)
-      //** Call: uniquevar.playclip() to play sound
-
-      //Initialize two sound clips with 1 fallback file each:
       var seconds = 30;
 
       function secondPassed() {
@@ -93,6 +85,8 @@
     </script>
 <% end %>
 <a id="phone_google" href="#">Phone a Google</a>
+<a id="eliminate" href="#">Elimination Station</a>
+
 <p>Going for trophy: <%= current_user.active_player.going_for_trophy%></p>
 
 <% if !current_user.active_player.challenge.nil?%>
@@ -103,9 +97,25 @@
     $(function() {
         $('#phone_google').click(function(){
             seconds = seconds + 30;
-            $('#phone_google').toggle();
+            $('#phone_google').hide();
             var win = window.open('https://www.google.com/?gws_rd=ssl#q=' + '<%= current_user.active_player.current_question.title %>', '_blank');
             win.focus();
+        });
+
+        $('#eliminate').click(function(){
+            var incorrectAnswers = [];
+            <% current_user.active_player.current_question.answers.all.shuffle.each do |answer| %>
+                if (<%= !answer.is_correct %>) {
+                    var button = document.getElementById('<%= answer.title.gsub(/\s+/, '') %>');
+                    incorrectAnswers.push(button);
+                }
+            <% end %>
+            var i;
+            console.log('Length ' + incorrectAnswers.length);
+            for (i = 0; i < incorrectAnswers.length-1; i++) {
+                $(incorrectAnswers[i]).fadeOut( 1600 );
+                //incorrectAnswers[i].style.display = 'none';
+            }
         });
     });
     function ChangePage()

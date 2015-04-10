@@ -62,5 +62,16 @@
   </div>
 </div>
 
+<script>
+    $( document ).ready(function() {
+        var sound = document.getElementById('un-mute');
+
+        sound.onclick = function () {
+            spinSound.muted = !spinSound.muted;
+            correctSound.muted = !correctSound.muted;
+            incorrectSound.muted = !incorrectSound.muted;
+        };
+    });
+</script>
 </body>
 </html>

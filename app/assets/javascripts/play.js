@@ -31,13 +31,3 @@ function createSoundBite(sound){
 var spinSound=createSoundBite("/sounds/spin.mp3");
 var correctSound=createSoundBite("/sounds/correct.mp3");
 var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
-
-$( document ).ready(function() {
-    var sound = document.getElementById('un-mute');
-
-    sound.onclick = function () {
-        spinSound.muted = !spinSound.muted;
-        correctSound.muted = !correctSound.muted;
-        incorrectSound.muted = !incorrectSound.muted;
-    };
-});
