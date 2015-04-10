@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150410033139) do
+ActiveRecord::Schema.define(version: 20150409082158) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -57,15 +57,14 @@ ActiveRecord::Schema.define(version: 20150410033139) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "question_counter"
+    t.integer  "trophy_id"
+    t.integer  "challenger_score"
+    t.integer  "challenged_score"
+    t.integer  "question_id"
+    t.integer  "answer_id"
     t.integer  "challenger_player_id"
     t.integer  "challenged_player_id"
     t.integer  "winner_player_id"
-    t.integer  "question_id"
-    t.integer  "answer_id"
-    t.integer  "player_id"
-    t.integer  "challenger_score"
-    t.integer  "challenged_score"
-    t.integer  "trophy_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -79,10 +78,10 @@ ActiveRecord::Schema.define(version: 20150410033139) do
     t.boolean  "going_for_trophy"
     t.integer  "category_id"
     t.integer  "question_id"
-    t.integer  "answer_id"
+    t.integer  "challenge_id"
     t.integer  "challenger_player_id"
     t.integer  "challenged_player_id"
-    t.integer  "challenge_id"
+    t.integer  "winner_player_id"
     t.integer  "challenge_score"
   end
 
@@ -105,9 +104,12 @@ ActiveRecord::Schema.define(version: 20150410033139) do
   create_table "trophies", force: :cascade do |t|
     t.integer  "category_id"
     t.integer  "player_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "icon_path"
+    t.integer  "challenge_id"
+    t.integer  "bid_trophy_id"
+    t.integer  "challenged_trophy_id"
   end
 
   add_index "trophies", ["category_id"], name: "index_trophies_on_category_id"
