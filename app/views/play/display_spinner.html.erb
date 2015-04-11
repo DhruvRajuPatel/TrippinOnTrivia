@@ -1,19 +1,26 @@
 <button onclick="GoBack()" type="button" class="btn btn-primary">
   BACK</button>
-<% if current_user.active_player.isActivePlayer %>
-    <h1>Spin the Wheel!</h1>
-    <% else %>
+<% if !current_user.active_player.isActivePlayer %>
     <h1>Awaiting opponent's turn</h1>
+<% elsif current_user.active_player.challenges.first.nil?%>
+    <h1>Spin the Wheel!!!</h1>
+    <img src= "/images/centerspin.png" id="center">
+    <img src= "/images/spinner.png" id="spinner">
+<% else %>
+    <h1>You have been challenged!</h1>
+    <br>
+    <button onclick="GetQuestions()" type="button" class="btn btn-primary btn-lg btn-block">
+    </button>
+    <br>
 <% end %>
-<img src= "/images/centerspin.png" id="center">
-<img src= "/images/spinner.png" id="spinner">
 <p>Meter: <%= current_user.active_player.meter%></p>
 <p>#Correct: <%= current_user.total_correct%></p>
 <p>#Correct to Next Level: <%= @until_level_up%></p>
-<p>Is in challenge: <%= !current_user.active_player.challenge.nil?%></p>
+<p>Is in challenge: <%= !current_user.active_player.challenges.first.nil?%></p>
 <% if (!current_user.active_player.opponent.nil?) %>
-<p>Opponent: <%= current_user.active_player.opponent.user.email%></p>
-    <% end %>
+    <p>Opponent: <%= current_user.active_player.opponent.user.email%></p>
+    <p>Opponent is in challenge: <%= !current_user.active_player.opponent.challenges.first.nil?%></p>
+<% end %>
 
 <div id="trophy">
   <% current_user.active_player.trophies.each do |trophy|  %>
@@ -24,9 +31,7 @@
 </div>
 
 <script type ="text/javascript" charset="utf-8">
-    <% if !current_user.active_player.challenge.nil? && current_user.active_player.isActivePlayer %>
-        ChangePage;
-    <% end %>
+
     jQuery(document).ready(function()
     {
         $("#center").rotate({
@@ -41,7 +46,6 @@
             }
         });
     });
-
     function ChangePage()
     {
         var meter = <%=current_user.active_player.meter%>;
@@ -49,7 +53,7 @@
             $('body').load('/play/display_full_meter_choice.html');
         }
         else {
-            $('body').load('/play/display_questions.html');
+            GetQuestions();
         }
     }
     function GoBack()

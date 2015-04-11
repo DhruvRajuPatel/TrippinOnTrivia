@@ -1,4 +1,5 @@
 class Challenge < ActiveRecord::Base
+  has_and_belongs_to_many :players
   has_one :challenger_player, class_name: "Player", foreign_key: "challenger_player_id"
   has_one :challenged_player, class_name: "Player", foreign_key: "challenged_player_id"
   has_one :bid_trophy, class_name: "Trophy", foreign_key: "bid_trophy_id"

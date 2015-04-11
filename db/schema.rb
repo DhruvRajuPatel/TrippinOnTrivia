@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150410083438) do
+ActiveRecord::Schema.define(version: 20150411103458) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -68,6 +68,12 @@ ActiveRecord::Schema.define(version: 20150410083438) do
     t.integer  "trophy_id"
     t.integer  "challenged_trophy_id"
     t.integer  "bid_trophy_id"
+    t.boolean  "is_first_round"
+  end
+
+  create_table "challenges_players", id: false, force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "challenge_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -89,6 +95,11 @@ ActiveRecord::Schema.define(version: 20150410083438) do
   end
 
   add_index "players", ["uid"], name: "index_players_on_uid"
+
+  create_table "players_trophies", id: false, force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "trophy_id"
+  end
 
   create_table "questions", force: :cascade do |t|
     t.string   "title"

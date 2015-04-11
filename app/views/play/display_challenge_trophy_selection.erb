@@ -1,6 +1,6 @@
 <div id="main" class="text-center">
 
-  <% if current_user.active_player.challenge.bid_trophy.nil? %>
+  <% if current_user.active_player.challenges.first.bid_trophy.nil? %>
       <h1>Pick a trophy to bid</h1>
       <% trophies = current_user.active_player.trophies %>
   <% else %>
@@ -9,8 +9,16 @@
   <% end %>
 
       <% trophies.each do |trophy| %>
-      <% if current_user.active_player.trophies.include? trophy && !current_user.active_player.challenge.bid_trophy.nil?%>
-        <% next %>
+      <% if !current_user.active_player.challenges.first.bid_trophy.nil?%>
+          <% contains = false %>
+          <% current_user.active_player.trophies.each do |player_trophy| %>
+          <% if player_trophy === trophy %>
+                  <% contains = true %>
+              <% end %>
+              <% end %>
+          <% if contains %>
+              <% next %>
+          <%end%>
       <% end %>
 
       <div id="trophy">
@@ -24,10 +32,10 @@
                               url: "play/get_trophy_category",
                               type: 'PUT',
                               dataType: 'json',
-                              data: {'trophy_id' : currentTrophy},
-                              complete: ChangePage
+                              data: {'trophy_id' : currentTrophy}
                           }
                   )
+                  setTimeout(ChangePage, 500);
               })
           });
       </script>
@@ -36,7 +44,7 @@
 
 <script>
     function ChangePage() {
-        <% if current_user.active_player.challenge.challenged_trophy.nil? %>
+        <% if current_user.active_player.challenges.first.bid_trophy.nil? %>
         $('body').load('/play/display_challenge_trophy_selection.html');
         <% else %>
         $('body').load('/play/display_questions.html');

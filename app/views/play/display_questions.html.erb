@@ -72,7 +72,7 @@
                     this.innerHTML = "Incorrect!!!";
                     correctButton.style.background = '#00BB00';
                 }
-                if (<%= current_user.active_player.isActivePlayer && !current_user.active_player.challenge.nil? %>){
+                if (<%= current_user.active_player.isActivePlayer && !current_user.active_player.challenges.first.nil? %>){
                     $.ajax({
                         url: "play/get_next_challenge_question",
                         type: 'PUT'
@@ -90,8 +90,8 @@
 
 <p>Going for trophy: <%= current_user.active_player.going_for_trophy%></p>
 
-<% if !current_user.active_player.challenge.nil?%>
-<p>Question counter: <%= current_user.active_player.challenge.question_counter%></p>
+<% if !current_user.active_player.challenges.first.nil?%>
+<p>Question counter: <%= current_user.active_player.challenges.first.question_counter%></p>
 <% end %>
 
 <script>
