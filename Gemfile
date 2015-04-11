@@ -29,6 +29,7 @@ gem 'devise'
 #External login
 gem 'omniauth-facebook'
 gem "omniauth-google-oauth2"
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
 gem 'simple_form'
 # Use ActiveModel has_secure_password

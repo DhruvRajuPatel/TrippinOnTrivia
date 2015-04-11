@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :admins
   resources :players
-
+  resources :charges
   resources :trophies
 
   get 'game/start'
