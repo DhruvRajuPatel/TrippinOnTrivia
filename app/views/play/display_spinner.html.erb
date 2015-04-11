@@ -9,7 +9,8 @@
 <% else %>
     <h1>You have been challenged!</h1>
     <br>
-    <button onclick="GetQuestions()" type="button" class="btn btn-primary btn-lg btn-block">
+    <button onclick="StartChallenge()" type="button" class="btn btn-primary btn-lg btn-block">
+      Start Challenge!
     </button>
     <br>
 <% end %>
@@ -38,7 +39,7 @@
             bind:
             {
                 click: function(){
-                    <% if current_user.active_player.isActivePlayer %>
+                    <% if current_user.active_player.isActivePlayer && current_user.active_player.challenges.first.nil?%>
                     $("#spinner").rotate({ angle:0,animateTo:<%= @rotations %>,easing: $.easing.easeInOutExpo }, setTimeout(ChangePage, 1000));
                     spinSound.playclip();
                     <% end %>
@@ -59,5 +60,19 @@
     function GoBack()
     {
         $('body').load('play/index');
+    }
+
+    function StartChallenge()
+    {
+        $.ajax({
+            url: "play/get_next_challenge_question",
+            type: 'PUT'
+        });
+        setTimeout(GetQuestions, 500);
+    }
+
+    function GetQuestions()
+    {
+        $('body').load('/play/display_questions.html');
     }
 </script>

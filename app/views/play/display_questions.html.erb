@@ -88,10 +88,9 @@
 <a id="eliminate" href="#">Elimination Station</a>
 <a id="reroll" href="#">Reroll</a>
 
-<p>Going for trophy: <%= current_user.active_player.going_for_trophy%></p>
-
 <% if !current_user.active_player.challenges.first.nil?%>
 <p>Question counter: <%= current_user.active_player.challenges.first.question_counter%></p>
+    <p>Is first turn: <%= current_user.active_player.challenges.first.is_first_round%></p>
 <% end %>
 
 <script>

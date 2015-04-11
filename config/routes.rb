@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       put 'get_selected_player'
       put 'make_new_challenge'
       put 'get_next_challenge_question'
+      put 'end_current_challenge'
     end
   end
 

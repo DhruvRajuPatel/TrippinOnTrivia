@@ -1,5 +1,6 @@
+<button onclick="GoBack()" type="button" class="btn btn-primary">
+  BACK</button>
 <div id="main" class="text-center">
-
   <% if current_user.active_player.challenges.first.bid_trophy.nil? %>
       <h1>Pick a trophy to bid</h1>
       <% trophies = current_user.active_player.trophies %>
@@ -50,6 +51,15 @@
         $('body').load('/play/display_questions.html');
         <% end %>
 
+    }
+
+    function GoBack()
+    {
+        $.ajax({
+            url: "play/end_current_challenge",
+            type: 'PUT'
+        });
+        setTimeout($('body').load('/play/display_full_meter_choice'), 500);
     }
 
 </script>
