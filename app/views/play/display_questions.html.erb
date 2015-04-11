@@ -86,6 +86,7 @@
 <% end %>
 <a id="phone_google" href="#">Phone a Google</a>
 <a id="eliminate" href="#">Elimination Station</a>
+<a id="reroll" href="#">Reroll</a>
 
 <p>Going for trophy: <%= current_user.active_player.going_for_trophy%></p>
 
@@ -95,6 +96,10 @@
 
 <script>
     $(function() {
+        $('#reroll').click(function(){
+            $('body').load('/play/display_spinner.html');
+        });
+
         $('#phone_google').click(function(){
             seconds = seconds + 30;
             $('#phone_google').hide();
@@ -104,14 +109,13 @@
 
         $('#eliminate').click(function(){
             var incorrectAnswers = [];
+            var i;
             <% current_user.active_player.current_question.answers.all.shuffle.each do |answer| %>
                 if (<%= !answer.is_correct %>) {
                     var button = document.getElementById('<%= answer.title.gsub(/\s+/, '') %>');
                     incorrectAnswers.push(button);
                 }
             <% end %>
-            var i;
-            console.log('Length ' + incorrectAnswers.length);
             for (i = 0; i < incorrectAnswers.length-1; i++) {
                 $(incorrectAnswers[i]).fadeOut( 1600 );
                 //incorrectAnswers[i].style.display = 'none';
