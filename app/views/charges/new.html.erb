@@ -1,12 +1,22 @@
-<%= form_tag charges_path do %>
-    <article>
-      <label class="amount">
-        <span>Amount: $5.00</span>
-      </label>
-    </article>
+<div class="text-center">
+  <%= form_tag charges_path do %>
+      <article>
+        <label class="amount">
+          <span>How many points would you like?</span>
+        </label>
+      </article>
 
-    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-description="A month's subscription"
-            data-amount="500"></script>
-<% end %>
+      <%= radio_button_tag(:amount, "99", {:class => "amount amount_99"}) %>
+      <%= label_tag(:amount_99, "10 points - $0.99") %><br>
+      <%= radio_button_tag(:amount, "299", {:class => "amount amount_299"}) %>
+      <%= label_tag(:amount_299, "50 points - $2.99") %><br>
+      <%= radio_button_tag(:amount, "499", {:class => "amount amount_499"}) %>
+      <%= label_tag(:amount_499, "100 points - $4.99") %><br>
+
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+              data-description="Checkout"
+              data-amount="<%= params[:amount] %>">
+      </script>
+  <% end %>
+</div>

@@ -23,6 +23,7 @@
               | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
               | Level: <%= current_user.level %>
               |  <%= link_to "Purchase", new_charge_path %>
+              | Points: <%= current_user.points %>
             </section>
             <section style="padding-top: 10px;text-align: center">
               <span data-remote="<%= edit_user_registration_path %>"

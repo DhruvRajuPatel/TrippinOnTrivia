@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411103458) do
+ActiveRecord::Schema.define(version: 20150411195155) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 20150411103458) do
     t.integer  "player_id"
     t.integer  "level"
     t.integer  "total_correct"
+    t.integer  "points",                 default: 0,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
