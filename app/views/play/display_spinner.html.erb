@@ -65,7 +65,7 @@
     function StartChallenge()
     {
         $.ajax({
-            url: "play/get_next_challenge_question",
+            url: "play/continue_challenge",
             type: 'PUT'
         });
         setTimeout(GetQuestions, 500);

@@ -74,7 +74,7 @@
                 }
                 if (<%= current_user.active_player.isActivePlayer && !current_user.active_player.challenges.first.nil? %>){
                     $.ajax({
-                        url: "play/get_next_challenge_question",
+                        url: "play/continue_challenge",
                         type: 'PUT'
                     });
                 }

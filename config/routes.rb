@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       put 'get_trophy_category'
       put 'get_selected_player'
       put 'make_new_challenge'
-      put 'get_next_challenge_question'
+      put 'continue_challenge'
       put 'end_current_challenge'
     end
   end

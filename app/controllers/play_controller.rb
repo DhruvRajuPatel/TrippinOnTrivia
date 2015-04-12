@@ -10,26 +10,40 @@ class PlayController < ApplicationController
   def display_spinner
     @until_level_up = get_current_player_level_up_threshold
     current_user.active_player.update_attribute(:going_for_trophy, false)
+    if !current_user.active_player.current_category.nil?
+      if !current_user.active_player.challenges.first.nil?
+        end_challenge_round
+      else
+        change_active_player
+      end
+      current_user.active_player.current_category = nil;
+    end
     if current_user.active_player.isActivePlayer && current_user.active_player.challenges.first.nil?
       @rotations = rand(80000...100000)
       category_number = @rotations%360
       case category_number
         when 0..53
-          random_category = Category.find_by_title('Aquatic Animals')
+          current_user.active_player.update_attribute(:meter, 3)
+          #random_category = Category.find_by_title('Aquatic Animals')
         when 54..104
-          random_category = Category.find_by_title('Memes')
+          current_user.active_player.update_attribute(:meter, 3)
+          #random_category = Category.find_by_title('Memes')
         when 105..155
-          random_category = Category.find_by_title('Basketball')
+          current_user.active_player.update_attribute(:meter, 3)
+          #random_category = Category.find_by_title('Basketball')
         when 156..206
-          random_category = Category.find_by_title('Contemporary Literature')
+          current_user.active_player.update_attribute(:meter, 3)
+          #random_category = Category.find_by_title('Contemporary Literature')
         when 207..257
-          random_category = Category.find_by_title('Music')
+          current_user.active_player.update_attribute(:meter, 3)
+          #random_category = Category.find_by_title('Music')
         when 258..308
-          random_category = Category.find_by_title('Computer Science')
+          current_user.active_player.update_attribute(:meter, 3)
+          #random_category = Category.find_by_title('Computer Science')
         when 309..359
           current_user.active_player.update_attribute(:meter, 3)
       end
-        current_user.active_player.current_category = random_category
+        #current_user.active_player.current_category = random_category
     end
   end
 
@@ -68,19 +82,27 @@ class PlayController < ApplicationController
       else
         current_user.active_player.challenges.first.update_attribute(:challenged_score, current_user.active_player.challenges.first.challenged_score + 1)
       end
+      current_user.active_player.current_category = nil;
     end
 
     def false_answer
       current_user.active_player.update_attribute(:going_for_trophy, false)
       if current_user.active_player.challenges.first.nil?
-        current_user.active_player.update_attribute(:isActivePlayer, false)
-        current_user.active_player.opponent.update_attribute(:isActivePlayer, true)
+        change_active_player
       end
+      current_user.active_player.current_category = nil;
     end
 
     respond_to do |format|
       format.html
       format.js
+    end
+  end
+
+  def change_active_player
+    current_user.active_player.update_attribute(:isActivePlayer, false)
+    if !current_user.active_player.opponent.nil?
+      current_user.active_player.opponent.update_attribute(:isActivePlayer, true)
     end
   end
 
@@ -127,31 +149,47 @@ class PlayController < ApplicationController
     current_user.active_player.current_category = current_user.active_player.current_question.category
   end
 
-  def get_next_challenge_question
+  def continue_challenge
 
     if current_user.active_player.challenges.first.question_counter < 6
-      current_user.active_player.current_question = current_user.active_player.challenges.first.questions[current_user.active_player.challenges.first.question_counter]
-      current_user.active_player.challenges.first.update_attribute(:question_counter, current_user.active_player.challenges.first.question_counter + 1)
-      current_user.active_player.current_category = current_user.active_player.current_question.category
+      get_next_challenge_question
     else
-      current_user.active_player.update_attribute(:isActivePlayer, false)
-      current_user.active_player.challenges.first.update_attribute(:question_counter, 0)
-
-      if current_user.active_player.challenges.first.is_first_round
-        current_user.active_player.opponent.update_attribute(:isActivePlayer, true)
-        current_user.active_player.challenges.first.update_attribute(:is_first_round, false)
-      else
-        if current_user.active_player.challenges.first.challenged_score > current_user.active_player.challenges.first.challenger_score
-          current_user.active_player.opponent.trophies.delete(current_user.active_player.challenges.first.bid_trophy)
-          current_user.active_player.update_attribute(:isActivePlayer, true)
-        else
-          current_user.active_player.trophies.delete(current_user.active_player.challenges.first.challenged_trophy)
-          current_user.active_player.opponent.trophies << current_user.active_player.challenges.first.challenged_trophy
-          current_user.active_player.opponent.update_attribute(:isActivePlayer, true)
-        end
-          end_current_challenge
-      end
+      end_challenge_round
     end
+  end
+
+  def get_next_challenge_question
+    current_user.active_player.current_question = current_user.active_player.challenges.first.questions[current_user.active_player.challenges.first.question_counter]
+    current_user.active_player.challenges.first.update_attribute(:question_counter, current_user.active_player.challenges.first.question_counter + 1)
+    current_user.active_player.current_category = current_user.active_player.current_question.category
+  end
+
+  def end_challenge_round
+    current_user.active_player.update_attribute(:isActivePlayer, false)
+    current_user.active_player.challenges.first.update_attribute(:question_counter, 0)
+
+    if current_user.active_player.challenges.first.is_first_round
+      current_user.active_player.opponent.update_attribute(:isActivePlayer, true)
+      current_user.active_player.challenges.first.update_attribute(:is_first_round, false)
+    else
+      if current_user.active_player.challenges.first.challenged_score > current_user.active_player.challenges.first.challenger_score
+        challenged_player_wins(current_user.active_player)
+      else
+        challenger_player_wins(current_user.active_player.opponent)
+      end
+      end_current_challenge
+    end
+  end
+
+  def challenger_player_wins(challenger_player)
+    challenger_player.opponent.trophies.delete(current_user.active_player.challenges.first.challenged_trophy)
+    challenger_player.trophies << current_user.active_player.challenges.first.challenged_trophy
+    challenger_player.update_attribute(:isActivePlayer, true)
+  end
+
+  def challenged_player_wins(challenged_player)
+    challenged_player.opponent.trophies.delete(current_user.active_player.challenges.first.bid_trophy)
+    challenged_player.update_attribute(:isActivePlayer, true)
   end
 
   def end_current_challenge
