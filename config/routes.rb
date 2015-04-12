@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   resources :charges
   resources :trophies
 
-  get 'game/start'
-  get 'game/category_selection'
   get 'play/index'
   get 'play/display_spinner'
   get 'play/display_questions'
@@ -14,7 +12,6 @@ Rails.application.routes.draw do
   get 'play/display_question_rating'
   get 'play/display_full_meter_choice'
   get 'play/display_challenge_trophy_selection'
-
 
   resources :play do
     collection do
@@ -25,6 +22,8 @@ Rails.application.routes.draw do
       put 'make_new_challenge'
       put 'continue_challenge'
       put 'end_current_challenge'
+      put 'finish_question'
+      put 'get_random_category'
     end
   end
 

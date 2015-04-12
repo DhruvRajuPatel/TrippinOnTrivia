@@ -10,41 +10,45 @@ class PlayController < ApplicationController
   def display_spinner
     @until_level_up = get_current_player_level_up_threshold
     current_user.active_player.update_attribute(:going_for_trophy, false)
-    if !current_user.active_player.current_category.nil?
-      if !current_user.active_player.challenges.first.nil?
-        end_challenge_round
-      else
-        change_active_player
-      end
-      current_user.active_player.current_category = nil;
+    detect_cheating
+  end
+
+  def get_random_category
+    rotations = params[:rotations].to_i
+    category_number = rotations%360
+
+    case category_number
+      when 0..53
+        random_category = Category.find_by_title('Aquatic Animals')
+      when 54..104
+        random_category = Category.find_by_title('Memes')
+      when 105..155
+        random_category = Category.find_by_title('Basketball')
+      when 156..206
+        random_category = Category.find_by_title('Contemporary Literature')
+      when 207..257
+        random_category = Category.find_by_title('Music')
+      when 258..308
+        random_category = Category.find_by_title('Computer Science')
+      when 309..359
+        current_user.active_player.update_attribute(:meter, 3)
     end
-    if current_user.active_player.isActivePlayer && current_user.active_player.challenges.first.nil?
-      @rotations = rand(80000...100000)
-      category_number = @rotations%360
-      case category_number
-        when 0..53
-          current_user.active_player.update_attribute(:meter, 3)
-          #random_category = Category.find_by_title('Aquatic Animals')
-        when 54..104
-          current_user.active_player.update_attribute(:meter, 3)
-          #random_category = Category.find_by_title('Memes')
-        when 105..155
-          current_user.active_player.update_attribute(:meter, 3)
-          #random_category = Category.find_by_title('Basketball')
-        when 156..206
-          current_user.active_player.update_attribute(:meter, 3)
-          #random_category = Category.find_by_title('Contemporary Literature')
-        when 207..257
-          current_user.active_player.update_attribute(:meter, 3)
-          #random_category = Category.find_by_title('Music')
-        when 258..308
-          current_user.active_player.update_attribute(:meter, 3)
-          #random_category = Category.find_by_title('Computer Science')
-        when 309..359
-          current_user.active_player.update_attribute(:meter, 3)
-      end
-        #current_user.active_player.current_category = random_category
+    current_user.active_player.current_category = random_category
+  end
+
+  def detect_cheating
+    if !current_user.active_player.current_question.nil?
+      punish_cheater
     end
+  end
+
+  def punish_cheater
+    if !current_user.active_player.challenges.first.nil?
+      end_challenge_round
+    else
+      change_active_player
+    end
+    finish_question
   end
 
   def display_new_game_page
@@ -82,7 +86,6 @@ class PlayController < ApplicationController
       else
         current_user.active_player.challenges.first.update_attribute(:challenged_score, current_user.active_player.challenges.first.challenged_score + 1)
       end
-      current_user.active_player.current_category = nil;
     end
 
     def false_answer
@@ -90,13 +93,17 @@ class PlayController < ApplicationController
       if current_user.active_player.challenges.first.nil?
         change_active_player
       end
-      current_user.active_player.current_category = nil;
     end
 
     respond_to do |format|
       format.html
       format.js
     end
+  end
+
+  def finish_question
+    current_user.active_player.current_question = nil;
+    current_user.active_player.current_category = nil;
   end
 
   def change_active_player
