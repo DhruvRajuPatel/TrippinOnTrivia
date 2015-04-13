@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_many :players, foreign_key: "uid"
   has_one :active_player, class_name: "Player", foreign_key: "active_player_id"
-  has_and_belongs_to_many :achievements
+  has_and_belongs_to_many :achievements, foreign_key: "uid"
   has_one :aquatic_counter, class_name: "CategoryCorrectCounter", foreign_key: "aquatic_counter_id"
   has_one :memes_counter, class_name: "CategoryCorrectCounter", foreign_key: "memes_counter_id"
   has_one :basketball_counter, class_name: "CategoryCorrectCounter", foreign_key: "basketball_counter_id"
@@ -72,6 +72,7 @@ class User < ActiveRecord::Base
     build_cs_counter
     memes_counter.categories << Category.all.find_by_title("Memes");
     basketball_counter.categories << Category.all.find_by_title("Basketball");
+    literature_counter.categories << Category.all.find_by_title("Contemporary Literature");
     music_counter.categories << Category.all.find_by_title("Music");
     cs_counter.categories << Category.all.find_by_title("Computer Science");
     aquatic_counter.categories << Category.all.find_by_title("Aquatic Animals");

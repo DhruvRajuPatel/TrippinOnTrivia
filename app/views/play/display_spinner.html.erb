@@ -1,5 +1,6 @@
 <button onclick="GoBack()" type="button" class="btn btn-primary">
   BACK</button>
+
 <% if !current_user.active_player.isActivePlayer %>
     <h1>Awaiting opponent's turn</h1>
     <img src= "/images/wait_centerspin.png" id="center">
@@ -17,12 +18,8 @@
     <br>
 <% end %>
 <p>Meter: <%= current_user.active_player.meter%></p>
-<p>#Correct: <%= current_user.aquatic_counter.questions_correct%></p>
-<p>#Correct to Next Level: <%= @until_level_up%></p>
-<p>Is in challenge: <%= !current_user.active_player.challenges.first.nil?%></p>
 <% if (!current_user.active_player.opponent.nil?) %>
     <p>Opponent: <%= current_user.active_player.opponent.user.email%></p>
-    <p>Opponent is in challenge: <%= !current_user.active_player.opponent.challenges.first.nil?%></p>
 <% end %>
 
 <div id="trophy">
@@ -34,6 +31,15 @@
 </div>
 
 <script type ="text/javascript" charset="utf-8">
+
+    <% if current_user.has_new_achievement %>
+    var newAchievement = "You have a new Achievement\n<%= current_user.achievements.last.title %>"
+    alert(newAchievement)
+    $.ajax({
+        url: "play/achievement_message_recieved",
+        type: 'PUT'
+    });
+    <% end %>
 
     jQuery(document).ready(function()
     {
