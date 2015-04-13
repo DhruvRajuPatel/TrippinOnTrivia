@@ -30,8 +30,18 @@
     + NEW GAME</button>
   <br/>  <br/>
 </div>
-
 <script>
+
+    <% if current_user.has_new_achievement %>
+    var newAchievement = "You have a new Achievement\n<%= current_user.achievements.last.title %>"
+    alert(newAchievement)
+    $.ajax({
+        url: "play/achievement_message_recieved",
+        type: 'PUT'
+    });
+    <% end %>
+
+
     function ChangePage()
     {
         $('body').load('play/display_new_game_page.html');

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413133737) do
+ActiveRecord::Schema.define(version: 20150413131051) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -21,22 +21,28 @@ ActiveRecord::Schema.define(version: 20150413133737) do
     t.string   "title"
   end
 
+  create_table "achievements_users", id: false, force: :cascade do |t|
+    t.integer "achievement_id"
+    t.string  "uid"
+  end
+
   create_table "admins", force: :cascade do |t|
-    t.string   "email",              default: "", null: false
-    t.string   "encrypted_password", default: "", null: false
-    t.integer  "sign_in_count",      default: 0,  null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "failed_attempts",    default: 0,  null: false
-    t.string   "unlock_token"
-    t.datetime "locked_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true
+  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
 
   create_table "answers", force: :cascade do |t|
     t.string   "title"
@@ -167,12 +173,12 @@ ActiveRecord::Schema.define(version: 20150413133737) do
   add_index "trophies", ["player_id"], name: "index_trophies_on_player_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                       default: "", null: false
-    t.string   "encrypted_password",          default: "", null: false
+    t.string   "email",                       default: "",    null: false
+    t.string   "encrypted_password",          default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",               default: 0,  null: false
+    t.integer  "sign_in_count",               default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -182,9 +188,9 @@ ActiveRecord::Schema.define(version: 20150413133737) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "player_id"
-    t.integer  "points",                      default: 0,  null: false
-    t.integer  "level",                       default: 1,  null: false
-    t.integer  "total_correct",               default: 0,  null: false
+    t.integer  "points",                      default: 0,     null: false
+    t.integer  "level",                       default: 1,     null: false
+    t.integer  "total_correct",               default: 0,     null: false
     t.string   "achievement_id"
     t.integer  "category_correct_counter_id"
     t.integer  "aquatic_counter_id"
@@ -193,6 +199,7 @@ ActiveRecord::Schema.define(version: 20150413133737) do
     t.integer  "literature_counter_id"
     t.integer  "music_counter_id"
     t.integer  "cs_counter_id"
+    t.boolean  "has_new_achievement",         default: false, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -4,20 +4,23 @@ class PlayController < ApplicationController
 
   LEVEL_UP_STATIC_THRESHOLD = 3
   LEVEL_UP_DYNAMIC_THRESHOLD = 2
+  CATEGORY_ACHIEVEMENT_THRESHOLD = 20
+  SPINNER_DEGREES = 360
+  FULL_METER_AMOUNT = 3
 
   def index
 
   end
 
   def display_spinner
-    @until_level_up = get_current_player_level_up_threshold
+
     current_user.active_player.update_attribute(:going_for_trophy, false)
     detect_cheating
   end
 
   def get_random_category
     rotations = params[:rotations].to_i
-    category_number = rotations%360
+    category_number = rotations % SPINNER_DEGREES
 
     case category_number
       when 0..53
@@ -33,7 +36,7 @@ class PlayController < ApplicationController
       when 258..308
         random_category = Category.find_by_title('Computer Science')
       when 309..359
-        current_user.active_player.update_attribute(:meter, 3)
+        current_user.active_player.update_attribute(:meter, FULL_METER_AMOUNT)
     end
     current_user.active_player.current_category = random_category
   end
@@ -80,33 +83,7 @@ class PlayController < ApplicationController
     end
 
     def true_answer
-      current_user.update_attribute(:total_correct, current_user.total_correct + 1)
-      category = current_user.active_player.current_category
-      puts "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
-
-      if category == current_user.aquatic_counter.categories.first
-        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
-      elsif category == current_user.memes_counter.categories.first
-        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
-      elsif category == current_user.basketball_counter.categories.first
-        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
-      elsif category == current_user.literature_counter.categories.first
-        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
-      elsif category == current_user.music_counter.categories.first
-        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
-      elsif category == current_user.cs_counter.categories.first
-        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
-      end
-
-      if current_user.total_correct == get_current_player_level_up_threshold
-        current_user.update_attribute(:level, current_user.level + 1)
-      end
+      update_question_statistics
 
       if current_user.active_player.going_for_trophy
         current_user.active_player.trophies << current_user.active_player.current_question.category.trophy
@@ -131,6 +108,57 @@ class PlayController < ApplicationController
       format.html
       format.js
     end
+  end
+
+  def update_question_statistics
+    current_user.update_attribute(:total_correct, current_user.total_correct + 1)
+
+    update_category_question_statistics()
+
+    if current_user.total_correct == get_current_player_level_up_threshold
+      current_user.update_attribute(:level, current_user.level + 1)
+    end
+  end
+
+  def update_category_question_statistics()
+
+    category = current_user.active_player.current_category
+
+    if category == current_user.aquatic_counter.categories.first
+      increment_counter(current_user.aquatic_counter, category)
+
+    elsif category == current_user.memes_counter.categories.first
+      increment_counter(current_user.memes_counter, category)
+
+    elsif category == current_user.basketball_counter.categories.first
+      increment_counter(current_user.basketball_counter, category)
+
+    elsif category == current_user.literature_counter.categories.first
+      increment_counter(current_user.literature_counter, category)
+
+    elsif category == current_user.music_counter.categories.first
+      increment_counter(current_user.music_counter, category)
+
+    elsif category == current_user.cs_counter.categories.first
+      increment_counter(current_user.cs_counter, category)
+    end
+  end
+
+  def increment_counter(counter, category)
+    counter.update_attribute(:questions_correct, counter.questions_correct + 1)
+    check_if_award_category_achievement(counter.questions_correct, category)
+  end
+
+  def check_if_award_category_achievement(questions_correct, category)
+    if questions_correct == CATEGORY_ACHIEVEMENT_THRESHOLD
+      current_user.achievements << category.achievement
+      current_user.update_attribute(:has_new_achievement, true)
+    end
+  end
+
+  def achievement_message_recieved
+    current_user.update_attribute(:has_new_achievement, false)
+    render nothing: true
   end
 
   def finish_question
@@ -190,7 +218,7 @@ class PlayController < ApplicationController
 
   def continue_challenge
 
-    if current_user.active_player.challenges.first.question_counter < 6
+    if current_user.active_player.challenges.first.question_counter < Category.all.length
       get_next_challenge_question
     else
       end_challenge_round
