@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411195155) do
+ActiveRecord::Schema.define(version: 20150413055801) do
+
+  create_table "achievements", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
+    t.string   "uid"
+    t.string   "title"
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -45,10 +53,11 @@ ActiveRecord::Schema.define(version: 20150411195155) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "title"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "question_id"
     t.integer  "player_id"
+    t.integer  "achievement_id"
   end
 
   add_index "categories", ["question_id"], name: "index_categories_on_question_id"
@@ -144,9 +153,10 @@ ActiveRecord::Schema.define(version: 20150411195155) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "player_id"
-    t.integer  "level"
-    t.integer  "total_correct"
     t.integer  "points",                 default: 0,  null: false
+    t.integer  "level",                  default: 1,  null: false
+    t.integer  "total_correct",          default: 0,  null: false
+    t.string   "achievement_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
