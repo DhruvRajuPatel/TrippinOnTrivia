@@ -60,6 +60,7 @@ class PlayController < ApplicationController
 
   def set_victory(player)
     player.update_attribute(:has_won, true)
+    player.user.update_attribute(:win_count, player.user.win_count + 1)
     end_game
   end
 
