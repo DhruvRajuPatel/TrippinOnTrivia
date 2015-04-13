@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="Rails TrippinOnTrivia: development" uuid="4da18fb1-3327-4610-b42f-4234ad112a38" />
+    <data-source name="Rails TrippinOnTrivia: development" uuid="4da18fb1-3327-4610-b42f-4234ad112a38">
+      <secret-storage>memory</secret-storage>
+    </data-source>
     <data-source name="Rails TrippinOnTrivia: test" uuid="3622c219-e87e-4f37-9072-a3fc87ebeb52" />
   </component>
 </project>
