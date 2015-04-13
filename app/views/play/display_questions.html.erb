@@ -32,8 +32,8 @@
 
 <h1 id="countdown" class="timer">0:30</h1>
 <h2 class="text-center">
-<%= current_user.active_player.current_category.title %>
-<br>
+  <%= current_user.active_player.current_category.title %>
+  <br>
   <small><%= current_user.active_player.current_question.title %></small>
 </h2>
 <% current_user.active_player.current_question.answers.all.shuffle.each do |answer| %>
@@ -84,22 +84,37 @@
         });
     </script>
 <% end %>
-<a id="phone_google" href="#">Phone a Google</a>
-<a id="eliminate" href="#">Elimination Station</a>
-<a id="reroll" href="#">Reroll</a>
+
+<div id="powerups">
+  <p>Power-Ups - Uses 1 point</p><br>
+  <a id="phone_google" href="#">Phone a Google</a><br>
+  <a id="eliminate" href="#">Elimination Station</a><br>
+  <a id="reroll" href="#">Reroll</a>
+</div>
 
 <% if !current_user.active_player.challenges.first.nil?%>
-<p>Question counter: <%= current_user.active_player.challenges.first.question_counter%></p>
+    <p>Question counter: <%= current_user.active_player.challenges.first.question_counter%></p>
     <p>Is first turn: <%= current_user.active_player.challenges.first.is_first_round%></p>
 <% end %>
 
 <script>
+    if (<%= current_user.points <= 0 %>) {
+        $('#powerups').hide();
+    } else {
+        $('#powerups').show();
+    }
+
     $(function() {
         $('#reroll').click(function(){
+            $('#reroll').hide();
+            <% points = current_user.points - 1 %>
+            <% current_user.update_attribute(:points, points) %>
             $('body').load('/play/display_spinner.html');
         });
 
         $('#phone_google').click(function(){
+            <% points = current_user.points - 1 %>
+            <% current_user.update_attribute(:points, points) %>
             seconds = seconds + 30;
             $('#phone_google').hide();
             var win = window.open('https://www.google.com/?gws_rd=ssl#q=' + '<%= current_user.active_player.current_question.title %>', '_blank');
@@ -107,20 +122,23 @@
         });
 
         $('#eliminate').click(function(){
+            $('#eliminate').hide();
+            <% points = current_user.points - 1 %>
+            <% current_user.update_attribute(:points, points) %>
             var incorrectAnswers = [];
             var i;
             <% current_user.active_player.current_question.answers.all.shuffle.each do |answer| %>
-                if (<%= !answer.is_correct %>) {
-                    var button = document.getElementById('<%= answer.title.gsub(/\s+/, '') %>');
-                    incorrectAnswers.push(button);
-                }
+            if (<%= !answer.is_correct %>) {
+                var button = document.getElementById('<%= answer.title.gsub(/\s+/, '') %>');
+                incorrectAnswers.push(button);
+            }
             <% end %>
             for (i = 0; i < incorrectAnswers.length-1; i++) {
                 $(incorrectAnswers[i]).fadeOut( 1600 );
-                //incorrectAnswers[i].style.display = 'none';
             }
         });
     });
+
     function ChangePage()
     {
         $('body').load('/play/display_question_rating.html');
