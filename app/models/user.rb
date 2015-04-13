@@ -70,12 +70,12 @@ class User < ActiveRecord::Base
     build_literature_counter
     build_music_counter
     build_cs_counter
-    memes_counter.categories << Category.all.find_by_title("Music");
-    basketball_counter.categories << Category.all.find_by_title("Music");
-    literature_counter.categories << Category.all.find_by_title("Music");
+    memes_counter.categories << Category.all.find_by_title("Memes");
+    basketball_counter.categories << Category.all.find_by_title("Basketball");
+    literature_counter.categories << Category.all.find_by_title("Literature");
     music_counter.categories << Category.all.find_by_title("Music");
-    cs_counter.categories << Category.all.find_by_title("Music");
-    aquatic_counter.categories << Category.all.find_by_title("Music");
+    cs_counter.categories << Category.all.find_by_title("Computer Science");
+    aquatic_counter.categories << Category.all.find_by_title("Aquatic Animals");
     true
 
   end

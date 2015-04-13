@@ -81,6 +81,7 @@ class PlayController < ApplicationController
       current_user.update_attribute(:total_correct, current_user.total_correct + 1)
       category = current_user.active_player.current_category
       puts "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+
       if category == current_user.aquatic_counter.categories.first
         puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
         current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
