@@ -20,10 +20,14 @@
         <% if user_signed_in? %>
             <section style="text-align: center">
               <strong> <%= current_user.email %></strong>
-              | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+              <% if current_user.nil? %>
+                  | <%= link_to "Logout Admin", destroy_admin_session_path, method: :delete %>
+            <% else %>
+                  | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+            <% end %>
               | Level: <%= current_user.level %>
               |  <%= link_to "Purchase", new_charge_path %>
-              | Points: <%= current_user.points %>
+                Points: <%= current_user.points %>
             </section>
             <section style="padding-top: 10px;text-align: center">
               <span data-remote="<%= edit_user_registration_path %>"

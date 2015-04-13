@@ -1,4 +1,6 @@
 class PlayController < ApplicationController
+  before_action :authenticate_user!
+
 
   LEVEL_UP_STATIC_THRESHOLD = 3
   LEVEL_UP_DYNAMIC_THRESHOLD = 2

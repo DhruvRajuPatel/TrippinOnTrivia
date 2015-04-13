@@ -24,6 +24,9 @@ music.trophy = Trophy.create(icon_path: "images/trophies/music.png")
 cs.achievement = Achievement.create(title: "Yoder")
 memes.achievement = Achievement.create(title: "Never gonna give you up")
 aqua.achievement = Achievement.create(title: "Smells fishy")
+basketball.achievement = Achievement.create(title: "Basketball achievement")
+lit.achievement = Achievement.create(title: "Literature achievement")
+music.achievement = Achievement.create(title: "Music achievement")
 Achievement.create(title: "Our friendship is over!")
 Achievement.create(title: "You’re a Thief and a Scoundrel and a Scurvy, Cowardly Knave!")
 
@@ -99,3 +102,5 @@ music_question2.answers.create(title: "Keith Whitley", is_correct: false)
 music_question2.answers.create(title: "Bob Dylan", is_correct: false)
 music_question2.answers.create(title: "Shooter Jennings", is_correct: false)
 
+# Admins
+Admin.create(:email => 'admin@gmail.com', :password => 'admin')

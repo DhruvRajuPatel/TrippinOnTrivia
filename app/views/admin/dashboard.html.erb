@@ -1,0 +1,8 @@
+    <h1>Admin Dashboard</h1>
+    <!--Display these fields if a admin is logged in.-->
+    <% for user in @users %>
+        <%= user.email %>
+        <%= link_to "Remove User", admin_destroy_user_path(user), method: :delete %>
+        <br>
+    <% end %>
+
