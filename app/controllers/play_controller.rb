@@ -93,7 +93,7 @@ class PlayController < ApplicationController
   def detect_unused_challenge
     if !current_user.active_player.challenges.first.nil? && current_user.active_player.challenges.first.is_first_round
       end_current_challenge
-    end
+   end
   end
 
   def display_new_game_page
