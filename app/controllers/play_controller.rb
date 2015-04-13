@@ -75,7 +75,7 @@ class PlayController < ApplicationController
 
   def detect_cheating
     if current_user.active_player.current_question.nil?
-      detect_if_bailed_on_unused_challenge
+      detect_unused_challenge
     else
       punish_cheater
     end
@@ -90,7 +90,7 @@ class PlayController < ApplicationController
     finish_question
   end
 
-  def detect_if_bailed_on_unused_challenge
+  def detect_unused_challenge
     if !current_user.active_player.challenges.first.nil? && current_user.active_player.challenges.first.is_first_round
       end_current_challenge
     end
@@ -100,7 +100,7 @@ class PlayController < ApplicationController
     current_user.active_player = current_user.players.create(meter: 0, isActivePlayer: true)
 
     Player.all.each do |player|
-      if player.user != current_user && player.opponent.nil? && !player.isActivePlayer
+      if player.user != current_user && player.opponent.nil? && !player.isActivePlayer && !player.is_inactive
         current_user.active_player.opponent = player
         player.opponent = current_user.active_player
         break
@@ -145,43 +145,45 @@ class PlayController < ApplicationController
   def update_question_statistics
     current_user.update_attribute(:total_correct, current_user.total_correct + 1)
 
-    update_category_question_statistics
+    update_category_statistics
 
     if current_user.total_correct == get_current_player_level_up_threshold
       current_user.update_attribute(:level, current_user.level + 1)
     end
   end
 
-  def update_category_question_statistics
+  def update_category_statistics
 
     category = current_user.active_player.current_category
 
-    if category == current_user.aquatic_counter.categories.first
-      increment_counter(current_user.aquatic_counter, category)
+    case category
+      when current_user.aquatic_counter.categories.first
+        increment_counter(current_user.aquatic_counter, category)
 
-    elsif category == current_user.memes_counter.categories.first
-      increment_counter(current_user.memes_counter, category)
+      when current_user.memes_counter.categories.first
+        increment_counter(current_user.memes_counter, category)
 
-    elsif category == current_user.basketball_counter.categories.first
-      increment_counter(current_user.basketball_counter, category)
+      when current_user.basketball_counter.categories.first
+        increment_counter(current_user.basketball_counter, category)
 
-    elsif category == current_user.literature_counter.categories.first
-      increment_counter(current_user.literature_counter, category)
+      when current_user.literature_counter.categories.first
+        increment_counter(current_user.literature_counter, category)
 
-    elsif category == current_user.music_counter.categories.first
-      increment_counter(current_user.music_counter, category)
+      when current_user.music_counter.categories.first
+        increment_counter(current_user.music_counter, category)
 
-    elsif category == current_user.cs_counter.categories.first
-      increment_counter(current_user.cs_counter, category)
+      when current_user.cs_counter.categories.first
+        increment_counter(current_user.cs_counter, category)
+      else
     end
   end
 
   def increment_counter(counter, category)
     counter.update_attribute(:questions_correct, counter.questions_correct + 1)
-    check_if_award_category_achievement(counter.questions_correct, category)
+    check_category_achievement(counter.questions_correct, category)
   end
 
-  def check_if_award_category_achievement(questions_correct, category)
+  def check_category_achievement(questions_correct, category)
     if questions_correct == CATEGORY_ACHIEVEMENT_THRESHOLD
       current_user.achievements << category.achievement
       current_user.update_attribute(:has_new_achievement, true)

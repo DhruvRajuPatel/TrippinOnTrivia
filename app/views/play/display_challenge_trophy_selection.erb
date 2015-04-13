@@ -11,9 +11,9 @@
            else
       trophies = {}
        end
-   end %>
+   end
 
-      <% trophies.each do |trophy|
+       trophies.each do |trophy|
        if !current_user.active_player.challenges.first.bid_trophy.nil?
            contains = false
           current_user.active_player.trophies.each do |player_trophy|
