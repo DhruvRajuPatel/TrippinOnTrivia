@@ -3,24 +3,28 @@
 <div id="main" class="text-center">
   <% if current_user.active_player.challenges.first.bid_trophy.nil? %>
       <h1>Pick a trophy to bid</h1>
-      <% trophies = current_user.active_player.trophies %>
-  <% else %>
+      <% trophies = current_user.active_player.trophies
+   else %>
       <h1>Pick a trophy to steal</h1>
-      <% trophies = current_user.active_player.opponent.trophies %>
-  <% end %>
+      <% if !current_user.active_player.opponent.nil?
+       trophies = current_user.active_player.opponent.trophies
+           else
+      trophies = {}
+       end
+   end %>
 
-      <% trophies.each do |trophy| %>
-      <% if !current_user.active_player.challenges.first.bid_trophy.nil?%>
-          <% contains = false %>
-          <% current_user.active_player.trophies.each do |player_trophy| %>
-          <% if player_trophy === trophy %>
-                  <% contains = true %>
-              <% end %>
-              <% end %>
-          <% if contains %>
-              <% next %>
-          <%end%>
-      <% end %>
+      <% trophies.each do |trophy|
+       if !current_user.active_player.challenges.first.bid_trophy.nil?
+           contains = false
+          current_user.active_player.trophies.each do |player_trophy|
+           if player_trophy === trophy
+                   contains = true
+               end
+               end
+           if contains
+               next
+          end
+       end %>
 
       <div id="trophy">
         <input id=<%= trophy.category.title.gsub(/\s+/, '') %> type="image" value=<%=trophy.id%> src=<%= trophy.icon_path%> >

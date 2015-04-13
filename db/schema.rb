@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413091315) do
+ActiveRecord::Schema.define(version: 20150413093956) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -74,11 +74,17 @@ ActiveRecord::Schema.define(version: 20150413091315) do
   end
 
   create_table "category_correct_counters", force: :cascade do |t|
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "uid"
     t.integer  "category_id"
-    t.integer  "questions_correct", default: 0, null: false
+    t.integer  "questions_correct",     default: 0, null: false
+    t.integer  "aquatic_counter_id"
+    t.integer  "memes_counter_id"
+    t.integer  "basketball_counter_id"
+    t.integer  "literature_counter_id"
+    t.integer  "music_counter_id"
+    t.integer  "cs_counter_id"
   end
 
   create_table "challenges", force: :cascade do |t|
@@ -182,6 +188,12 @@ ActiveRecord::Schema.define(version: 20150413091315) do
     t.integer  "total_correct",               default: 0,  null: false
     t.string   "achievement_id"
     t.integer  "category_correct_counter_id"
+    t.integer  "aquatic_counter_id"
+    t.integer  "memes_counter_id"
+    t.integer  "basketball_counter_id"
+    t.integer  "literature_counter_id"
+    t.integer  "music_counter_id"
+    t.integer  "cs_counter_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

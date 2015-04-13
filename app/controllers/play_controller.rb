@@ -4,10 +4,7 @@ class PlayController < ApplicationController
   LEVEL_UP_DYNAMIC_THRESHOLD = 2
 
   def index
-    cat = Category.find_by_title("Music")
-    count = CategoryCorrectCounter.create
-    cat.category_correct_counters << count
-    current_user.category_correct_counters << count
+
   end
 
   def display_spinner
@@ -42,6 +39,8 @@ class PlayController < ApplicationController
   def detect_cheating
     if !current_user.active_player.current_question.nil?
       punish_cheater
+    else
+      detect_if_bailed_on_unused_challenge
     end
   end
 
@@ -52,6 +51,12 @@ class PlayController < ApplicationController
       change_active_player
     end
     finish_question
+  end
+
+  def detect_if_bailed_on_unused_challenge
+    if !current_user.active_player.challenges.first.nil? && current_user.active_player.challenges.first.is_first_round
+      end_current_challenge
+    end
   end
 
   def display_new_game_page
@@ -74,6 +79,27 @@ class PlayController < ApplicationController
 
     def true_answer
       current_user.update_attribute(:total_correct, current_user.total_correct + 1)
+      category = current_user.active_player.current_category
+      puts "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+      if category == current_user.aquatic_counter.categories.first
+        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
+      elsif category == current_user.memes_counter.categories.first
+        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
+      elsif category == current_user.basketball_counter.categories.first
+        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
+      elsif category == current_user.literature_counter.categories.first
+        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
+      elsif category == current_user.music_counter.categories.first
+        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
+      elsif category == current_user.cs_counter.categories.first
+        puts "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        current_user.aquatic_count.update_attribute(:questions_correct, current_user.aquatic_count.questions_correct + 1)
+      end
 
       if current_user.total_correct == get_current_player_level_up_threshold
         current_user.update_attribute(:level, current_user.level + 1)
@@ -204,7 +230,10 @@ class PlayController < ApplicationController
 
   def end_current_challenge
     current_user.active_player.challenges.delete(current_user.active_player.challenges.first)
-    current_user.active_player.opponent.challenges.delete(current_user.active_player.opponent.challenges.first)
+
+    if !current_user.active_player.opponent.nil?
+      current_user.active_player.opponent.challenges.delete(current_user.active_player.opponent.challenges.first)
+    end
   end
 
   private

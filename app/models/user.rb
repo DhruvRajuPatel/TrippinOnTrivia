@@ -1,8 +1,13 @@
 class User < ActiveRecord::Base
   has_many :players, foreign_key: "uid"
   has_one :active_player, class_name: "Player", foreign_key: "active_player_id"
-  has_and_belongs_to_many :achievements, foreign_key: "uid"
-  has_many :category_correct_counters, foreign_key: "uid"
+  has_and_belongs_to_many :achievements
+  has_one :aquatic_counter, class_name: "CategoryCorrectCounter", foreign_key: "aquatic_counter_id"
+  has_one :memes_counter, class_name: "CategoryCorrectCounter", foreign_key: "memes_counter_id"
+  has_one :basketball_counter, class_name: "CategoryCorrectCounter", foreign_key: "basketball_counter_id"
+  has_one :literature_counter, class_name: "CategoryCorrectCounter", foreign_key: "literature_counter_id"
+  has_one :music_counter, class_name: "CategoryCorrectCounter", foreign_key: "music_counter_id"
+  has_one :cs_counter, class_name: "CategoryCorrectCounter", foreign_key: "cs_counter_id"
   before_create :build_counters
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -59,7 +64,18 @@ class User < ActiveRecord::Base
 
   def build_counters
 
-
+    build_aquatic_counter
+    build_basketball_counter
+    build_memes_counter
+    build_literature_counter
+    build_music_counter
+    build_cs_counter
+    memes_counter.categories << Category.all.find_by_title("Music");
+    basketball_counter.categories << Category.all.find_by_title("Music");
+    literature_counter.categories << Category.all.find_by_title("Music");
+    music_counter.categories << Category.all.find_by_title("Music");
+    cs_counter.categories << Category.all.find_by_title("Music");
+    aquatic_counter.categories << Category.all.find_by_title("Music");
     true
 
   end
