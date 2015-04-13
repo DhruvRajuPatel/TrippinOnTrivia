@@ -72,7 +72,6 @@ class User < ActiveRecord::Base
     build_cs_counter
     memes_counter.categories << Category.all.find_by_title("Memes");
     basketball_counter.categories << Category.all.find_by_title("Basketball");
-    literature_counter.categories << Category.all.find_by_title("Literature");
     music_counter.categories << Category.all.find_by_title("Music");
     cs_counter.categories << Category.all.find_by_title("Computer Science");
     aquatic_counter.categories << Category.all.find_by_title("Aquatic Animals");
