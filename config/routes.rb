@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       put 'finish_question'
       put 'get_random_category'
       put 'achievement_message_recieved'
+      put 'resign'
     end
   end
 

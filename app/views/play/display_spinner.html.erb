@@ -1,11 +1,17 @@
 <button onclick="GoBack()" type="button" class="btn btn-primary">
   BACK</button>
 
-<% if !current_user.active_player.isActivePlayer %>
+<% if !current_user.active_player.isActivePlayer
+     if !current_user.active_player.is_inactive %>
     <h1>Awaiting opponent's turn</h1>
     <img src= "/images/wait_centerspin.png" id="center">
     <img src= "/images/spinner.png" id="spinner">
-<% elsif current_user.active_player.challenges.first.nil?%>
+        <% elsif current_user.active_player.has_won %>
+            <h1>You Won!!!</h1>
+        <% else %>
+            <h1>You Lost...</h1>
+        <% end
+ elsif current_user.active_player.challenges.first.nil?%>
     <h1>Spin the Wheel!!!</h1>
     <img src= "/images/centerspin.png" id="center">
     <img src= "/images/spinner.png" id="spinner">
@@ -29,6 +35,8 @@
 
   <% end %>
 </div>
+<button onclick="Resign()" type="button" class="btn btn-primary">
+  RESIGN</button>
 
 <script type ="text/javascript" charset="utf-8">
 
@@ -90,5 +98,14 @@
     function GetQuestions()
     {
         $('body').load('/play/display_questions.html');
+    }
+
+    function Resign()
+    {
+        $.ajax({
+            url: "play/resign",
+            type: 'PUT'
+        });
+        setTimeout($('body').load('/play/display_spinner.html'), 1000);
     }
 </script>

@@ -14,6 +14,7 @@ class PlayController < ApplicationController
 
     current_user.active_player.update_attribute(:going_for_trophy, false)
     detect_cheating
+    check_win
   end
 
   def get_random_category
@@ -35,23 +36,53 @@ class PlayController < ApplicationController
         random_category = Category.find_by_title('Computer Science')
       when 309..359
         current_user.active_player.update_attribute(:meter, FULL_METER_AMOUNT)
+      else
+        random_category = Category.all.shuffle.first
     end
     current_user.active_player.current_category = random_category
   end
 
-  def detect_cheating
-    if !current_user.active_player.current_question.nil?
-      punish_cheater
+  def check_win
+    if current_user.active_player.trophies.count == 6
+      set_victory(current_user.active_player)
+    end
+  end
+
+  def resign
+    if current_user.active_player.opponent.nil?
+      end_game
     else
+      set_victory(current_user.active_player.opponent)
+    end
+  end
+
+  def set_victory(player)
+    player.update_attribute(:has_won, true)
+    end_game
+  end
+
+  def end_game
+    current_user.active_player.update_attribute(:is_inactive, true)
+    current_user.active_player.update_attribute(:isActivePlayer, false)
+    if !current_user.active_player.opponent.nil?
+      current_user.active_player.opponent.update_attribute(:is_inactive, true)
+      current_user.active_player.opponent.update_attribute(:isActivePlayer, false)
+    end
+  end
+
+  def detect_cheating
+    if current_user.active_player.current_question.nil?
       detect_if_bailed_on_unused_challenge
+    else
+      punish_cheater
     end
   end
 
   def punish_cheater
-    if !current_user.active_player.challenges.first.nil?
-      end_challenge_round
-    else
+    if current_user.active_player.challenges.first.nil?
       change_active_player
+    else
+      end_challenge_round
     end
     finish_question
   end
@@ -111,14 +142,14 @@ class PlayController < ApplicationController
   def update_question_statistics
     current_user.update_attribute(:total_correct, current_user.total_correct + 1)
 
-    update_category_question_statistics()
+    update_category_question_statistics
 
     if current_user.total_correct == get_current_player_level_up_threshold
       current_user.update_attribute(:level, current_user.level + 1)
     end
   end
 
-  def update_category_question_statistics()
+  def update_category_question_statistics
 
     category = current_user.active_player.current_category
 

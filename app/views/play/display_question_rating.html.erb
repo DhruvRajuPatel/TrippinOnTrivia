@@ -33,10 +33,7 @@
         function ChangePage()
         {
             var meter = <%= current_user.active_player.meter %>;
-            var number_of_trophies = <%= current_user.active_player.trophies.count %>;
-            if (number_of_trophies == 6) {
-                alert("Your win.");
-            }
+
             if (meter == 3) {
                 $('body').load('/play/display_full_meter_choice.html');
             }

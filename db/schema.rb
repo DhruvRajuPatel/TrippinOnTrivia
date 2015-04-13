@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413131051) do
+ActiveRecord::Schema.define(version: 20150413181432) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -124,8 +124,8 @@ ActiveRecord::Schema.define(version: 20150413131051) do
     t.integer  "meter"
     t.boolean  "isActivePlayer"
     t.integer  "player_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "uid"
     t.integer  "active_player_id"
     t.boolean  "going_for_trophy"
@@ -136,6 +136,8 @@ ActiveRecord::Schema.define(version: 20150413131051) do
     t.integer  "challenged_player_id"
     t.integer  "challenge_id"
     t.integer  "challenge_score"
+    t.boolean  "has_won",              default: false
+    t.boolean  "is_inactive",          default: false
   end
 
   add_index "players", ["uid"], name: "index_players_on_uid"
