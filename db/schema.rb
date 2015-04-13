@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413055801) do
+ActiveRecord::Schema.define(version: 20150413091315) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -51,16 +51,35 @@ ActiveRecord::Schema.define(version: 20150413055801) do
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id"
 
+  create_table "categoies_category_correct_counters", id: false, force: :cascade do |t|
+    t.integer "category_id"
+    t.integer "category_correct_counter_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string   "title"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "question_id"
     t.integer  "player_id"
     t.integer  "achievement_id"
+    t.integer  "category_correct_counter_id"
   end
 
   add_index "categories", ["question_id"], name: "index_categories_on_question_id"
+
+  create_table "categories_category_correct_counters", id: false, force: :cascade do |t|
+    t.integer "category_id"
+    t.integer "category_correct_counter_id"
+  end
+
+  create_table "category_correct_counters", force: :cascade do |t|
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "uid"
+    t.integer  "category_id"
+    t.integer  "questions_correct", default: 0, null: false
+  end
 
   create_table "challenges", force: :cascade do |t|
     t.datetime "created_at",           null: false
@@ -78,6 +97,11 @@ ActiveRecord::Schema.define(version: 20150413055801) do
     t.integer  "challenged_trophy_id"
     t.integer  "bid_trophy_id"
     t.boolean  "is_first_round"
+  end
+
+  create_table "challenges_player", id: false, force: :cascade do |t|
+    t.integer "challenge_id"
+    t.integer "player_id"
   end
 
   create_table "challenges_players", id: false, force: :cascade do |t|
@@ -138,12 +162,12 @@ ActiveRecord::Schema.define(version: 20150413055801) do
   add_index "trophies", ["player_id"], name: "index_trophies_on_player_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                       default: "", null: false
+    t.string   "encrypted_password",          default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",               default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -153,10 +177,11 @@ ActiveRecord::Schema.define(version: 20150413055801) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "player_id"
-    t.integer  "points",                 default: 0,  null: false
-    t.integer  "level",                  default: 1,  null: false
-    t.integer  "total_correct",          default: 0,  null: false
+    t.integer  "points",                      default: 0,  null: false
+    t.integer  "level",                       default: 1,  null: false
+    t.integer  "total_correct",               default: 0,  null: false
     t.string   "achievement_id"
+    t.integer  "category_correct_counter_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

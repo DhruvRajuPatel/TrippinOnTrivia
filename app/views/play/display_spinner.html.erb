@@ -17,7 +17,6 @@
     <br>
 <% end %>
 <p>Meter: <%= current_user.active_player.meter%></p>
-<p>#Correct: <%= current_user.total_correct%></p>
 <p>#Correct to Next Level: <%= @until_level_up%></p>
 <p>Is in challenge: <%= !current_user.active_player.challenges.first.nil?%></p>
 <% if (!current_user.active_player.opponent.nil?) %>

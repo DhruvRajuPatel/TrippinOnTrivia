@@ -4,7 +4,10 @@ class PlayController < ApplicationController
   LEVEL_UP_DYNAMIC_THRESHOLD = 2
 
   def index
-
+    cat = Category.find_by_title("Music")
+    count = CategoryCorrectCounter.create
+    cat.category_correct_counters << count
+    current_user.category_correct_counters << count
   end
 
   def display_spinner

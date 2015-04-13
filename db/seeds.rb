@@ -21,6 +21,12 @@ basketball.trophy = Trophy.create(icon_path: "images/trophies/basketball.png")
 lit.trophy = Trophy.create(icon_path: "images/trophies/contemporary_literature.png")
 music.trophy = Trophy.create(icon_path: "images/trophies/music.png")
 
+cs.achievement = Achievement.create(title: "Yoder")
+memes.achievement = Achievement.create(title: "Never gonna give you up")
+aqua.achievement = Achievement.create(title: "Smells fishy")
+Achievement.create(title: "Our friendship is over!")
+Achievement.create(title: "You’re a Thief and a Scoundrel and a Scurvy, Cowardly Knave!")
+
 basketball_question1 = basketball.questions.create(title: "What team won the very first NBA game?", rating: 1)
 basketball_question2 = basketball.questions.create(title: "What NBA player scored 100 points on 3/2/62?", rating: 1)
 

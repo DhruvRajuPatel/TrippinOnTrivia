@@ -1,12 +1,15 @@
 class User < ActiveRecord::Base
   has_many :players, foreign_key: "uid"
   has_one :active_player, class_name: "Player", foreign_key: "active_player_id"
-  has_and_belongs_to_many :achievements
+  has_and_belongs_to_many :achievements, foreign_key: "uid"
+  has_many :category_correct_counters, foreign_key: "uid"
+  before_create :build_counters
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
+
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -51,4 +54,14 @@ class User < ActiveRecord::Base
       end
     end
   end
+
+  private
+
+  def build_counters
+
+
+    true
+
+  end
+
 end
