@@ -4,7 +4,8 @@ class AdminController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy!
+    @user = User.find(params[:id])
+    @user.destroy!
 
     if @user.destroy
       redirect_to admin_dashboard_path, notice: 'User deleted.'
