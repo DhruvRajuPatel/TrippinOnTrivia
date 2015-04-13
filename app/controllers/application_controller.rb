@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     if resource.is_a?(Admin)
       '/admin/dashboard'
     else
-      '/play/index'
+      '/'
     end
   end
 end

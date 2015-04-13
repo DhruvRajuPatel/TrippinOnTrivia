@@ -56,11 +56,6 @@ ActiveRecord::Schema.define(version: 20150413191015) do
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id"
 
-  create_table "categoies_category_correct_counters", id: false, force: :cascade do |t|
-    t.integer "category_id"
-    t.integer "category_correct_counter_id"
-  end
-
   create_table "categories", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at",                  null: false
@@ -113,11 +108,6 @@ ActiveRecord::Schema.define(version: 20150413191015) do
   create_table "challenges_player", id: false, force: :cascade do |t|
     t.integer "challenge_id"
     t.integer "player_id"
-  end
-
-  create_table "challenges_players", id: false, force: :cascade do |t|
-    t.integer "player_id"
-    t.integer "challenge_id"
   end
 
   create_table "players", force: :cascade do |t|
