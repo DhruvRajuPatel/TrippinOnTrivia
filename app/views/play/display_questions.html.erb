@@ -39,7 +39,7 @@
 <br>
 <% current_user.active_player.current_question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
-      <button id="<%= answer.title.gsub(/\s+/, '') %>"
+      <button style="background-color: #2541c3" id="<%= answer.title.gsub(/\s+/, '') %>"
               type="button"
               name=<%= answer.title %>
                       value=<%= answer.is_correct %>
