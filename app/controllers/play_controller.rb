@@ -114,12 +114,8 @@ class PlayController < ApplicationController
   end
 
   def toggle_mute
-    puts 'Before'
-    puts @muted
-    @muted = !current_user.muted
-    current_user.update_attribute(:muted,@muted)
-    puts 'After'
-    puts @muted
+    muted = !current_user.muted
+    current_user.update_attribute(:muted,muted)
     render :nothing => true
   end
 

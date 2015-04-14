@@ -58,7 +58,9 @@
                         url: "play/true_answer",
                         type: 'PUT'
                     });
-                    correctSound.playclip();
+                    <% if !current_user.muted %>
+                        correctSound.playclip();
+                    <% end %>
                     this.style.background = '#00BB00';
                     this.innerHTML = "Correct!!!";
                 }
@@ -67,7 +69,9 @@
                         url: "play/false_answer",
                         type: 'PUT'
                     });
-                    incorrectSound.playclip();
+                    <% if !current_user.muted %>
+                        incorrectSound.playclip();
+                    <% end %>
                     this.style.background = '#FF0000';
                     this.innerHTML = "Incorrect!!!";
                     correctButton.style.background = '#00BB00';
