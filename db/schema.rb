@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150414045101) do
+ActiveRecord::Schema.define(version: 20150414070112) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -104,6 +104,13 @@ ActiveRecord::Schema.define(version: 20150414045101) do
   create_table "challenges_players", id: false, force: :cascade do |t|
     t.integer "challenge_id"
     t.integer "player_id"
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "players", force: :cascade do |t|

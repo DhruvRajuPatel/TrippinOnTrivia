@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   has_one :literature_counter, class_name: "CategoryCorrectCounter", foreign_key: "literature_counter_id"
   has_one :music_counter, class_name: "CategoryCorrectCounter", foreign_key: "music_counter_id"
   has_one :cs_counter, class_name: "CategoryCorrectCounter", foreign_key: "cs_counter_id"
+  has_many :friendships
+  has_many :friends, :through => :friendships
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  has_many :inverse_friends, :through => :inverse_friendships, :source => :user
   before_create :build_counters
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
