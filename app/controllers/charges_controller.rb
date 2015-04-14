@@ -5,9 +5,6 @@ class ChargesController < ApplicationController
   def create
     # Amount in cents
     @amount = params[:amount]
-    puts 'Printing amount: '
-    puts @amount
-    puts 'before switch'
     case @amount
       when '99'
         points = current_user.points + 10
@@ -22,10 +19,6 @@ class ChargesController < ApplicationController
         puts 'Error on switch amount'
     end
 
-    puts '================'
-    puts @amount
-    puts current_user.points
-    puts '================'
     customer = Stripe::Customer.create(
         :email => current_user.email,
         :card  => params[:stripeToken]
