@@ -39,14 +39,14 @@
 </div>
 
 <script>
-  function playFriend(id) {
-      $.ajax({
-          url: "play/play_friend",
-          type: 'PUT',
-          data: {id: id}
-      });
-      setTimeout($('body').load('play/display_spinner.html'), 500);
-  }
+    function playFriend(id) {
+        $.ajax({
+            url: "play/play_friend",
+            type: 'PUT',
+            data: {id: id}
+        });
+        setTimeout($('body').load('play/display_spinner.html'), 500);
+    }
       function PlayNow()
     {
         $('body').load('play/display_spinner.html');

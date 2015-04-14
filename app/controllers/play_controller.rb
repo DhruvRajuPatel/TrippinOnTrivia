@@ -97,6 +97,23 @@ class PlayController < ApplicationController
     end
   end
 
+  def play_friend
+    @user = User.find(params[:id])
+    current_user.active_player = current_user.players.create(meter: 0, isActivePlayer: true)
+    @user.players.all.each do |player|
+      if player.user != current_user && player.opponent.nil? && !player.isActivePlayer && !player.is_inactive
+        current_user.active_player.opponent = player
+        player.opponent = current_user.active_player
+        break
+      end
+    end
+    if current_user.active_player.opponent.nil?
+      new_player = @user.players.create(isActivePlayer: false, meter: 0)
+      current_user.active_player.opponent = new_player
+      new_player.opponent = current_user.active_player
+    end
+  end
+
   def display_new_game_page
     @users = User.all
     current_user.active_player = current_user.players.create(meter: 0, isActivePlayer: true)
