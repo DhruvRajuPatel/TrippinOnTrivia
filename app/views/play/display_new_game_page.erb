@@ -30,7 +30,8 @@
           <% for friendship in current_user.friendships %>
               <li>
                 <%=h friendship.friend.email %>
-                (<%= link_to "Select", friendship, :method => :delete %>)
+                <a id="friends" onclick="playFriend(<%= friendship.friend.id %>)">Select</a> <br>
+                <%= link_to "Select", { :controller => :play, :action => :display_new_game_page, :id => friendship.friend.id } %>
               </li>
           <% end %>
         </ul>
@@ -39,7 +40,16 @@
 </div>
 
 <script>
-    function PlayNow()
+  function playFriend(id) {
+      console.log('Id: '+ id);
+      $.ajax({
+          url: "play/play_friend",
+          type: 'PUT',
+          data: {id: id}
+      });
+      $('body').load('play/display_spinner.html');
+  }
+      function PlayNow()
     {
         $('body').load('play/display_spinner.html');
     }
