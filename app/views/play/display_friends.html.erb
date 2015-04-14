@@ -1,17 +1,18 @@
 <h2>All Users</h2>
 <ul>
   <% for user in @users %>
-      <% if !current_user.friendships.nil? %>
-<% if current_user.friendships.find(user.id) %>
-          <li>
-            <%=h user.email %> - (<%= link_to "remove",:method => :delete %>)
-          </li>
-      <% else %>
+      <% if current_user.friendships.count > 0 %>
+          <% if current_user.friendships.find(user.id) %>
+              <li>
+                <%=h user.email %> - (<%= link_to "remove",:method => :delete %>)
+              </li>
+          <% end %>
+      <% end %>
+      <% if user.id != current_user.id %>
           <li>
             <%=h user.email %>
             - <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
           </li>
       <% end %>
-  <% end %>
-  <% end %>
+      <% end %>
 </ul>
