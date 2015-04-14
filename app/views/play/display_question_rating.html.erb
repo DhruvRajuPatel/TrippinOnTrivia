@@ -17,11 +17,15 @@
 <script>
     $(function() {
         $('#fun').click(function() {
-            <%= current_user.active_player.current_question.increment!(:rating) %>
+            <%= if !current_user.active_player.current_question.nil?
+                current_user.active_player.current_question.increment!(:rating)
+            end%>
             ChangePage()
         });
         $('#boring').click(function() {
-            <%= current_user.active_player.current_question.decrement!(:rating) %>
+            <%= if !current_user.active_player.current_question.nil?
+                current_user.active_player.current_question.decrement!(:rating)
+            end%>
             ChangePage()
         });
         $('#submit_question').click(function() {

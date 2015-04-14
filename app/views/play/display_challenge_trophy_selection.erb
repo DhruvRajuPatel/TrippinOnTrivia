@@ -59,11 +59,7 @@
 
     function GoBack()
     {
-        $.ajax({
-            url: "play/end_current_challenge",
-            type: 'PUT'
-        });
-        setTimeout($('body').load('/play/display_full_meter_choice'), 500);
+        $('body').load('/play/display_full_meter_choice');
     }
 
 </script>
