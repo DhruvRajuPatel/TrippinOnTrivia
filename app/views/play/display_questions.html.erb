@@ -97,11 +97,6 @@
   <!--<a id="reroll" href="#">Reroll</a>-->
 </div>
 
-<% if !current_user.active_player.challenges.first.nil?%>
-    <p>Question counter: <%= current_user.active_player.challenges.first.question_counter%></p>
-    <p>Is first turn: <%= current_user.active_player.challenges.first.is_first_round%></p>
-<% end %>
-
 <script>
     if (<%= current_user.points <= 0 %>) {
         $('#powerups').hide();

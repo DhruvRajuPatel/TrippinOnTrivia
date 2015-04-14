@@ -236,6 +236,9 @@ class PlayController < ApplicationController
 
   def display_full_meter_choice
     current_user.active_player.update_attribute(:meter, 0)
+    if !current_user.active_player.opponent.nil?
+      make_new_challenge
+    end
   end
 
   def get_trophy_category
