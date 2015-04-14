@@ -43,6 +43,8 @@ Rails.application.routes.draw do
       put 'get_random_category'
       put 'achievement_message_recieved'
       put 'resign'
+      put 'phone_google'
+      put 'eliminate'
     end
   end
 

@@ -108,6 +108,14 @@ class PlayController < ApplicationController
     end
   end
 
+  def eliminate
+    current_user.update_attribute(:points, current_user.points - 1)
+  end
+
+  def phone_google
+    current_user.update_attribute(:points, current_user.points - 1)
+  end
+
   def display_questions
 
     if current_user.active_player.challenges.first.nil?

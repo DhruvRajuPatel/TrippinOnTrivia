@@ -89,7 +89,7 @@
   <p>Power-Ups - Uses 1 point</p><br>
   <a id="phone_google" href="#">Phone a Google</a><br>
   <a id="eliminate" href="#">Elimination Station</a><br>
-  <a id="reroll" href="#">Reroll</a>
+  <!--<a id="reroll" href="#">Reroll</a>-->
 </div>
 
 <% if !current_user.active_player.challenges.first.nil?%>
@@ -107,14 +107,14 @@
     $(function() {
         $('#reroll').click(function(){
             $('#reroll').hide();
-            <% points = current_user.points - 1 %>
-            <% current_user.update_attribute(:points, points) %>
             $('body').load('/play/display_spinner.html');
         });
 
         $('#phone_google').click(function(){
-            <% points = current_user.points - 1 %>
-            <% current_user.update_attribute(:points, points) %>
+            $.ajax({
+                url: "play/phone_google",
+                type: 'PUT'
+            });
             seconds = seconds + 30;
             $('#phone_google').hide();
             var win = window.open('https://www.google.com/?gws_rd=ssl#q=' + '<%= current_user.active_player.current_question.title %>', '_blank');
@@ -123,8 +123,10 @@
 
         $('#eliminate').click(function(){
             $('#eliminate').hide();
-            <% points = current_user.points - 1 %>
-            <% current_user.update_attribute(:points, points) %>
+            $.ajax({
+                url: "play/eliminate",
+                type: 'PUT'
+            });
             var incorrectAnswers = [];
             var i;
             <% current_user.active_player.current_question.answers.all.shuffle.each do |answer| %>
