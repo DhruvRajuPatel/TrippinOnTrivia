@@ -64,7 +64,6 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
         <img src= "/images/bolt.png">
     <% end %>
     </div>
-
 <div id="trophy">
   <h3>My trophies:
   <% if current_user.active_player.trophies.count == 0 %>
@@ -84,9 +83,10 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
     <% else %>
     <h3>Awaiting opponent...</h3>
 <% end %>
+<% if !current_user.active_player.is_inactive %>
 <br><br><button style="background-color: #2541c3" onclick="Resign()" type="button" class="btn btn-primary">
   RESIGN</button>
-
+<% end %>
 <script type ="text/javascript" charset="utf-8">
 
     <% if current_user.has_new_achievement %>
