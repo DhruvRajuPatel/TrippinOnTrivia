@@ -1,9 +1,39 @@
 // Place all the styles related to the game controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@font-face {
+  font-family: 'Arcade-Classic';
+  src: font-url('ArcadeClassic.ttf');
+  src: font-url('ArcadeClassic.ttf')format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'karmatic';
+  src: font-url('ka1.ttf');
+  src: font-url('ka1.ttf')format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 h1 {
+  font-family: 'karmatic';
+  padding-bottom: 10px;
   text-align: center;
 }
+
+h2 {
+  font-family: 'karmatic';
+}
+
+h3 {
+  font-family: "Arcade-Classic";
+}
+
+#meter {
+  margin: 0 auto;
+}
+
 #spinner {
 	height: 368px;
 	width: 368px;
@@ -32,9 +62,7 @@ h1 {
 }
 
 #bolt {
-  margin-left: auto;
-  margin-right: auto;
+  padding-left: 150px;
   padding-top: 35px;
-  display: inline;
   white-space: nowrap;
 }

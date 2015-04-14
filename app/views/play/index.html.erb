@@ -1,7 +1,8 @@
 <div id="main" class="text-center">
-
-  <button onclick="ChangePage()" type="button" class="btn btn-primary btn-lg btn-block">
-    + NEW GAME</button><br>
+<h1>WELCOME TO TRIPPIN' ON TRIVIA</h1>
+  <br><br>
+  <button style="font-family: Arcade-Classic; font-size: 2.3em; background-color: #2541c3"onclick="ChangePage()" type="button" class="btn btn-primary btn-lg btn-block">
+    + NEW GAME</button><br><br>
 
   <% current_user.players.each do |player|%>
       <div class="text-center">
@@ -13,7 +14,7 @@
                  opponent_trophies = player.opponent.trophies.count
                end %>
 
-            <button style="background-color:mediumseagreen" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
+            <button style="background-color:#38cc07" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
               READY <%=has_opponent%> <%=player.trophies.count %>:<%= opponent_trophies %></button><br>
             </div>
             <script>
@@ -34,7 +35,7 @@
                  opponent_trophies = player.opponent.trophies.count
                end %>
 
-            <button style="background-color:deepskyblue" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
+            <button style="background-color:#ff00dd" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
               WAITING <%=has_opponent%> <%=player.trophies.count %>:<%= opponent_trophies %></button><br>
             </div>
             <script>
@@ -55,7 +56,7 @@
                  opponent_trophies = player.opponent.trophies.count
                end %>
 
-            <button style="background-color:lightsteelblue" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
+            <button style="background-color:#fcc603" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
               GAME OVER <%=has_opponent%> <%=player.trophies.count %>:<%= opponent_trophies %></button><br>
             </div>
             <script>

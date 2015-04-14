@@ -35,7 +35,7 @@ var correctSound=createSoundBite("/sounds/correct.mp3");
 var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
 </script>
 <button onclick="GoBack()" type="button" class="btn btn-primary">
-  BACK</button>
+  BACK</button><br>
 
 <% if !current_user.active_player.isActivePlayer
      if !current_user.active_player.is_inactive %>
@@ -66,17 +66,23 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
     </div>
 
 <div id="trophy">
-  <p>Me:</p>
+  <h3>My trophies:
+  <% if current_user.active_player.trophies.count == 0 %>
+    NONE
+  <% end %>
+  </h3>
   <% current_user.active_player.trophies.each do |trophy|  %>
       <img id="trophy" src= <%= trophy.icon_path%>>
   <% end %>
 </div>
 <% if (!current_user.active_player.opponent.nil?) %>
-      <br><p><%= current_user.active_player.opponent.user.email%>: </p>
+      <br><h3><%= current_user.active_player.opponent.user.email%>: </h3>
       <% current_user.active_player.opponent.trophies.each do |trophy|  %>
 
           <img src= <%= trophy.icon_path%>>
       <% end %>
+    <% else %>
+    <h3>Awaiting opponent</h3>
 <% end %>
 <br><br><button onclick="Resign()" type="button" class="btn btn-primary">
   RESIGN</button>
