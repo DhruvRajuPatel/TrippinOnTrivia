@@ -22,12 +22,15 @@
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <h2>Friends</h2>
+      <h2 class="text-center">Friends</h2>
         <ul>
+          <% if current_user.friendships.count < 1 %>
+                <h4>You have no friends! :(</h4>
+              <% end %>
           <% for friendship in current_user.friendships %>
               <li>
                 <%=h friendship.friend.email %>
-                (<%= link_to "remove", friendship, :method => :delete %>)
+                (<%= link_to "Select", friendship, :method => :delete %>)
               </li>
           <% end %>
         </ul>
