@@ -63,9 +63,9 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
 <p>Meter: <%= current_user.active_player.meter%></p>
 
 <div id="trophy">
+  <p>Me:</p>
   <% current_user.active_player.trophies.each do |trophy|  %>
       <img id="trophy" src= <%= trophy.icon_path%>>
-      <br>
   <% end %>
 </div>
 <% if (!current_user.active_player.opponent.nil?) %>
