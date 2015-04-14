@@ -3,6 +3,7 @@ class CreateQuestions < ActiveRecord::Migration
     create_table :questions do |t|
       t.string :title
       t.integer :rating
+      t.boolean :user_submitted, null: false, default: false
 
       t.references :category, index: true
 

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'questions/create_user_question'
+  post "questions/create_user_question" => "questions#create_user_question", :as => :create_user_question
+
 
   devise_for :admins
   resources :players

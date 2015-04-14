@@ -1,6 +1,5 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_admin!
 
   # GET /questions
   # GET /questions.json
@@ -16,6 +15,8 @@ class QuestionsController < ApplicationController
   # GET /questions/new
   def new
     @question = Question.new
+    @categories = Category.all
+    @answer = Answer.new
   end
 
   # GET /questions/1/edit
@@ -63,6 +64,19 @@ class QuestionsController < ApplicationController
       format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def create_user_question
+    category = Category.find(params[:question][:category_id])
+    user_question = category.questions.create(:title => params[:question][:title], :user_submitted => true)
+    user_question.answers.create(:title => params[:answer][:title])
+    user_question.save
+
+    respond_to do |format|
+      format.html { redirect_to root_url, notice: 'Question was successfully submitted.' }
+      format.json { head :no_content }
+    end
+
   end
 
   private

@@ -24,7 +24,7 @@
             ChangePage()
         });
         $('#submit_question').click(function() {
-            $('body').load(<%= new_question_path %>);
+            $('body').load('<%= new_question_path %>');
         });
         $.ajax({
             url: "play/finish_question",

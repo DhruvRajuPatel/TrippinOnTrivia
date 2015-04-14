@@ -136,9 +136,10 @@ ActiveRecord::Schema.define(version: 20150413191015) do
   create_table "questions", force: :cascade do |t|
     t.string   "title"
     t.integer  "rating"
+    t.boolean  "user_submitted", default: false, null: false
     t.integer  "category_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "answer_id"
     t.integer  "player_id"
     t.integer  "challenge_id"
