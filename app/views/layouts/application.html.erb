@@ -31,10 +31,10 @@
             | <%= link_to "Purchase", new_charge_path %>
             | Points: <%= current_user.points %>
             <section style="padding-top: 10px;text-align: center">
-              <span data-remote="<%= edit_user_registration_path %>"
+              <span data-remote="play/display_friends"
                     data-toggle="modal"
                     data-target="#basicModal">
-                <i class="fa fa-star fa-3x fa-fw"></i>
+                <i class="fa fa-user-plus fa-3x fa-fw"></i>
               </span>
 
               <span data-remote="<%= edit_user_registration_path %>"
@@ -68,6 +68,7 @@
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+
     </div>
   </div>
 </div>
