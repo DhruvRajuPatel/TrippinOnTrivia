@@ -64,11 +64,10 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
 
 <div id="trophy">
   <% current_user.active_player.trophies.each do |trophy|  %>
-      <br><p>Me: </p>
-      <img src= <%= trophy.icon_path%>>
+      <img id="trophy" src= <%= trophy.icon_path%>>
       <br>
   <% end %>
-
+</div>
 <% if (!current_user.active_player.opponent.nil?) %>
       <br><p><%= current_user.active_player.opponent.user.email%>: </p>
       <% current_user.active_player.opponent.trophies.each do |trophy|  %>
@@ -76,8 +75,6 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
           <img src= <%= trophy.icon_path%>>
       <% end %>
 <% end %>
-
-</div>
 <br><br><button onclick="Resign()" type="button" class="btn btn-primary">
   RESIGN</button>
 
