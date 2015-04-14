@@ -34,11 +34,12 @@
 <h2 class="text-center">
   <%= current_user.active_player.current_category.title %>
   <br>
-  <small><%= current_user.active_player.current_question.title %></small>
+  <small style="font-family: Arial"><%= current_user.active_player.current_question.title %></small>
 </h2>
+<br>
 <% current_user.active_player.current_question.answers.all.shuffle.each do |answer| %>
     <div class="text-center">
-      <button id="<%= answer.title.gsub(/\s+/, '') %>"
+      <button style="background-color: #2541c3" id="<%= answer.title.gsub(/\s+/, '') %>"
               type="button"
               name=<%= answer.title %>
                       value=<%= answer.is_correct %>
@@ -61,7 +62,7 @@
                     <% if !current_user.muted %>
                         correctSound.playclip();
                     <% end %>
-                    this.style.background = '#00BB00';
+                    this.style.background = '#38cc07';
                     this.innerHTML = "Correct!!!";
                 }
                 else {
@@ -72,9 +73,9 @@
                     <% if !current_user.muted %>
                         incorrectSound.playclip();
                     <% end %>
-                    this.style.background = '#FF0000';
+                    this.style.background = '#ff0d00';
                     this.innerHTML = "Incorrect!!!";
-                    correctButton.style.background = '#00BB00';
+                    correctButton.style.background = '#38cc07';
                 }
                 if (<%= current_user.active_player.isActivePlayer && !current_user.active_player.challenges.first.nil? %>){
                     $.ajax({
