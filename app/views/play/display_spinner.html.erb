@@ -59,8 +59,11 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
     </button>
     <br>
 <% end %>
-<p>Meter: <%= current_user.active_player.meter%></p>
-<p>Muted: <%= current_user.muted%></p>
+    <div id="bolt">
+    <% for i in 1..current_user.active_player.meter %>
+        <img src= "/images/bolt.png">
+    <% end %>
+    </div>
 
 <div id="trophy">
   <p>Me:</p>
