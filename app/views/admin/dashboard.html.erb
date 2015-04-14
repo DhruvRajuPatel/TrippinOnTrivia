@@ -1,5 +1,7 @@
 <!--Display these fields if a admin is logged in.-->
 
+<% if !current_admin.reviewer %>
+
 <h2>Users</h2>
 <ul>
   <% for user in @users %>
@@ -9,5 +11,23 @@
       </li>
   <% end %>
 </ul>
-<script>
-</script>
+<% end %>
+
+<% if current_admin.reviewer %>
+    <h2>Questions</h2>
+    <% for question in @questions %>
+        <% if question.user_submitted %>
+            <label>Title</label><br>
+            <%= question.title %><br>
+
+            <label>Correct Answer</label><br>
+            <% for answer in question.answers %>
+                <% if answer.is_correct %>
+                    <label>Correct Answer</label><br>
+                    <%= answer.title %>
+                <% end %>
+            <% end %>
+
+        <% end %>
+    <% end %>
+<% end %>
