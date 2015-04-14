@@ -5,6 +5,17 @@ Rails.application.routes.draw do
   resources :charges
   resources :trophies
 
+  resources :questions do
+    resources :answers
+  end
+
+  resources :categories do
+    resources :trophies
+    resources :questions do
+      resources :answers
+    end
+  end
+
   get 'play/index'
   get 'play/display_spinner'
   get 'play/display_questions'
@@ -32,16 +43,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions do
-    resources :answers
-  end
 
-  resources :categories do
-    resources :trophies
-    resources :questions do
-      resources :answers
-    end
-  end
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   match 'users/:id' => 'admin#destroy', :via => :delete, :as => :admin_destroy_user

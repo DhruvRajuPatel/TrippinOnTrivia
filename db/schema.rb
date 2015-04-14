@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20150413191015) do
     t.boolean  "is_first_round"
   end
 
-  create_table "challenges_player", id: false, force: :cascade do |t|
+  create_table "challenges_players", id: false, force: :cascade do |t|
     t.integer "challenge_id"
     t.integer "player_id"
   end

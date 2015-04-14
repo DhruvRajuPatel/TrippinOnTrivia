@@ -13,32 +13,32 @@
   <![endif]-->
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <section>
       <p class="navbar-text">
-        <% if user_signed_in? %>
-            <section style="text-align: center">
-              <strong> <%= current_user.email %></strong>
-              <% if current_user.nil? %>
-                  | <%= link_to "Logout Admin", destroy_admin_session_path, method: :delete %>
-            <% else %>
-                  | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-            <% end %>
-              | Level: <%= current_user.level %>
-              |  <%= link_to "Purchase", new_charge_path %>
-                Points: <%= current_user.points %>
-            </section>
+        <% if admin_signed_in? %>
+          <div class="text-center">
+            <h3>Admin Dashboard</h3>
+            <%= link_to "Logout Admin", destroy_admin_session_path, method: :delete %>
+          </div>
+      <% end %>
+      <% if user_signed_in? %>
+          <section style="text-align: center">
+            <strong> <%= current_user.email %></strong>
+            | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+            | Level: <%= current_user.level %>
+            Points: <%= current_user.points %>
             <section style="padding-top: 10px;text-align: center">
               <span data-remote="<%= edit_user_registration_path %>"
-                 data-toggle="modal"
-                 data-target="#basicModal">
+                    data-toggle="modal"
+                    data-target="#basicModal">
                 <i class="fa fa-star fa-3x fa-fw"></i>
               </span>
 
               <span data-remote="<%= edit_user_registration_path %>"
-                 data-toggle="modal"
-                 data-target="#basicModal">
+                    data-toggle="modal"
+                    data-target="#basicModal">
                     <i class="fa fa-cog fa-3x fa-fw"></i>
               </span>
 
@@ -50,14 +50,14 @@
                 <i title="Unmute icon" class="fa fa-volume-up fa-3x fa-fw"></i>
               </label>
             </section>
-        <% end %>
-        </section>
+          </section>
+
+      <% end %>
+    </section>
   </div>
 </nav>
 
 <div class="container" id="main">
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
   <%= yield %>
 </div>
 
@@ -67,6 +67,8 @@
     </div>
   </div>
 </div>
+
+
 
 <script>
     $( document ).ready(function() {

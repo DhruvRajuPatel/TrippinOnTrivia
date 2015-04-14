@@ -1,6 +1,6 @@
 class AddChallengesPlayers < ActiveRecord::Migration
   def self.up
-    create_table :challenges_player, :id => false do |t|
+    create_table :challenges_players, :id => false do |t|
       t.integer :challenge_id
       t.integer :player_id
     end
