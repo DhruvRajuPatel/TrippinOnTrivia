@@ -20,7 +20,9 @@ class PlayController < ApplicationController
   def display_spinner
 
     current_user.active_player.update_attribute(:going_for_trophy, false)
-    detect_cheating
+    if !current_user.active_player.current_question.nil?
+      detect_cheating
+    end
     check_win
   end
 
@@ -79,26 +81,20 @@ class PlayController < ApplicationController
   end
 
   def detect_cheating
-    if current_user.active_player.current_question.nil?
-      detect_unused_challenge
-    else
+    if current_user.active_player.isActivePlayer
       punish_cheater
     end
+    finish_question
   end
 
   def punish_cheater
     if current_user.active_player.challenges.first.nil?
       change_active_player
-    else
+    elsif current_user.active_player.challenges.first.question_counter > 1 || !current_user.active_player.challenges.first.is_first_round
       end_challenge_round
-    end
-    finish_question
-  end
-
-  def detect_unused_challenge
-    if !current_user.active_player.challenges.first.nil? && current_user.active_player.challenges.first.is_first_round
+    else
       end_current_challenge
-   end
+    end
   end
 
   def display_new_game_page
@@ -134,34 +130,33 @@ class PlayController < ApplicationController
       current_user.active_player.current_question = current_user.active_player.current_category.questions.all.shuffle[0]
     end
 
-    def true_answer
-      update_question_statistics
-
-      if current_user.active_player.going_for_trophy
-        current_user.active_player.trophies << current_user.active_player.current_question.category.trophy
-        current_user.active_player.update_attribute(:going_for_trophy, false)
-      elsif current_user.active_player.challenges.first.nil?
-        current_user.active_player.update_attribute(:meter, current_user.active_player.meter + 1)
-      elsif current_user.active_player.challenges.first.is_first_round
-        current_user.active_player.challenges.first.update_attribute(:challenger_score, current_user.active_player.challenges.first.challenger_score + 1)
-      else
-        current_user.active_player.challenges.first.update_attribute(:challenged_score, current_user.active_player.challenges.first.challenged_score + 1)
-      end
-    end
-
-    def false_answer
-      current_user.active_player.update_attribute(:going_for_trophy, false)
-      if current_user.active_player.challenges.first.nil?
-        change_active_player
-      end
-    end
-
     respond_to do |format|
       format.html
       format.js
     end
   end
 
+  def true_answer
+    update_question_statistics
+
+    if current_user.active_player.going_for_trophy
+      current_user.active_player.trophies << current_user.active_player.current_question.category.trophy
+      current_user.active_player.update_attribute(:going_for_trophy, false)
+    elsif current_user.active_player.challenges.first.nil?
+      current_user.active_player.update_attribute(:meter, current_user.active_player.meter + 1)
+    elsif current_user.active_player.challenges.first.is_first_round
+      current_user.active_player.challenges.first.update_attribute(:challenger_score, current_user.active_player.challenges.first.challenger_score + 1)
+    else
+      current_user.active_player.challenges.first.update_attribute(:challenged_score, current_user.active_player.challenges.first.challenged_score + 1)
+    end
+  end
+
+  def false_answer
+    current_user.active_player.update_attribute(:going_for_trophy, false)
+    if current_user.active_player.challenges.first.nil?
+      change_active_player
+    end
+  end
   def update_question_statistics
     current_user.update_attribute(:total_correct, current_user.total_correct + 1)
 
@@ -216,8 +211,10 @@ class PlayController < ApplicationController
   end
 
   def finish_question
-    current_user.active_player.current_question = nil;
-    current_user.active_player.current_category = nil;
+    if current_user.active_player.challenges.first.nil?
+      current_user.active_player.current_question = nil;
+      current_user.active_player.current_category = nil;
+    end
   end
 
   def change_active_player
@@ -322,6 +319,9 @@ class PlayController < ApplicationController
     if !current_user.active_player.opponent.nil?
       current_user.active_player.opponent.challenges.delete(current_user.active_player.opponent.challenges.first)
     end
+    finish_question
+    current_user.active_player.opponent.current_question = nil;
+    current_user.active_player.opponent.current_category = nil;
   end
 
   private
