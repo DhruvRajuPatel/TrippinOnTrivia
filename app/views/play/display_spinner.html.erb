@@ -61,6 +61,7 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
     <br>
 <% end %>
 <p>Meter: <%= current_user.active_player.meter%></p>
+<p>Muted: <%= current_user.muted%></p>
 
 <div id="trophy">
   <p>Me:</p>
@@ -105,7 +106,9 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
                     });
                     <% if current_user.active_player.isActivePlayer && current_user.active_player.challenges.first.nil?%>
                      $("#spinner").rotate({ angle:0,animateTo: rotations,easing: $.easing.easeInOutExpo });
-                    spinSound.playclip();
+                    <% if !current_user.muted %>
+                        spinSound.playclip();
+                    <% end %>
                     if (category_number >= 309 && category_number <= 359) {
                         setTimeout(GetFullMeterChoice, 1000);
                     }
