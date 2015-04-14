@@ -10,7 +10,7 @@
       FRIEND<span id="friend-ok" style="display: none;" class="glyphicon glyphicon-ok"></span>
     </button>
     <button id="random" onclick="RandomOpp(this.id);" type="button" class="btn btn-default btn-lg btn-block">
-      RANDOM<span id="random-ok" style="display: none;" class="glyphicon glyphicon-ok"></span></button>
+      RANDOM<span id="random-ok" class="glyphicon glyphicon-ok"></span></button>
   </div>
 </div>
 
@@ -22,7 +22,17 @@
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      ...
+      <% for user in @users %>
+          <h2>Friends</h2>
+          <ul>
+            <% for user in @users %>
+                <li>
+                  <%=h user.email %>
+                  - <%= link_to "Add Friend" %>
+                </li>
+            <% end %>
+          </ul>
+      <% end %>
     </div>
   </div>
 </div>
@@ -34,13 +44,13 @@
     }
     function FriendOpp(element)
     {
-        $('#choices #friend span').toggle();
+        $('#choices #friend span').show();
         $('#choices #random span').hide();
     }
 
     function RandomOpp(element)
     {
-        $('#choices #random span').toggle();
+        $('#choices #random span').show();
         $('#choices #friend span').hide();
     }
 </script>

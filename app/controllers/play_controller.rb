@@ -97,6 +97,7 @@ class PlayController < ApplicationController
   end
 
   def display_new_game_page
+    @users = User.all
     current_user.active_player = current_user.players.create(meter: 0, isActivePlayer: true)
 
     Player.all.each do |player|
