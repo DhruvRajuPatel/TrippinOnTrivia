@@ -16,14 +16,13 @@
     <%= f.association :category %>
 
     <div class="field">
-      <%= f.label :title %><br>
-      <%= f.text_field :title %>
+      <%= f.input :title %>
     </div>
 
-    <%= fields_for @answer do |a| %>
+    <%= simple_fields_for @answer do |a| %>
         <p>
-          <%= a.label 'Correct Answer' %><br />
-          <%= a.text_field :title %>
+          <%= a.input :title, label: 'Correct Answer' %>
+          <% @answer.is_correct = true %>
         </p>
     <% end %>
     <p>

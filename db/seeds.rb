@@ -104,3 +104,6 @@ music_question2.answers.create(title: "Shooter Jennings", is_correct: false)
 
 # Admins
 Admin.create(:email => 'admin@gmail.com', :password => 'admin')
+
+# Reviewer
+Admin.create(:email => 'reviewer@gmail.com', :password => 'reviewer', :reviewer => true)

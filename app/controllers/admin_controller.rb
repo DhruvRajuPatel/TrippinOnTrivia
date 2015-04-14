@@ -1,6 +1,7 @@
 class AdminController < ApplicationController
   def dashboard
       @users = User.all
+      @questions = Question.all
   end
 
   def destroy
