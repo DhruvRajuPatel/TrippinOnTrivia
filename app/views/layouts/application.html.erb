@@ -75,9 +75,11 @@
         var sound = document.getElementById('un-mute');
 
         sound.onclick = function () {
-            spinSound.muted = !spinSound.muted;
-            correctSound.muted = !correctSound.muted;
-            incorrectSound.muted = !incorrectSound.muted;
+            $.ajax({
+                url: "play/toggle_mute",
+                type: 'PUT'
+            });
+            spinSound.muted = correctSound.muted =  incorrectSound.muted =  !spinSound.muted;
         };
     });
 </script>

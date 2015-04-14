@@ -112,6 +112,16 @@ class PlayController < ApplicationController
     current_user.update_attribute(:points, current_user.points - 1)
   end
 
+  def toggle_mute
+    puts 'Before'
+    puts @muted
+    @muted = !current_user.muted
+    current_user.update_attribute(:muted,@muted)
+    puts 'After'
+    puts @muted
+    render :nothing => true
+  end
+
   def phone_google
     current_user.update_attribute(:points, current_user.points - 1)
   end

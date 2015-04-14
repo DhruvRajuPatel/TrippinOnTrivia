@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413191015) do
+ActiveRecord::Schema.define(version: 20150414045101) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 20150413191015) do
     t.integer  "cs_counter_id"
     t.boolean  "has_new_achievement",         default: false, null: false
     t.integer  "win_count",                   default: 0
+    t.boolean  "muted",                       default: false, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

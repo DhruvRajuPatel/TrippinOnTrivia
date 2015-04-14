@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       put 'resign'
       put 'phone_google'
       put 'eliminate'
+      put 'toggle_mute'
     end
   end
 
