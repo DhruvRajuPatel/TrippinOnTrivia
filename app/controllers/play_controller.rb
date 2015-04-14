@@ -99,7 +99,6 @@ class PlayController < ApplicationController
 
   def play_friend
     @user = User.find(params[:id])
-    current_user.active_player = current_user.players.create(meter: 0, isActivePlayer: true)
     @user.players.all.each do |player|
       if player.user != current_user && player.opponent.nil? && !player.isActivePlayer && !player.is_inactive
         current_user.active_player.opponent = player
