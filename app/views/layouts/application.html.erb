@@ -43,13 +43,16 @@
                     <i class="fa fa-cog fa-3x fa-fw"></i>
               </span>
 
-              <input type="checkbox" name="un-mute" id="un-mute">
-              <label for="un-mute" class="unmute">
-                <i title="Mute icon" class="fa fa-volume-off fa-3x fa-fw"></i>
-              </label>
-              <label for="un-mute" class="mute">
-                <i title="Unmute icon" class="fa fa-volume-up fa-3x fa-fw"></i>
-              </label>
+              <% muteStatus = "fa fa-volume-up fa-3x fa-fw"
+                 if current_user.muted
+                   muteStatus = "fa fa-volume-off fa-3x fa-fw"
+                 end %>
+
+
+              <span id="un-mute">
+                <i class="<%= muteStatus%>"></i>
+              </span>
+
             </section>
           </section>
 
@@ -76,6 +79,7 @@
         var sound = document.getElementById('un-mute');
 
         sound.onclick = function () {
+            $(this).find('i').toggleClass("fa fa-volume-up fa-3x fa-fw fa fa-volume-off fa-3x fa-fw");
             $.ajax({
                 url: "play/toggle_mute",
                 type: 'PUT'
