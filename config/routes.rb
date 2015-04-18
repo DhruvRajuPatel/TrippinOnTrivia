@@ -39,8 +39,6 @@ Rails.application.routes.draw do
       put 'get_selected_player'
       put 'make_new_challenge'
       put 'continue_challenge'
-      put 'end_current_challenge'
-      put 'finish_question'
       put 'get_random_category'
       put 'achievement_message_recieved'
       put 'resign'
@@ -48,6 +46,15 @@ Rails.application.routes.draw do
       put 'eliminate'
       put 'toggle_mute'
       put 'play_friend'
+      put 'get_random_category'
+      put 'finish_question'
+    end
+  end
+
+  resources :challenges do
+    collection do
+      put 'continue_challenge'
+      put 'end_current_challenge'
     end
   end
 

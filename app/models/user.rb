@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+
+  LEVEL_UP_STATIC_THRESHOLD = 3
+  LEVEL_UP_DYNAMIC_THRESHOLD = 2
+  CATEGORY_ACHIEVEMENT_THRESHOLD = 20
+
   has_many :players, foreign_key: "uid"
   has_one :active_player, class_name: "Player", foreign_key: "active_player_id"
   has_and_belongs_to_many :achievements, foreign_key: "uid"
@@ -13,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
   before_create :build_counters
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -64,7 +70,76 @@ class User < ActiveRecord::Base
     end
   end
 
+  def update_question_statistics
+    self.update_attribute(:total_correct, self.total_correct + 1)
+
+    update_category_statistics
+
+    if self.total_correct == calculate_level_up_threshold
+      self.update_attribute(:level, self.level + 1)
+    end
+  end
+
   private
+
+  def calculate_level_up_threshold
+
+    current_dynamic_threshold = get_recursive_definition(self.level, LEVEL_UP_DYNAMIC_THRESHOLD)
+    current_static_threshold = LEVEL_UP_STATIC_THRESHOLD * self.level
+
+    current_dynamic_threshold + current_static_threshold
+
+  end
+
+  def update_category_statistics
+
+    category = self.active_player.current_category
+
+    case category
+      when self.aquatic_counter.categories.first
+        increment_counter(self.aquatic_counter, category)
+
+      when self.memes_counter.categories.first
+        increment_counter(self.memes_counter, category)
+
+      when self.basketball_counter.categories.first
+        increment_counter(self.basketball_counter, category)
+
+      when self.literature_counter.categories.first
+        increment_counter(self.literature_counter, category)
+
+      when self.music_counter.categories.first
+        increment_counter(self.music_counter, category)
+
+      when self.cs_counter.categories.first
+        increment_counter(self.cs_counter, category)
+      else
+    end
+  end
+
+  def get_recursive_definition(times_to_iterate, numeric_definition)
+    current_sum = 0
+
+    if times_to_iterate - 1 > 0
+
+      current_sum = get_recursive_definition(times_to_iterate - 1, numeric_definition)
+    end
+
+    numeric_definition * times_to_iterate + current_sum
+
+  end
+
+  def increment_counter(counter, category)
+    counter.update_attribute(:questions_correct, counter.questions_correct + 1)
+    check_category_achievement(counter.questions_correct, category)
+  end
+
+  def check_category_achievement(questions_correct, category)
+    if questions_correct == CATEGORY_ACHIEVEMENT_THRESHOLD
+      self.achievements << category.achievement
+      self.update_attribute(:has_new_achievement, true)
+    end
+  end
 
   def build_counters
 

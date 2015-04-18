@@ -61,6 +61,23 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def continue_challenge
+
+    player = current_user.active_player
+    challenge = player.challenges.first
+
+    if challenge.question_counter < Category.all.length
+      challenge.get_next_challenge_question(player)
+    else
+      challenge.end_challenge_round(player)
+    end
+  end
+
+  def end_current_challenge
+
+    current_user.active_player.challenges.first.end_current_challenge(current_user.active_player)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_challenge

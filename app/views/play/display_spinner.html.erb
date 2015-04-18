@@ -141,7 +141,7 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
     function StartChallenge()
     {
         $.ajax({
-            url: "play/continue_challenge",
+            url: "challenges/continue_challenge",
             type: 'PUT'
         });
         setTimeout(GetQuestions, 500);

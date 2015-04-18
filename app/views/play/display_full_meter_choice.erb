@@ -14,7 +14,7 @@
   <script>
     function ChangePageTrophy() {
         $.ajax({
-            url: "play/end_current_challenge",
+            url: "challenges/end_current_challenge",
             type: 'PUT'
         });
         $('body').load('/play/display_trophy_select.html');
