@@ -91,6 +91,18 @@ class Challenge < ActiveRecord::Base
     end
   end
 
+  def set_challenge_trophies(trophy)
+
+    if self.bid_trophy.nil?
+
+      self.bid_trophy = trophy
+
+    else
+
+      self.challenged_trophy = trophy
+    end
+  end
+
   def decide_winner(player)
     if self.challenged_score > self.challenger_score
       self.challenged_player_wins(player)

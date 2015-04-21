@@ -78,6 +78,12 @@ class ChallengesController < ApplicationController
     current_user.active_player.challenges.first.end_current_challenge(current_user.active_player)
   end
 
+  def set_challenge_trophy_by_id
+
+  current_user.active_player.challenges.first.set_challenge_trophies(Trophy.find(params[:trophy_id]))
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_challenge

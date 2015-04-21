@@ -34,7 +34,7 @@
               $(<%= trophy.category.title.gsub(/\s+/, '') %>).click(function() {
                   var currentTrophy = this.value;
                   $.ajax({
-                              url: "play/get_trophy_category",
+                              url: "challenges/set_challenge_trophy_by_id",
                               type: 'PUT',
                               dataType: 'json',
                               data: {'trophy_id' : currentTrophy}

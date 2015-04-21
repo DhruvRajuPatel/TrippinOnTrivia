@@ -76,7 +76,7 @@
           $(id).click(function() {
               var currentPlayer = this.value;
               $.ajax({
-                          url: "play/get_selected_player",
+                          url: "users/get_selected_player",
                           type: 'PUT',
                           dataType: 'json',
                           data: {'player_id' : currentPlayer},

@@ -89,6 +89,11 @@ class PlayersController < ApplicationController
 
   end
 
+  def set_category_by_id
+
+      current_user.active_player.current_category = Category.find(params[:category_id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_player

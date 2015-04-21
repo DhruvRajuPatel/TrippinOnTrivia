@@ -32,7 +32,6 @@ Rails.application.routes.draw do
 
   resources :play do
     collection do
-      put 'get_trophy_category'
       put 'get_selected_player'
       put 'get_random_category'
       put 'achievement_message_recieved'
@@ -47,6 +46,7 @@ Rails.application.routes.draw do
     collection do
       put 'continue_challenge'
       put 'end_current_challenge'
+      put 'set_challenge_trophy_by_id'
     end
   end
 
@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       put 'handle_correct_response'
       put 'handle_incorrect_response'
       put 'reset_question_properties'
+      put 'set_category_by_id'
     end
   end
 

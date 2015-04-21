@@ -20,7 +20,7 @@
               $(<%= category.title.gsub(/\s+/, '') %>).click(function() {
                   var currentCategory = this.value;
                   $.ajax({
-                      url: "play/get_trophy_category",
+                      url: "players/set_category_by_id",
                       type: 'PUT',
                       dataType: 'json',
                       data: {'category_id' : currentCategory},

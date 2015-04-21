@@ -24,13 +24,7 @@ class PlayController < ApplicationController
   def display_new_game_page
     current_user.active_player = current_user.players.create(meter: 0, isActivePlayer: true)
 
-    Player.all.each do |player|
-      if player.user != current_user && player.opponent.nil? && !player.isActivePlayer && !player.is_inactive
-        current_user.active_player.opponent = player
-        player.opponent = current_user.active_player
-        break
-      end
-    end
+    current_user.active_player.get_random_opponent_from_group
   end
 
   def display_questions
@@ -66,13 +60,7 @@ class PlayController < ApplicationController
 
   def play_friend
     user = User.find(params[:id])
-    user.players.all.each do |player|
-      if player.user != current_user && !player.has_opponent && !player.isActivePlayer && !player.is_inactive
-        current_user.active_player.opponent = player
-        player.opponent = current_user.active_player
-        break
-      end
-    end
+    current_user.active_player.get_random_opponent_from_group(user.players.all)
     if current_user.active_player.opponent.nil?
       new_player = user.players.create(isActivePlayer: false, meter: 0)
       current_user.active_player.opponent = new_player
@@ -83,16 +71,6 @@ class PlayController < ApplicationController
   def achievement_message_recieved
     current_user.update_attribute(:has_new_achievement, false)
     render nothing: true
-  end
-
-  def get_trophy_category
-    if current_user.active_player.challenges.first.nil?
-      current_user.active_player.current_category = Category.find(params[:category_id])
-    elsif current_user.active_player.challenges.first.bid_trophy.nil?
-      current_user.active_player.challenges.first.bid_trophy = Trophy.find(params[:trophy_id])
-    else
-      current_user.active_player.challenges.first.challenged_trophy = Trophy.find(params[:trophy_id])
-    end
   end
 
   def get_selected_player
