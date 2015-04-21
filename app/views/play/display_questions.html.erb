@@ -13,7 +13,7 @@
               clearInterval(countdownTimer);
               incorrectSound.playclip();
               $.ajax({
-                  url: "play/false_answer",
+                  url: "players/handle_incorrect_response",
                   type: 'PUT'
               });
               document.getElementById('countdown').innerHTML = "Time up!";
@@ -56,7 +56,7 @@
                 correctAnswer = <%=answer.is_correct %>;
                 if(correctAnswer) {
                     $.ajax({
-                        url: "play/true_answer",
+                        url: "players/handle_correct_response",
                         type: 'PUT'
                     });
                     <% if !current_user.muted %>
@@ -67,7 +67,7 @@
                 }
                 else {
                     $.ajax({
-                        url: "play/false_answer",
+                        url: "players/handle_incorrect_response",
                         type: 'PUT'
                     });
                     <% if !current_user.muted %>

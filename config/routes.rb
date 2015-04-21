@@ -4,7 +4,6 @@ Rails.application.routes.draw do
 
   resources :friendships
   devise_for :admins
-  resources :players
   resources :charges
   resources :trophies
 
@@ -33,21 +32,14 @@ Rails.application.routes.draw do
 
   resources :play do
     collection do
-      put 'true_answer'
-      put 'false_answer'
       put 'get_trophy_category'
       put 'get_selected_player'
-      put 'make_new_challenge'
-      put 'continue_challenge'
       put 'get_random_category'
       put 'achievement_message_recieved'
-      put 'resign'
       put 'phone_google'
       put 'eliminate'
       put 'toggle_mute'
       put 'play_friend'
-      put 'get_random_category'
-      put 'finish_question'
     end
   end
 
@@ -58,6 +50,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :players do
+    collection do
+      put 'resign_current_player'
+      put 'handle_correct_response'
+      put 'handle_incorrect_response'
+      put 'reset_question_properties'
+    end
+  end
 
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }

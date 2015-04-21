@@ -32,14 +32,14 @@
             $('body').load('<%= new_question_path %>');
         });
         $.ajax({
-            url: "play/finish_question",
+            url: "players/reset_question_properties",
             type: 'PUT'
         });
         function ChangePage()
         {
             var meter = <%= current_user.active_player.meter %>;
 
-            if (meter >= <%= PlayController::FULL_METER_AMOUNT%>) {
+            if (meter >= <%= Player::FULL_METER_AMOUNT%>) {
                 $('body').load('/play/display_full_meter_choice.html');
             }
             else if (<%= current_user.active_player.isActivePlayer && !current_user.active_player.challenges.first.nil? %>){

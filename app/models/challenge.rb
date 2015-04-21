@@ -71,15 +71,36 @@ class Challenge < ActiveRecord::Base
     self.update_attribute(:question_counter, 0)
 
     if self.is_first_round
-      player.opponent.update_attribute(:isActivePlayer, true)
-      self.update_attribute(:is_first_round, false)
+      proceed_to_next_round(player)
+
     else
-      if self.challenged_score > self.challenger_score
-        self.challenged_player_wins(player)
-      else
-        self.challenger_player_wins(player.opponent)
-      end
+      decide_winner(player)
       end_current_challenge(player)
     end
+  end
+
+  def handle_correct_answer
+
+    if self.is_first_round
+
+      self.update_attribute(:challenger_score, self.challenger_score + 1)
+
+    else
+
+      self.update_attribute(:challenged_score, self.challenged_score + 1)
+    end
+  end
+
+  def decide_winner(player)
+    if self.challenged_score > self.challenger_score
+      self.challenged_player_wins(player)
+    else
+      self.challenger_player_wins(player.opponent)
+    end
+  end
+
+  def proceed_to_next_round(player)
+    player.opponent.update_attribute(:isActivePlayer, true)
+    self.update_attribute(:is_first_round, false)
   end
 end

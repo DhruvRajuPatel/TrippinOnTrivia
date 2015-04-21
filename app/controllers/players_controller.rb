@@ -66,6 +66,29 @@ class PlayersController < ApplicationController
     end
   end
 
+  def resign_current_player
+    current_user.active_player.resign
+  end
+
+  def handle_correct_response
+
+    current_user.update_question_statistics
+    current_user.active_player.respond_correctly
+
+  end
+
+  def handle_incorrect_response
+
+    current_user.active_player.respond_incorrectly
+
+  end
+
+  def reset_question_properties
+
+    current_user.active_player.finish_question
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_player

@@ -155,7 +155,7 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
     function Resign()
     {
         $.ajax({
-            url: "play/resign",
+            url: "players/resign_current_player",
             type: 'PUT'
         });
         setTimeout($('body').load('/play/display_spinner.html'), 1000);
