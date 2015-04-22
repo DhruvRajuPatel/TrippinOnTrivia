@@ -25,6 +25,7 @@
       <% end %>
       <% if user_signed_in? %>
           <section style="text-align: center">
+            <%= image_tag current_user.avatar.url, style: 'border-radius: 50%; height: 35px' %>
             <strong> <%= current_user.email %></strong>
             | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
             | Level: <%= current_user.level %>

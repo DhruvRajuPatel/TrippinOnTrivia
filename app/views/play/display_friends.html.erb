@@ -6,7 +6,7 @@
       <% if user.id != current_user.id  %>
           <tr>
             <td>
-              <%= image_tag user.avatar.url %>
+              <%= image_tag user.avatar.url, style: 'border-radius: 50%;' %>
             </td>
 
             <td>
