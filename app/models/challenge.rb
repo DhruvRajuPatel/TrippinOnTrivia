@@ -13,10 +13,6 @@ class Challenge < ActiveRecord::Base
   has_many :questions
   has_many :answers
 
-  def add_question_by_category_name(category_name)
-    self.questions << Category.find_by_title(category_name).questions.shuffle[0]
-  end
-
   def self.make_new_challenge(player)
     challenge = Challenge.create(question_counter: 1, is_first_round: true, challenger_score: 0, challenged_score: 0)
 
@@ -37,32 +33,6 @@ class Challenge < ActiveRecord::Base
     player.current_question = self.questions[self.question_counter]
     self.update_attribute(:question_counter, self.question_counter + 1)
     player.current_category = player.current_question.category
-  end
-
-  def challenger_player_wins(challenger_player)
-    challenger_player.opponent.trophies.delete(self.challenged_trophy)
-    challenger_player.trophies << self.challenged_trophy
-    challenger_player.update_attribute(:isActivePlayer, true)
-  end
-
-  def challenged_player_wins(challenged_player)
-    challenged_player.opponent.trophies.delete(self.bid_trophy)
-    challenged_player.update_attribute(:isActivePlayer, true)
-  end
-
-  def end_current_challenge(player)
-
-    if !player.opponent.nil?
-      player.opponent.challenges.delete(self)
-    end
-    if player.challenges.first.nil?
-      player.current_question = nil
-      player.current_category = nil
-    end
-    player.opponent.current_question = nil
-    player.opponent.current_category = nil
-    player.save_current_players
-    player.challenges.delete(self)
   end
 
   def end_challenge_round(player)
@@ -103,15 +73,58 @@ class Challenge < ActiveRecord::Base
     end
   end
 
+  private
+
+  def add_question_by_category_name(category_name)
+
+    self.questions << Category.find_by_title(category_name).questions.shuffle[0]
+  end
+
+  def challenger_player_wins(challenger_player)
+
+    challenger_player.opponent.trophies.delete(self.challenged_trophy)
+    challenger_player.trophies << self.challenged_trophy
+    challenger_player.update_attribute(:isActivePlayer, true)
+  end
+
+  def challenged_player_wins(challenged_player)
+
+    challenged_player.opponent.trophies.delete(self.bid_trophy)
+    challenged_player.update_attribute(:isActivePlayer, true)
+  end
+
+  def end_current_challenge(player)
+
+    if player.has_opponent
+
+      player.opponent.challenges.delete(self)
+    end
+
+    if player.challenges.first.nil?
+
+      player.current_question = nil
+      player.current_category = nil
+    end
+
+    player.opponent.current_question = nil
+    player.opponent.current_category = nil
+    player.save_current_players
+    player.challenges.delete(self)
+  end
+
   def decide_winner(player)
+
     if self.challenged_score > self.challenger_score
+
       self.challenged_player_wins(player)
     else
+
       self.challenger_player_wins(player.opponent)
     end
   end
 
   def proceed_to_next_round(player)
+
     player.opponent.update_attribute(:isActivePlayer, true)
     self.update_attribute(:is_first_round, false)
   end

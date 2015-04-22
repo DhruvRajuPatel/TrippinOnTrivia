@@ -80,6 +80,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def change_muted_status
+    muted = !self.muted
+    self.update_attribute(:muted,muted)
+  end
+
   private
 
   def calculate_level_up_threshold

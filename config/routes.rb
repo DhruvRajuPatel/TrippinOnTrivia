@@ -34,9 +34,8 @@ Rails.application.routes.draw do
     collection do
       put 'get_selected_player'
       put 'get_random_category'
-      put 'achievement_message_recieved'
-      put 'phone_google'
-      put 'eliminate'
+      put 'achievement_message_received'
+      put 'use_power_up'
       put 'toggle_mute'
       put 'play_friend'
     end

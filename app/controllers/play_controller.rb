@@ -15,7 +15,7 @@ class PlayController < ApplicationController
   def display_spinner
 
     current_user.active_player.update_attribute(:going_for_trophy, false)
-    if !current_user.active_player.current_question.nil?
+    if current_user.active_player.current_question.present?
       detect_cheating
     end
     current_user.active_player.check_win
@@ -47,7 +47,7 @@ class PlayController < ApplicationController
 
   def display_full_meter_choice
     current_user.active_player.update_attribute(:meter, 0)
-    if !current_user.active_player.opponent.nil?
+    if current_user.active_player.has_opponent
       Challenge.make_new_challenge(current_user.active_player)
     end
   end
@@ -56,39 +56,32 @@ class PlayController < ApplicationController
     rotations = params[:rotations].to_i
     degree = rotations % SPINNER_DEGREES
     current_user.active_player.set_category_by_degree(degree)
+    render nothing: true
   end
 
   def play_friend
     user = User.find(params[:id])
-    current_user.active_player.get_random_opponent_from_group(user.players.all)
-    if current_user.active_player.opponent.nil?
-      new_player = user.players.create(isActivePlayer: false, meter: 0)
-      current_user.active_player.opponent = new_player
-      new_player.opponent = current_user.active_player
-    end
+    current_user.active_player.set_user_as_opponent(user)
+    render nothing: true
   end
 
-  def achievement_message_recieved
+  def achievement_message_received
     current_user.update_attribute(:has_new_achievement, false)
     render nothing: true
   end
 
   def get_selected_player
     current_user.active_player = current_user.players.find(params[:player_id])
+    render nothing: true
   end
 
-  def eliminate
+  def use_power_up
     current_user.update_attribute(:points, current_user.points - 1)
+    render nothing: true
   end
 
   def toggle_mute
-    muted = !current_user.muted
-    current_user.update_attribute(:muted,muted)
+    current_user.change_muted_status
     render :nothing => true
   end
-
-  def phone_google
-    current_user.update_attribute(:points, current_user.points - 1)
-  end
-
 end

@@ -10,11 +10,6 @@ class Player < ActiveRecord::Base
   $category_amount = Category.all.count
   FULL_METER_AMOUNT = 3
 
-  def self.all_waiting_active_players
-
-    where('isActivePlayer = ? AND is_inactive = ?', false, false)
-  end
-
   def get_random_opponent_from_group(group = Player.all)
 
     group.all_waiting_active_players.each do |opponent|
@@ -38,6 +33,16 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def set_user_as_opponent(user)
+    self.get_random_opponent_from_group(user.players.all)
+    if self.opponent.nil?
+      new_player = user.players.create(isActivePlayer: false, meter: 0)
+      self.opponent = new_player
+      new_player.opponent = self
+    end
+  end
+
+
   def check_win
 
     if self.trophies.count >= $category_amount
@@ -56,14 +61,6 @@ class Player < ActiveRecord::Base
 
       end_game
     end
-  end
-
-  def set_victory
-
-    self.update_attribute(:has_won, true)
-    self.user.update_attribute(:win_count, self.user.win_count + 1)
-    end_game
-
   end
 
   def set_category_by_degree(degree)
@@ -110,32 +107,6 @@ class Player < ActiveRecord::Base
     finish_question
   end
 
-  def punish_cheating_player
-
-    if !has_active_challenge
-
-      change_active_player
-
-    elsif self.challenges.first.question_counter > 1 || !self.challenges.first.is_first_round
-
-      self.challenges.first.end_challenge_round(self)
-
-    else
-
-      self.challenges.first.end_current_challenge(self)
-    end
-  end
-
-  def change_active_player
-
-    self.update_attribute(:isActivePlayer, false)
-
-    if has_opponent
-
-      self.opponent.update_attribute(:isActivePlayer, true)
-    end
-  end
-
   def finish_question
 
     if !has_active_challenge
@@ -143,31 +114,6 @@ class Player < ActiveRecord::Base
       self.current_question = nil
       self.current_category = nil
     end
-  end
-
-  def fill_meter
-
-    self.update_attribute(:meter, FULL_METER_AMOUNT)
-  end
-
-  def end_game
-
-    self.close_player
-
-    if has_opponent
-
-      self.opponent.close_player
-
-    end
-
-    save_current_players
-  end
-
-  def close_player
-
-    self.update_attribute(:is_inactive, true)
-    self.update_attribute(:isActivePlayer, false)
-
   end
 
   def respond_correctly
@@ -204,4 +150,71 @@ class Player < ActiveRecord::Base
   def has_active_challenge
     !self.challenges.first.nil?
   end
+
+  private
+
+  def self.all_waiting_active_players
+
+    where('isActivePlayer = ? AND is_inactive = ?', false, false)
+  end
+
+  def set_victory
+
+    self.update_attribute(:has_won, true)
+    self.user.update_attribute(:win_count, self.user.win_count + 1)
+    end_game
+
+  end
+
+  def punish_cheating_player
+
+    if !has_active_challenge
+
+      change_active_player
+
+    elsif self.challenges.first.question_counter > 1 || !self.challenges.first.is_first_round
+
+      self.challenges.first.end_challenge_round(self)
+
+    else
+
+      self.challenges.first.end_current_challenge(self)
+    end
+  end
+
+  def change_active_player
+
+    self.update_attribute(:isActivePlayer, false)
+
+    if has_opponent
+
+      self.opponent.update_attribute(:isActivePlayer, true)
+    end
+  end
+
+  def fill_meter
+
+    self.update_attribute(:meter, FULL_METER_AMOUNT)
+  end
+
+  def end_game
+
+    self.close_player
+
+    if has_opponent
+
+      self.opponent.close_player
+
+    end
+
+    save_current_players
+  end
+
+  def close_player
+
+    self.update_attribute(:is_inactive, true)
+    self.update_attribute(:isActivePlayer, false)
+
+  end
+
 end

@@ -90,7 +90,7 @@
     var newAchievement = "You have a new Achievement\n<%= current_user.achievements.last.title %>"
     alert(newAchievement)
     $.ajax({
-        url: "play/achievement_message_recieved",
+        url: "play/achievement_message_received",
         type: 'PUT'
     });
     <% end %>

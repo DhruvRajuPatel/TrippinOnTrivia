@@ -112,7 +112,7 @@
 
         $('#phone_google').click(function(){
             $.ajax({
-                url: "play/phone_google",
+                url: "play/use_power_up",
                 type: 'PUT'
             });
             seconds = seconds + 30;
@@ -124,7 +124,7 @@
         $('#eliminate').click(function(){
             $('#eliminate').hide();
             $.ajax({
-                url: "play/eliminate",
+                url: "play/use_power_up",
                 type: 'PUT'
             });
             var incorrectAnswers = [];
