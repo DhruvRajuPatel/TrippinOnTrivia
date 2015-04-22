@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
   <data-source name="Rails TrippinOnTrivia: development" uuid="4da18fb1-3327-4610-b42f-4234ad112a38">
-    <database-info product="SQLite" version="3.7.6.3" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native"/>
+    <database-info product="SQLite" version="3.8.7" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native"/>
     <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed"/>
     <schema name="" catalog=""/>
     <table name="achievements" schema="" catalog="" type="TABLE">
@@ -19,16 +19,16 @@
     </table>
     <table name="admins" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
-      <column name="email" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
-      <column name="encrypted_password" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
-      <column name="sign_in_count" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="email" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="encrypted_password" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="sign_in_count" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="MA=="/>
       <column name="current_sign_in_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="last_sign_in_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="current_sign_in_ip" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="last_sign_in_ip" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
-      <column name="reviewer" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="reviewer" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="J2Yn"/>
       <primary-key columns="id"/>
       <index name="index_admins_on_email" unique="true" columns="email"/>
     </table>
@@ -66,7 +66,7 @@
       <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="uid" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="category_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
-      <column name="questions_correct" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="questions_correct" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="MA=="/>
       <column name="aquatic_counter_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="memes_counter_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="basketball_counter_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
@@ -109,7 +109,7 @@
     <table name="players" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
       <column name="meter" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
-      <column name="isActivePlayer" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="is_current_turn" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="player_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
@@ -123,8 +123,8 @@
       <column name="challenged_player_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="challenge_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="challenge_score" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
-      <column name="has_won" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
-      <column name="is_inactive" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="has_won" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4" def="J2Yn"/>
+      <column name="is_inactive" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="true" jdbcType="4" def="J2Yn"/>
       <primary-key columns="id"/>
       <index name="index_players_on_uid" unique="true" columns="uid"/>
     </table>
@@ -136,16 +136,16 @@
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
       <column name="title" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="rating" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
-      <column name="user_submitted" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="user_submitted" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="J2Yn"/>
       <column name="category_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="answer_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="player_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="challenge_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="times_rated" sqlType="FLOAT" precision="2000000000" scale="10" nullable="false" jdbcType="6" def="MS4w"/>
+      <column name="average_difficulty_rating" sqlType="FLOAT" precision="2000000000" scale="10" nullable="false" jdbcType="6" def="MC4w"/>
       <primary-key columns="id"/>
-      <index name="index_questions_on_category_id" unique="true" columns="category_id"/>
-      <index name="index_questions_on_answer_id" unique="true" columns="answer_id"/>
     </table>
     <table name="schema_migrations" schema="" catalog="" type="TABLE">
       <column name="version" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
@@ -165,17 +165,15 @@
       <column name="challenged_trophy_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="bid_trophy_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <primary-key columns="id"/>
-      <index name="index_trophies_on_player_id" unique="true" columns="player_id"/>
-      <index name="index_trophies_on_category_id" unique="true" columns="category_id"/>
     </table>
     <table name="users" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
-      <column name="email" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
-      <column name="encrypted_password" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="encrypted_password" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12" def="Jyc="/>
       <column name="reset_password_token" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="reset_password_sent_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="remember_created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
-      <column name="sign_in_count" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="sign_in_count" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="MA=="/>
       <column name="current_sign_in_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="last_sign_in_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="current_sign_in_ip" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
@@ -185,9 +183,9 @@
       <column name="provider" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="uid" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="player_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
-      <column name="points" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
-      <column name="level" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
-      <column name="total_correct" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="points" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="level" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="MQ=="/>
+      <column name="total_correct" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="MA=="/>
       <column name="achievement_id" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="category_correct_counter_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="aquatic_counter_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
@@ -196,12 +194,14 @@
       <column name="literature_counter_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="music_counter_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="cs_counter_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
-      <column name="has_new_achievement" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
-      <column name="win_count" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
-      <column name="muted" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="has_new_achievement" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="J2Yn"/>
+      <column name="win_count" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="muted" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="J2Yn"/>
+      <column name="avatar_file_name" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="avatar_content_type" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="avatar_file_size" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="avatar_updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <primary-key columns="id"/>
-      <index name="index_users_on_reset_password_token" unique="true" columns="reset_password_token"/>
-      <index name="index_users_on_email" unique="true" columns="email"/>
     </table>
   </data-source>
 </component>

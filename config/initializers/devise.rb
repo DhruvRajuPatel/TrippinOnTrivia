@@ -233,7 +233,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :facebook, "722391551191324", "86daf4cc428cc03385c58db683304038"
+  config.omniauth :facebook, "722391551191324", "86daf4cc428cc03385c58db683304038", secure_image_url: true
   config.omniauth :google_oauth2, "973443164429-28h14bbdirbmaut9jq9h2utjgkpmfa3f.apps.googleusercontent.com", "9uAhaR3G9sXKUjWyAfF5fAiQ"
   silence_warnings do
     OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE

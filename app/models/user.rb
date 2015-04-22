@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
 
+  has_attached_file :avatar, :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
   LEVEL_UP_STATIC_THRESHOLD = 3
   LEVEL_UP_DYNAMIC_THRESHOLD = 2
   CATEGORY_ACHIEVEMENT_THRESHOLD = 20
@@ -34,10 +37,11 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,20]
       user.level = 1
       user.total_correct = 0
+      user.avatar = auth.info.image
 
       unless user
         user = User.create(
-            email: data["email"],
+            email: data['email'],
             password: Devise.friendly_token[0,20],
             level: 1,
             total_correct: 0,
@@ -54,10 +58,11 @@ class User < ActiveRecord::Base
 
     unless user
         user = User.create(
-           email: data["email"],
+           email: data['email'],
            password: Devise.friendly_token[0,20],
            level: 1,
            total_correct: 0,
+           avatar: data['image'],
         )
     end
 

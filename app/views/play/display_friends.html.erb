@@ -1,13 +1,24 @@
-<div>
-  <h2>Users</h2>
-  <ul>
-    <% for user in @users %>
-        <% if user.id != current_user.id  %>
-            <li>
-              <%=h user.email %>
-               <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
-            </li>
-        <% end %>
-    <% end %>
-  </ul>
-</div>
+<table style="width: 50%;margin: 0 auto;">
+  <tr>
+    <th colspan="3" style="text-align: center">Users</th>
+  </tr>
+  <% for user in @users %>
+      <% if user.id != current_user.id  %>
+          <tr>
+            <td>
+              <%= image_tag user.avatar.url %>
+            </td>
+
+            <td>
+              <%= user.email %>
+            </td>
+
+            <td>
+              <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
+            </td>
+
+          </tr>
+      <% end %>
+  <% end %>
+
+</table>
