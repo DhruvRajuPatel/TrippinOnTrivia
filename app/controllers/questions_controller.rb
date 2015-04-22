@@ -79,6 +79,19 @@ class QuestionsController < ApplicationController
 
   end
 
+  def rate_current_question
+
+    if !current_user.active_player.current_question.nil?
+
+        question = current_user.active_player.current_question
+        question.update_attribute(:rating, question.rating + params[:difficulty].to_i)
+        question.update_attribute(:times_rated, question.times_rated + 1)
+        overall_difficulty = question.calculate_difficulty_rating
+        question.update_attribute(:average_difficulty_rating, overall_difficulty)
+    end
+    render nothing: true
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question

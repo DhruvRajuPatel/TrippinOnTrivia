@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :trophies
 
   resources :questions do
+    collection do
+      put 'rate_current_question'
+    end
     resources :answers
   end
 

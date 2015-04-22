@@ -69,30 +69,32 @@ class PlayersController < ApplicationController
   def resign_current_player
 
     current_user.active_player.resign
+    render nothing: true
   end
 
   def handle_correct_response
 
     current_user.update_question_statistics
     current_user.active_player.respond_correctly
-
+    render nothing: true
   end
 
   def handle_incorrect_response
 
     current_user.active_player.respond_incorrectly
-
+    render nothing: true
   end
 
   def reset_question_properties
 
     current_user.active_player.finish_question
-
+    render nothing: true
   end
 
   def set_category_by_id
 
       current_user.active_player.current_category = Category.find(params[:category_id])
+      render nothing: true
   end
 
   private

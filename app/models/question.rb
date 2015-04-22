@@ -5,4 +5,16 @@ class Question < ActiveRecord::Base
   def to_s
     "#{title}"
   end
+
+  def calculate_difficulty_rating
+
+    difficulty = 0
+
+    if self.times_rated != 0
+
+      difficulty = self.rating / self.times_rated
+    end
+
+    difficulty
+  end
 end
