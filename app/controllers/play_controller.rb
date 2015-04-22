@@ -32,7 +32,7 @@ class PlayController < ApplicationController
   def display_questions
 
     if current_user.active_player.challenges.first.nil?
-      current_user.active_player.current_question = current_user.active_player.current_category.questions.all.shuffle[0]
+      current_user.active_player.current_question = current_user.active_player.current_category.questions.get_question_by_user_level(current_user)
     end
 
     respond_to do |format|

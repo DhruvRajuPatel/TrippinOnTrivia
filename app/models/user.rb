@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
+  MAX_LEVEL = 30.0
+
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -83,6 +85,18 @@ class User < ActiveRecord::Base
   def change_muted_status
     muted = !self.muted
     self.update_attribute(:muted,muted)
+  end
+
+  def get_max_level_progression
+
+    progress = self.level / MAX_LEVEL
+
+    if progress > 1.0
+
+      progress = 1.0
+    end
+
+    progress
   end
 
   private
