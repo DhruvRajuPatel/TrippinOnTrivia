@@ -67,6 +67,7 @@ class PlayersController < ApplicationController
   end
 
   def resign_current_player
+
     current_user.active_player.resign
   end
 

@@ -4,67 +4,49 @@
   <button style="font-family: Arcade-Classic; font-size: 2.3em; background-color: #2541c3"onclick="ChangePage()" type="button" class="btn btn-primary btn-lg btn-block">
     + NEW GAME</button><br><br>
 
-  <% current_user.players.each do |player|%>
-      <div class="text-center">
-        <% if player.isActivePlayer %>
-            <% has_opponent = 'Unmatched'
-               opponent_trophies = 0
-               if (!player.opponent.nil?)
-                 has_opponent = player.opponent.user.email
-                 opponent_trophies = player.opponent.trophies.count
-               end %>
+  <% active_players = current_user.players.all_active_players.order(updated_at: :desc)%>
+  <% active_players.each do |player|%>
+
+            <%assign_button_labels(player)%>
 
             <button style="background-color:#38cc07" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
-              READY <%=has_opponent%> <%=player.trophies.count %>:<%= opponent_trophies %></button><br>
-            </div>
+              READY <%=@has_opponent%> <%=player.trophies.count %>:<%= @opponent_trophies %></button><br>
+
             <script>
                 $(document).ready(function() {
                     AssignFunctionality(<%= 'a' + player.id.to_s%>);
                 })
             </script>
-        <% end %>
   <% end %>
 
-  <% current_user.players.each do |player|%>
-      <div class="text-center">
-        <% if !player.isActivePlayer && !player.is_inactive%>
-            <% has_opponent = 'Unmatched'
-               opponent_trophies = 0
-               if (!player.opponent.nil?)
-                 has_opponent = player.opponent.user.email
-                 opponent_trophies = player.opponent.trophies.count
-               end %>
+  <% waiting_players = current_user.players.all_waiting_players.order(updated_at: :desc)%>
+  <% waiting_players.each do |player|%>
+
+            <%assign_button_labels(player)%>
 
             <button style="background-color:#ff00dd" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
-              WAITING <%=has_opponent%> <%=player.trophies.count %>:<%= opponent_trophies %></button><br>
-            </div>
+              WAITING <%=@has_opponent%> <%=player.trophies.count %>:<%= @opponent_trophies %></button><br>
+
             <script>
                 $(document).ready(function() {
                     AssignFunctionality(<%= 'a' + player.id.to_s%>);
                 })
             </script>
-        <% end %>
   <% end %>
 
-  <% current_user.players.each do |player|%>
-      <div class="text-center">
-        <% if player.is_inactive %>
-            <% has_opponent = 'Unmatched'
-               opponent_trophies = 0
-               if (!player.opponent.nil?)
-                 has_opponent = player.opponent.user.email
-                 opponent_trophies = player.opponent.trophies.count
-               end %>
+  <% closed_players = current_user.players.all_closed_players.order(updated_at: :desc)%>
+  <% closed_players.each do |player|%>
+
+            <%assign_button_labels(player)%>
 
             <button style="background-color:#fcc603" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
-              GAME OVER <%=has_opponent%> <%=player.trophies.count %>:<%= opponent_trophies %></button><br>
-            </div>
+              GAME OVER <%=@has_opponent%> <%=player.trophies.count %>:<%= @opponent_trophies %></button><br>
+
             <script>
                 $(document).ready(function() {
                     AssignFunctionality(<%= 'a' + player.id.to_s%>);
                 })
             </script>
-        <% end %>
   <% end %>
 </div>
 
@@ -76,7 +58,7 @@
           $(id).click(function() {
               var currentPlayer = this.value;
               $.ajax({
-                          url: "users/get_selected_player",
+                          url: "play/get_selected_player",
                           type: 'PUT',
                           dataType: 'json',
                           data: {'player_id' : currentPlayer},
@@ -87,12 +69,12 @@
   }
 
     <% if current_user.has_new_achievement %>
-    var newAchievement = "You have a new Achievement\n<%= current_user.achievements.last.title %>"
-    alert(newAchievement)
-    $.ajax({
-        url: "play/achievement_message_received",
-        type: 'PUT'
-    });
+        var newAchievement = "You have a new Achievement\n<%= current_user.achievements.last.title %>"
+        alert(newAchievement);
+        $.ajax({
+            url: "play/achievement_message_received",
+            type: 'PUT'
+        });
     <% end %>
 
 

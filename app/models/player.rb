@@ -10,6 +10,26 @@ class Player < ActiveRecord::Base
   $category_amount = Category.all.count
   FULL_METER_AMOUNT = 3
 
+  def self.all_active_players
+
+    where('isActivePlayer = ?', true)
+  end
+
+  def self.all_waiting_players
+
+    where('isActivePlayer = ? AND is_inactive = ?', false, false)
+  end
+
+  def self.all_closed_players
+
+    where('is_inactive = ?', true)
+  end
+
+  def self.all_waiting_active_players
+
+    where('isActivePlayer = ? AND is_inactive = ?', false, false)
+  end
+
   def get_random_opponent_from_group(group = Player.all)
 
     group.all_waiting_active_players.each do |opponent|
@@ -144,18 +164,20 @@ class Player < ActiveRecord::Base
   end
 
   def has_opponent
+
     !self.opponent.nil?
   end
 
   def has_active_challenge
+
     !self.challenges.first.nil?
   end
 
-  private
+  def close_player
 
-  def self.all_waiting_active_players
+    self.update_attribute(:is_inactive, true)
+    self.update_attribute(:isActivePlayer, false)
 
-    where('isActivePlayer = ? AND is_inactive = ?', false, false)
   end
 
   def set_victory
@@ -165,6 +187,8 @@ class Player < ActiveRecord::Base
     end_game
 
   end
+
+  private
 
   def punish_cheating_player
 
@@ -208,13 +232,6 @@ class Player < ActiveRecord::Base
     end
 
     save_current_players
-  end
-
-  def close_player
-
-    self.update_attribute(:is_inactive, true)
-    self.update_attribute(:isActivePlayer, false)
-
   end
 
 end

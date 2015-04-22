@@ -73,26 +73,6 @@ class Challenge < ActiveRecord::Base
     end
   end
 
-  private
-
-  def add_question_by_category_name(category_name)
-
-    self.questions << Category.find_by_title(category_name).questions.shuffle[0]
-  end
-
-  def challenger_player_wins(challenger_player)
-
-    challenger_player.opponent.trophies.delete(self.challenged_trophy)
-    challenger_player.trophies << self.challenged_trophy
-    challenger_player.update_attribute(:isActivePlayer, true)
-  end
-
-  def challenged_player_wins(challenged_player)
-
-    challenged_player.opponent.trophies.delete(self.bid_trophy)
-    challenged_player.update_attribute(:isActivePlayer, true)
-  end
-
   def end_current_challenge(player)
 
     if player.has_opponent
@@ -112,14 +92,34 @@ class Challenge < ActiveRecord::Base
     player.challenges.delete(self)
   end
 
+  def add_question_by_category_name(category_name)
+
+    self.questions << Category.find_by_title(category_name).questions.shuffle[0]
+  end
+
+  private
+
+  def challenger_player_wins(challenger_player)
+
+    challenger_player.opponent.trophies.delete(self.challenged_trophy)
+    challenger_player.trophies << self.challenged_trophy
+    challenger_player.update_attribute(:isActivePlayer, true)
+  end
+
+  def challenged_player_wins(challenged_player)
+
+    challenged_player.opponent.trophies.delete(self.bid_trophy)
+    challenged_player.update_attribute(:isActivePlayer, true)
+  end
+
   def decide_winner(player)
 
     if self.challenged_score > self.challenger_score
 
-      self.challenged_player_wins(player)
+      challenged_player_wins(player)
     else
 
-      self.challenger_player_wins(player.opponent)
+      challenger_player_wins(player.opponent)
     end
   end
 
