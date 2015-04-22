@@ -17,6 +17,11 @@ class PlayController < ApplicationController
     render :layout => false
   end
 
+  def display_user_profile
+    @users = User.all
+    render :layout => false
+  end
+
   def display_spinner
 
     current_user.active_player.update_attribute(:going_for_trophy, false)

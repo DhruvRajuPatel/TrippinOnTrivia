@@ -7,6 +7,7 @@ module PlayHelper
 
     if (!player.opponent.nil?)
 
+      @opponent = player.opponent
       @has_opponent = player.opponent.user.email
       @opponent_trophies = player.opponent.trophies.count
     end

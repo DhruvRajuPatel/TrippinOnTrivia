@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   LEVEL_UP_STATIC_THRESHOLD = 3
   LEVEL_UP_DYNAMIC_THRESHOLD = 2
-  CATEGORY_ACHIEVEMENT_THRESHOLD = 20
+  CATEGORY_ACHIEVEMENT_THRESHOLD = 1
 
   has_many :players, foreign_key: "uid"
   has_one :active_player, class_name: "Player", foreign_key: "active_player_id"
@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
 
     update_category_statistics
 
-    if self.total_correct == calculate_level_up_threshold
+    if self.total_correct > calculate_level_up_threshold
       self.update_attribute(:level, self.level + 1)
     end
   end

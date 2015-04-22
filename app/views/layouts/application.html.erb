@@ -25,17 +25,28 @@
       <% end %>
       <% if user_signed_in? %>
           <section style="text-align: center">
+              <span data-remote="play/display_user_profile"
+                    data-toggle="modal"
+                    data-target="#basicModal">
             <%= image_tag current_user.avatar.url, style: 'border-radius: 50%; height: 35px' %>
+              </span>
+
             <strong> <%= current_user.email %></strong>
             | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
             | Level: <%= current_user.level %>
             | Points: <%= current_user.points %>
             | <%= link_to "Purchase Points", new_charge_path %>
             <section style="padding-top: 10px;text-align: center">
+              <span data-remote="play/display_user_profile"
+                    data-toggle="modal"
+                    data-target="#basicModal">
+                <i class="fa fa-user fa-3x fa-fw"></i>
+              </span>
+
               <span data-remote="play/display_friends"
                     data-toggle="modal"
                     data-target="#basicModal">
-                <i class="fa fa-user-plus fa-3x fa-fw"></i>
+                <i class="fa fa-users fa-3x fa-fw"></i>
               </span>
 
               <span data-remote="<%= edit_user_registration_path %>"
@@ -77,6 +88,11 @@
 
 
 <script>
+
+    $(document.body).on('hidden.bs.modal', function () {
+        $('#basicModal').removeData('bs.modal')
+    });
+
     $( document ).ready(function() {
         var sound = document.getElementById('un-mute');
 
