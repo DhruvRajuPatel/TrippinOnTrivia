@@ -28,8 +28,8 @@
             <strong> <%= current_user.email %></strong>
             | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
             | Level: <%= current_user.level %>
-            | <%= link_to "Purchase", new_charge_path %>
             | Points: <%= current_user.points %>
+            | <%= link_to "Purchase Points", new_charge_path %>
             <section style="padding-top: 10px;text-align: center">
               <span data-remote="play/display_friends"
                     data-toggle="modal"

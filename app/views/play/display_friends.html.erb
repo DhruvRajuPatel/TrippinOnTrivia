@@ -5,7 +5,7 @@
         <% if user.id != current_user.id  %>
             <li>
               <%=h user.email %>
-              - <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
+               <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
             </li>
         <% end %>
     <% end %>
