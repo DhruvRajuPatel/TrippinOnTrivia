@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422041109) do
+ActiveRecord::Schema.define(version: 20150422125742) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -151,8 +151,8 @@ ActiveRecord::Schema.define(version: 20150422041109) do
     t.integer  "answer_id"
     t.integer  "player_id"
     t.integer  "challenge_id"
-    t.integer  "times_rated",               default: 1,     null: false
-    t.integer  "average_difficulty_rating", default: 0,     null: false
+    t.float    "times_rated",               default: 1.0,   null: false
+    t.float    "average_difficulty_rating", default: 0.0,   null: false
   end
 
   add_index "questions", ["answer_id"], name: "index_questions_on_answer_id"
