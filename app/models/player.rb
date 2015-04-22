@@ -12,12 +12,12 @@ class Player < ActiveRecord::Base
 
   def self.all_active_players
 
-    where('isActivePlayer = ?', true)
+    where('is_current_turn = ?', true)
   end
 
   def self.all_waiting_players
 
-    where('isActivePlayer = ? AND is_inactive = ?', false, false)
+    where('is_current_turn = ? AND is_inactive = ?', false, false)
   end
 
   def self.all_closed_players
@@ -27,7 +27,7 @@ class Player < ActiveRecord::Base
 
   def self.all_waiting_active_players
 
-    where('isActivePlayer = ? AND is_inactive = ?', false, false)
+    where('is_current_turn = ? AND is_inactive = ?', false, false)
   end
 
   def get_random_opponent_from_group(group = Player.all)
@@ -56,7 +56,7 @@ class Player < ActiveRecord::Base
   def set_user_as_opponent(user)
     self.get_random_opponent_from_group(user.players.all)
     if self.opponent.nil?
-      new_player = user.players.create(isActivePlayer: false, meter: 0)
+      new_player = user.players.create(is_current_turn: false, meter: 0)
       self.opponent = new_player
       new_player.opponent = self
     end
@@ -119,7 +119,7 @@ class Player < ActiveRecord::Base
 
   def detect_cheating
 
-    if self.isActivePlayer
+    if self.is_current_turn
 
       punish_cheating_player
     end
@@ -176,7 +176,7 @@ class Player < ActiveRecord::Base
   def close_player
 
     self.update_attribute(:is_inactive, true)
-    self.update_attribute(:isActivePlayer, false)
+    self.update_attribute(:is_current_turn, false)
 
   end
 
@@ -208,11 +208,11 @@ class Player < ActiveRecord::Base
 
   def change_active_player
 
-    self.update_attribute(:isActivePlayer, false)
+    self.update_attribute(:is_current_turn, false)
 
     if has_opponent
 
-      self.opponent.update_attribute(:isActivePlayer, true)
+      self.opponent.update_attribute(:is_current_turn, true)
     end
   end
 

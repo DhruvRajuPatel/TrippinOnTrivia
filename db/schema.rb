@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422125742) do
+ActiveRecord::Schema.define(version: 20150422182438) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20150422125742) do
 
   create_table "players", force: :cascade do |t|
     t.integer  "meter"
-    t.boolean  "isActivePlayer"
+    t.boolean  "is_current_turn"
     t.integer  "player_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false

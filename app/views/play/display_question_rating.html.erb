@@ -55,7 +55,7 @@
             if (meter >= <%= Player::FULL_METER_AMOUNT%>) {
                 $('body').load('/play/display_full_meter_choice.html');
             }
-            else if (<%= current_user.active_player.isActivePlayer && !current_user.active_player.challenges.first.nil? %>){
+            else if (<%= current_user.active_player.is_current_turn && !current_user.active_player.challenges.first.nil? %>){
                 $('body').load('/play/display_questions.html');
             }
             else {

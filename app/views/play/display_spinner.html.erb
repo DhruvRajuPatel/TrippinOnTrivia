@@ -37,7 +37,7 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
 <button style="background-color: #2541c3" onclick="GoBack()" type="button" class="btn btn-primary">
   BACK</button><br>
 
-<% if !current_user.active_player.isActivePlayer
+<% if !current_user.active_player.is_current_turn
      if !current_user.active_player.is_inactive %>
     <h1>Awaiting opponent's turn</h1>
     <img src= "/images/wait_centerspin.png" id="center">
@@ -113,7 +113,7 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
                         dataType: 'json',
                         data: {'rotations' : rotations}
                     });
-                    <% if current_user.active_player.isActivePlayer && current_user.active_player.challenges.first.nil?%>
+                    <% if current_user.active_player.is_current_turn && current_user.active_player.challenges.first.nil?%>
                      $("#spinner").rotate({ angle:0,animateTo: rotations,easing: $.easing.easeInOutExpo });
                     <% if !current_user.muted %>
                         spinSound.playclip();

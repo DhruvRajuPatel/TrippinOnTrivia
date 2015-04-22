@@ -77,7 +77,7 @@
                     this.innerHTML = "Incorrect!!!";
                     correctButton.style.background = '#38cc07';
                 }
-                if (<%= current_user.active_player.isActivePlayer && !current_user.active_player.challenges.first.nil? %>){
+                if (<%= current_user.active_player.is_current_turn && !current_user.active_player.challenges.first.nil? %>){
                     $.ajax({
                         url: "challenges/continue_challenge",
                         type: 'PUT'

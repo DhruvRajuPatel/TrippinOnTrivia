@@ -24,7 +24,7 @@ class PlayController < ApplicationController
   end
 
   def display_new_game_page
-    current_user.active_player = current_user.players.create(meter: 0, isActivePlayer: true)
+    current_user.active_player = current_user.players.create(meter: 0, is_current_turn: true)
 
     current_user.active_player.get_random_opponent_from_group
   end

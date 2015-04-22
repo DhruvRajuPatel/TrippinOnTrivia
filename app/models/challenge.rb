@@ -36,7 +36,7 @@ class Challenge < ActiveRecord::Base
 
   def end_challenge_round(player)
 
-    player.update_attribute(:isActivePlayer, false)
+    player.update_attribute(:is_current_turn, false)
     self.update_attribute(:question_counter, 0)
 
     if self.is_first_round
@@ -102,13 +102,13 @@ class Challenge < ActiveRecord::Base
 
     challenger_player.opponent.trophies.delete(self.challenged_trophy)
     challenger_player.trophies << self.challenged_trophy
-    challenger_player.update_attribute(:isActivePlayer, true)
+    challenger_player.update_attribute(:is_current_turn, true)
   end
 
   def challenged_player_wins(challenged_player)
 
     challenged_player.opponent.trophies.delete(self.bid_trophy)
-    challenged_player.update_attribute(:isActivePlayer, true)
+    challenged_player.update_attribute(:is_current_turn, true)
   end
 
   def decide_winner(player)
@@ -124,7 +124,7 @@ class Challenge < ActiveRecord::Base
 
   def proceed_to_next_round(player)
 
-    player.opponent.update_attribute(:isActivePlayer, true)
+    player.opponent.update_attribute(:is_current_turn, true)
     self.update_attribute(:is_first_round, false)
   end
 end
