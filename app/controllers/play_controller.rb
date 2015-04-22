@@ -5,6 +5,11 @@ class PlayController < ApplicationController
 
   def index
 
+    current_user.players.all_active_players.each do |player|
+      if player.current_question.present?
+        player.detect_cheating
+      end
+    end
   end
 
   def display_friends
@@ -15,9 +20,6 @@ class PlayController < ApplicationController
   def display_spinner
 
     current_user.active_player.update_attribute(:going_for_trophy, false)
-    if current_user.active_player.current_question.present?
-      detect_cheating
-    end
     current_user.active_player.check_win
   end
 

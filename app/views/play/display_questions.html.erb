@@ -92,9 +92,10 @@
 
 <div id="powerups">
   <p>Power-Ups - Uses 1 point</p><br>
+
   <a id="phone_google" href="#">Phone a Google</a><br>
   <a id="eliminate" href="#">Elimination Station</a><br>
-  <!--<a id="reroll" href="#">Reroll</a>-->
+  <a id="reroll" href="#">Re-Roll</a><br>
 </div>
 
 <script>
@@ -104,8 +105,20 @@
         $('#powerups').show();
     }
 
+    if (<%= current_user.active_player.going_for_trophy || current_user.active_player.has_active_challenge %>) {
+        $('#reroll').hide();
+    }
+
     $(function() {
         $('#reroll').click(function(){
+            $.ajax({
+                url: "play/use_power_up",
+                type: 'PUT'
+            });
+            $.ajax({
+                url: "players/reset_question_properties",
+                type: 'PUT'
+            });
             $('#reroll').hide();
             $('body').load('/play/display_spinner.html');
         });
