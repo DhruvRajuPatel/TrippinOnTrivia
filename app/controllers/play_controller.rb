@@ -13,11 +13,17 @@ class PlayController < ApplicationController
 
   def display_friends
 
+    @friends = Array.new(current_user.friendships.count)
+    for friendship in current_user.friendships
+
+      @friends << friendship.friend
+    end
+
     if params[:search] && params[:search] != ""
       @user = User.find_by_email(params[:search])
-    else
-      @users = User.all
     end
+
+    @users = User.all
     @disable_nav = true
   end
 

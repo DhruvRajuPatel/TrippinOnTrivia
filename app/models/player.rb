@@ -8,7 +8,7 @@ class Player < ActiveRecord::Base
   belongs_to :current_answer, class_name: "Answer", :foreign_key => "current_answer_id"
 
   $category_amount = Category.all.count
-  FULL_METER_AMOUNT = 1
+  FULL_METER_AMOUNT = 3
 
   def self.all_active_players
 
