@@ -40,3 +40,7 @@ input#un-mute:checked ~ .unmute i {
 input#un-mute:checked ~ .mute i {
   display: none;
 }
+
+table { border-spacing: 5px; } /* cellspacing */
+
+th, td { padding: 5px; } /* cellpadding */

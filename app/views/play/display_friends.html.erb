@@ -14,6 +14,7 @@
               <tr>
                 <td>
                   <%= image_tag user.avatar.url, style: 'border-radius: 50%;' %>
+                </td>
                 <td>
                   <%= user.email %>
                 </td>
@@ -37,6 +38,8 @@
       <tr>
         <td>
           <%= image_tag @user.avatar.url, style: 'border-radius: 50%;' %>
+        </td>
+
         <td>
           <%= @user.email %>
         </td>
@@ -44,7 +47,6 @@
         <td>
           <%= link_to "Add Friend", friendships_path(:friend_id => @user), :method => :post %>
         </td>
-
       </tr>
 
   <% end %>

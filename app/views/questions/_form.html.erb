@@ -19,13 +19,34 @@
       <%= f.input :title %>
     </div>
 
-    <%= simple_fields_for @answer do |a| %>
+    <%= simple_fields_for @correct_answer do |a| %>
         <p>
           <%= a.input :title, label: 'Correct Answer' %>
-          <% @answer.is_correct = true %>
+          <% @correct_answer.is_correct = true %>
         </p>
     <% end %>
-    <p>
+
+    <%= simple_fields_for @incorrect_answer1 do |a| %>
+        <p>
+          <%= a.input :title, label: 'Incorrect Answer1' %>
+          <% @incorrect_answer1.is_correct = false %>
+
+        </p>
+    <% end %>
+
+    <%= simple_fields_for @incorrect_answer2 do |a| %>
+        <p>
+          <%= a.input :title, label: 'Incorrect Answer2' %>
+          <% @incorrect_answer2.is_correct = false %>
+        </p>
+    <% end %>
+
+    <%= simple_fields_for @incorrect_answer3 do |a| %>
+        <p>
+          <%= a.input :title, label: 'Incorrect Answer3' %>
+          <% @incorrect_answer3.is_correct = false %>
+        </p>
+    <% end %>
 
     <div class="actions">
       <%= f.submit 'Submit Question For Review' %>

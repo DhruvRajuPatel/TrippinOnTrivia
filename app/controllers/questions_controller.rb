@@ -16,7 +16,10 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @categories = Category.all
-    @answer = Answer.new
+    @correct_answer = Answer.new
+    @incorrect_answer1 = Answer.new
+    @incorrect_answer2 = Answer.new
+    @incorrect_answer3 = Answer.new
   end
 
   # GET /questions/1/edit
@@ -69,7 +72,11 @@ class QuestionsController < ApplicationController
   def create_user_question
     category = Category.find(params[:question][:category_id])
     user_question = category.questions.create(:title => params[:question][:title], :user_submitted => true)
-    user_question.answers.create(:title => params[:answer][:title])
+    user_question.answers.create(:title => params[:correct_answer][:title])
+    user_question.answers.create(:title => params[:incorrect_answer1][:title])
+    user_question.answers.create(:title => params[:incorrect_answer2][:title])
+    user_question.answers.create(:title => params[:incorrect_answer3][:title])
+
     user_question.save
 
     respond_to do |format|

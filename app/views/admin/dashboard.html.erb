@@ -1,33 +1,62 @@
 <!--Display these fields if a admin is logged in.-->
 
 <% if !current_admin.reviewer %>
+<table style="width: 100%; margin: 0 auto;border-spacing: 10px">
 
-<h2>Users</h2>
-<ul>
+  <tr>
+    <th colspan="3" style="text-align: center;">
+      Users
+    </th>
+  </tr>
   <% for user in @users %>
-      <li>
-        <%=h user.email %>
-        - <%= link_to "Remove", admin_destroy_user_path(user), method: :delete %>
-      </li>
+  <tr>
+    <td>
+      <%= image_tag user.avatar.url, style: 'border-radius: 50%;' %>
+    </td>
+
+    <td><%=h user.email %></td>
+
+    <td><%= link_to "Remove", admin_destroy_user_path(user), method: :delete %></td>
+  </tr>
   <% end %>
-</ul>
-<% end %>
 
-<% if current_admin.reviewer %>
-    <h2>Questions</h2>
-    <% for question in @questions %>
-        <% if question.user_submitted %>
-            <label>Title</label><br>
-            <%= question.title %><br>
+  <% end %>
+</table>
 
-            <label>Correct Answer</label><br>
-            <% for answer in question.answers %>
-                <% if answer.is_correct %>
-                    <label>Correct Answer</label><br>
-                    <%= answer.title %>
+<% if current_admin.reviewer || !current_admin.reviewer  %>
+
+    <table style="width: 75%; margin: 0 auto;">
+      <tr>
+        <th colspan="5" style="text-align: center">User Questions</th>
+      </tr>
+      <tr>
+        <th style="text-align: center">Question Title</th>
+        <th style="text-align: center">Correct Answer</th>
+        <th style="text-align: center">Incorrect Answer</th>
+        <th style="text-align: center">Incorrect Answer</th>
+        <th style="text-align: center">Incorrect Answer</th>
+      </tr>
+
+      <% for question in @questions %>
+          <% if question.user_submitted %>
+              <tr>
+                <td>
+                  <%= question.title %>
+                </td>
+                <% for answer in question.answers %>
+                    <% if answer.is_correct %>
+                        <td>
+                          <%= answer.title %>
+                        </td>
+                    <% end %>
+                    <td>
+                      <%= answer.title %>
+                    </td>
                 <% end %>
-            <% end %>
+              </tr>
 
-        <% end %>
-    <% end %>
+          <% end %>
+      <% end %>
+    </table>
+
 <% end %>
