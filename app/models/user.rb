@@ -80,6 +80,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.all_searchable_users
+
+    where('searchable = ?', true)
+  end
+
   def update_question_statistics
     self.update_attribute(:total_correct, self.total_correct + 1)
 

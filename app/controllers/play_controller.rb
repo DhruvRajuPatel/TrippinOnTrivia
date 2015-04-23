@@ -24,10 +24,10 @@ class PlayController < ApplicationController
     end
 
     if params[:search] && params[:search] != ""
-      @user = User.find_by_email(params[:search])
+      @user = User.all_searchable_users.find_by_email(params[:search])
     end
 
-    @users = User.all
+    @users = User.all_searchable_users
     @disable_nav = true
   end
 
@@ -114,6 +114,12 @@ class PlayController < ApplicationController
   def toggle_avatar
     current_user.hide_image = !current_user.hide_image
     current_user.update_attribute(:hide_image,current_user.hide_image)
+    render :nothing => true
+  end
+
+  def toggle_searchable
+    searchable = !current_user.searchable
+    current_user.update_attribute(:searchable, searchable)
     render :nothing => true
   end
 end

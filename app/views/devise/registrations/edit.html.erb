@@ -21,13 +21,30 @@
       </div>
   <% end %>
   <br>
-  <button id="toggle_avatar" class="btn btn-danger">Toggle Avatar Picture</button>
+  <button id="toggle_avatar" class="btn btn-danger">Toggle Avatar Picture</button><br><br>
+  <button id="toggle_searchable" class="btn btn-danger">Change Visibility</button><br><br>
+  <%if current_user.searchable %>
+      <p>Other users <b>can</b> search for me</p>
+      <% else %>
+      <p>Other users <b>cannot</b> search for me</p>
+      <% end %>
 
   <script>
           var toggle_avatar = $('#toggle_avatar');
           toggle_avatar.click(function() {
               $.ajax({
                   url: "play/toggle_avatar",
+                  type: 'PUT',
+                  success: function() {
+                      window.location.reload()
+                  }
+              });
+          });
+
+          var toggle_searchable = $('#toggle_searchable');
+          toggle_searchable.click(function() {
+              $.ajax({
+                  url: "play/toggle_searchable",
                   type: 'PUT',
                   success: function() {
                       window.location.reload()

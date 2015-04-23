@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       put 'use_power_up'
       put 'toggle_mute'
       put 'toggle_avatar'
+      put 'toggle_searchable'
       put 'play_friend'
     end
   end

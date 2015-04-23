@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423104328) do
+ActiveRecord::Schema.define(version: 20150423124615) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -244,6 +244,7 @@ ActiveRecord::Schema.define(version: 20150423104328) do
     t.boolean  "hide_image",                  default: false, null: false
     t.integer  "win_keeper_id"
     t.integer  "loss_keeper_id"
+    t.boolean  "searchable",                  default: true,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
