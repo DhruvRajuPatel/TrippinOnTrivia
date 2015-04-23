@@ -16,7 +16,8 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @categories = Category.all
-    4.times { @question.answers.build }
+    @correct_answer = Answer.new
+    3.times { @question.answers.build(:is_correct => false) }
   end
 
   # GET /questions/1/edit
@@ -69,13 +70,10 @@ class QuestionsController < ApplicationController
   def create_user_question
     category = Category.find(params[:question][:category_id])
     user_question = category.questions.create(:title => params[:question][:title], :user_submitted => true)
-    puts '============================================================='
-    puts  params[:question][:answers_attributes]['0'][:title]
-    puts '============================================================='
+    user_question.answers.create(:title =>  params[:answer][:title], :is_correct => true)
     user_question.answers.create(:title =>  params[:question][:answers_attributes]['0'][:title])
     user_question.answers.create(:title =>  params[:question][:answers_attributes]['1'][:title])
     user_question.answers.create(:title =>  params[:question][:answers_attributes]['2'][:title])
-    user_question.answers.create(:title =>  params[:question][:answers_attributes]['3'][:title])
 
     user_question.save
 
@@ -97,6 +95,20 @@ class QuestionsController < ApplicationController
         question.update_attribute(:average_difficulty_rating, overall_difficulty)
     end
     render nothing: true
+  end
+
+  def save_user_question()
+    @question_to_save = Question.find(params[:id])
+    puts '====================================================='
+    puts  @question_to_save
+    puts '====================================================='
+    puts  @question_to_save.user_submitted
+    puts '====================================================='
+    @question_to_save.update_attribute(:user_submitted, :false)
+    puts '====================================================='
+    puts  @question_to_save.user_submitted
+    puts '====================================================='
+    redirect_to admin_dashboard_path
   end
 
   private

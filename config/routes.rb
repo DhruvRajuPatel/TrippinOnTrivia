@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :questions do
     collection do
       put 'rate_current_question'
+      put 'save_user_question'
     end
     resources :answers
   end
