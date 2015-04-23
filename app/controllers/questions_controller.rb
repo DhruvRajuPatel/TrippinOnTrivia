@@ -16,10 +16,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @categories = Category.all
-    @correct_answer = Answer.new
-    @incorrect_answer1 = Answer.new
-    @incorrect_answer2 = Answer.new
-    @incorrect_answer3 = Answer.new
+    4.times { @question.answers.build }
   end
 
   # GET /questions/1/edit
@@ -72,10 +69,13 @@ class QuestionsController < ApplicationController
   def create_user_question
     category = Category.find(params[:question][:category_id])
     user_question = category.questions.create(:title => params[:question][:title], :user_submitted => true)
-    user_question.answers.create(:title => params[:correct_answer][:title])
-    user_question.answers.create(:title => params[:incorrect_answer1][:title])
-    user_question.answers.create(:title => params[:incorrect_answer2][:title])
-    user_question.answers.create(:title => params[:incorrect_answer3][:title])
+    puts '============================================================='
+    puts  params[:question][:answers_attributes][0][:title]
+    puts '============================================================='
+    user_question.answers.create(:title => params[:answer_attributes][0][:title])
+    user_question.answers.create(:title => params[:answer_attributes[1]][:title])
+    user_question.answers.create(:title => params[:answer_attributes[2]][:title])
+    user_question.answers.create(:title => params[:answer_attributes[3]][:title])
 
     user_question.save
 

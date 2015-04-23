@@ -1,6 +1,8 @@
 <%= simple_form_for @question,
                     :url => url_for(:action => 'create_user_question', :controller => 'questions'),
                     :method => 'post' do |f| %>
+
+
     <% if @question.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
@@ -16,36 +18,11 @@
     <%= f.association :category %>
 
     <div class="field">
-      <%= f.input :title %>
+      <%= f.input :title, :label => 'Question' %>
     </div>
 
-    <%= simple_fields_for @correct_answer do |a| %>
-        <p>
-          <%= a.input :title, label: 'Correct Answer' %>
-          <% @correct_answer.is_correct = true %>
-        </p>
-    <% end %>
-
-    <%= simple_fields_for @incorrect_answer1 do |a| %>
-        <p>
-          <%= a.input :title, label: 'Incorrect Answer1' %>
-          <% @incorrect_answer1.is_correct = false %>
-
-        </p>
-    <% end %>
-
-    <%= simple_fields_for @incorrect_answer2 do |a| %>
-        <p>
-          <%= a.input :title, label: 'Incorrect Answer2' %>
-          <% @incorrect_answer2.is_correct = false %>
-        </p>
-    <% end %>
-
-    <%= simple_fields_for @incorrect_answer3 do |a| %>
-        <p>
-          <%= a.input :title, label: 'Incorrect Answer3' %>
-          <% @incorrect_answer3.is_correct = false %>
-        </p>
+    <%= f.fields_for :answers do |answer| %>
+        <%= answer.input :title, :label => 'Answer' %>
     <% end %>
 
     <div class="actions">

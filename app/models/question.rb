@@ -2,6 +2,8 @@ class Question < ActiveRecord::Base
   belongs_to :category, dependent: :destroy
   has_many :answers
   has_many :players
+  accepts_nested_attributes_for :answers
+
 
   def self.get_questions_by_difficulty
 
