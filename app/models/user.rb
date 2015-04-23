@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessor :avatar
-  has_attached_file :avatar, :default_url => "/images/:style/missing.png"
+  has_attached_file :avatar, :default_url => "/images/original/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   LEVEL_UP_STATIC_THRESHOLD = 3

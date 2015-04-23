@@ -96,4 +96,10 @@ class PlayController < ApplicationController
     current_user.change_muted_status
     render :nothing => true
   end
+
+  def toggle_avatar
+    current_user.hide_image = !current_user.hide_image
+    current_user.update_attribute(:hide_image,current_user.hide_image)
+    render :nothing => true
+  end
 end

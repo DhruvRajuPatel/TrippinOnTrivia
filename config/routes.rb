@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       put 'achievement_message_received'
       put 'use_power_up'
       put 'toggle_mute'
+      put 'toggle_avatar'
       put 'play_friend'
     end
   end

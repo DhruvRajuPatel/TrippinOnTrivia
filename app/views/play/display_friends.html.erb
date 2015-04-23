@@ -8,7 +8,12 @@
           <% if user.id != current_user.id  %>
               <tr>
                 <td>
-                  <%= image_tag user.avatar.url, style: 'border-radius: 50%;' %>
+                  <% if user.hide_image %>
+                      <%= image_tag '/images/original/missing.png', style: 'border-radius: 50%;' %>
+                  <% else %>
+                      <%= image_tag user.avatar.url, style: 'border-radius: 50%;' %>
+                  <% end %>
+                </td>
                 <td>
                   <%= user.email %>
                 </td>
@@ -24,7 +29,13 @@
 
       <tr>
         <td>
-          <%= image_tag @user.avatar.url, style: 'border-radius: 50%;' %>
+          <% if @user.hide_image %>
+              <%= image_tag '/images/original/missing.png', style: 'border-radius: 50%;' %>
+          <% else %>
+              <%= image_tag @user.avatar.url, style: 'border-radius: 50%;' %>
+
+          <% end %>
+        </td>
         <td>
           <%= @user.email %>
         </td>
@@ -40,10 +51,10 @@
 </table>
 
 <div style="text-align:center; padding: 15px;" >
-<%= form_tag play_display_friends_path, :method => 'get' do %>
-    <p>
-      <%= text_field_tag :search, params[:search] %>
-      <%= submit_tag 'Search By Email', :name => nil, :class => 'btn' %>
-    </p>
-<% end %>
+  <%= form_tag play_display_friends_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag 'Search By Email', :name => nil, :class => 'btn' %>
+      </p>
+  <% end %>
 </div>

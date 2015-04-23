@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423005355) do
+ActiveRecord::Schema.define(version: 20150423030100) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 20150423005355) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "hide_image"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
