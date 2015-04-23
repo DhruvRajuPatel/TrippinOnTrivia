@@ -70,12 +70,12 @@ class QuestionsController < ApplicationController
     category = Category.find(params[:question][:category_id])
     user_question = category.questions.create(:title => params[:question][:title], :user_submitted => true)
     puts '============================================================='
-    puts  params[:question][:answers_attributes][0][:title]
+    puts  params[:question][:answers_attributes]['0'][:title]
     puts '============================================================='
-    user_question.answers.create(:title => params[:answer_attributes][0][:title])
-    user_question.answers.create(:title => params[:answer_attributes[1]][:title])
-    user_question.answers.create(:title => params[:answer_attributes[2]][:title])
-    user_question.answers.create(:title => params[:answer_attributes[3]][:title])
+    user_question.answers.create(:title =>  params[:question][:answers_attributes]['0'][:title])
+    user_question.answers.create(:title =>  params[:question][:answers_attributes]['1'][:title])
+    user_question.answers.create(:title =>  params[:question][:answers_attributes]['2'][:title])
+    user_question.answers.create(:title =>  params[:question][:answers_attributes]['3'][:title])
 
     user_question.save
 
