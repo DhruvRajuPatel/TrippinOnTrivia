@@ -4,7 +4,6 @@ class PlayController < ApplicationController
   SPINNER_DEGREES = 360
 
   def index
-
     current_user.players.all_active_players.each do |player|
       if player.current_question.present?
         player.detect_cheating
@@ -13,8 +12,13 @@ class PlayController < ApplicationController
   end
 
   def display_friends
-    @users = User.all
-    render :layout => false
+
+    if params[:search] && params[:search] != ""
+      @user = User.find_by_email(params[:search])
+    else
+      @users = User.all
+    end
+    @disable_nav = true
   end
 
   def display_user_profile

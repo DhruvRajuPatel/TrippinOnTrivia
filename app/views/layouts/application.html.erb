@@ -13,79 +13,14 @@
   <![endif]-->
 </head>
 <body>
-<nav id="accountbar" class="navbar navbar-default navbar-fixed-top">
-  <div class="account">
-    <section>
-      <p class="navbar-text">
-        <% if admin_signed_in? %>
-          <div class="text-center">
-            <h3>Admin Dashboard</h3>
-            <%= link_to "Logout Admin", destroy_admin_session_path, method: :delete %>
-          </div>
-      <% end %>
-      <% if user_signed_in? %>
-          <section style="text-align: center">
-              <span data-remote="play/display_user_profile"
-                    data-toggle="modal"
-                    data-target="#basicModal">
-            <%= image_tag current_user.avatar.url, style: 'border-radius: 50%; height: 35px' %>
-              </span>
 
-            <strong> <%= current_user.email %></strong>
-            | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-            | Level: <%= current_user.level %>
-            | Points: <%= current_user.points %>
-            | <%= link_to "Purchase Points", new_charge_path %>
-            <section style="padding-top: 10px;text-align: center">
-              <span data-remote="play/display_user_profile"
-                    data-toggle="modal"
-                    data-target="#basicModal">
-                <i class="fa fa-user fa-3x fa-fw"></i>
-              </span>
-
-              <span data-remote="play/display_friends"
-                    data-toggle="modal"
-                    data-target="#basicModal">
-                <i class="fa fa-users fa-3x fa-fw"></i>
-              </span>
-
-              <span data-remote="<%= edit_user_registration_path %>"
-                    data-toggle="modal"
-                    data-target="#basicModal">
-                    <i class="fa fa-cog fa-3x fa-fw"></i>
-              </span>
-
-              <% muteStatus = "fa fa-volume-up fa-3x fa-fw"
-                 if current_user.muted
-                   muteStatus = "fa fa-volume-off fa-3x fa-fw"
-                 end %>
-
-
-              <span id="un-mute">
-                <i class="<%= muteStatus%>"></i>
-              </span>
-
-            </section>
-          </section>
-
-      <% end %>
-    </section>
-  </div>
-</nav>
+<%= render 'layouts/navigation' unless @disable_nav %>
 
 <div class="container" id="main">
   <%= yield %>
 </div>
 
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-    </div>
-  </div>
-</div>
-
-
+<%= render 'layouts/modal' %>
 
 <script>
 
