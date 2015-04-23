@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   LEVEL_UP_STATIC_THRESHOLD = 3
   LEVEL_UP_DYNAMIC_THRESHOLD = 2
-  CATEGORY_ACHIEVEMENT_THRESHOLD = 1
+  CATEGORY_ACHIEVEMENT_THRESHOLD = 3
 
   has_many :players, foreign_key: "uid"
   has_one :active_player, class_name: "Player", foreign_key: "active_player_id"
@@ -173,12 +173,12 @@ class User < ActiveRecord::Base
     build_literature_counter
     build_music_counter
     build_cs_counter
-    memes_counter.categories << Category.all.find_by_title("Memes");
-    basketball_counter.categories << Category.all.find_by_title("Basketball");
-    literature_counter.categories << Category.all.find_by_title("Contemporary Literature");
-    music_counter.categories << Category.all.find_by_title("Music");
-    cs_counter.categories << Category.all.find_by_title("Computer Science");
-    aquatic_counter.categories << Category.all.find_by_title("Aquatic Animals");
+    memes_counter.categories << Category.find_by_title("Memes")
+    basketball_counter.categories << Category.find_by_title("Basketball")
+    literature_counter.categories << Category.find_by_title("Contemporary Literature")
+    music_counter.categories << Category.find_by_title("Music")
+    cs_counter.categories << Category.find_by_title("Computer Science")
+    aquatic_counter.categories << Category.find_by_title("Aquatic Animals")
     true
 
   end

@@ -40,7 +40,11 @@
               <span data-remote="play/display_user_profile"
                     data-toggle="modal"
                     data-target="#basicModal">
-                <i class="fa fa-user fa-3x fa-fw"></i>
+                    <% if current_user.has_new_achievement %>
+                        <i class="fa fa-exclamation-circle fa-3x fa-fw"></i>
+                    <% else %>
+                        <i class="fa fa-user fa-3x fa-fw"></i>
+                    <% end %>
               </span>
 
               <span data-remote="play/display_friends"

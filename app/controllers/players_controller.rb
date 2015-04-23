@@ -94,6 +94,7 @@ class PlayersController < ApplicationController
   def set_category_by_id
 
       current_user.active_player.current_category = Category.find(params[:category_id])
+      current_user.active_player.save
       render nothing: true
   end
 

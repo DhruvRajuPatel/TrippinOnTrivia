@@ -3,12 +3,12 @@ class Player < ActiveRecord::Base
   has_and_belongs_to_many :trophies
   has_and_belongs_to_many :challenges
   has_one :opponent, class_name: "Player"
-  has_one :current_category, class_name: "Category"
-  has_one :current_question, class_name: "Question"
-  has_one :current_answer, class_name: "Answer"
+  belongs_to :current_category, class_name: "Category", :foreign_key => "current_category_id"
+  belongs_to :current_question, class_name: "Question", :foreign_key => "current_question_id"
+  belongs_to :current_answer, class_name: "Answer", :foreign_key => "current_answer_id"
 
   $category_amount = Category.all.count
-  FULL_METER_AMOUNT = 3
+  FULL_METER_AMOUNT = 1
 
   def self.all_active_players
 
@@ -115,6 +115,7 @@ class Player < ActiveRecord::Base
     end
 
     self.current_category = random_category
+    self.save
   end
 
   def detect_cheating

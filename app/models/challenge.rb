@@ -32,6 +32,7 @@ class Challenge < ActiveRecord::Base
     player.current_question = self.questions[self.question_counter]
     self.update_attribute(:question_counter, self.question_counter + 1)
     player.current_category = player.current_question.category
+    player.save
   end
 
   def end_challenge_round(player)
