@@ -25,6 +25,9 @@
                     <%= image_tag current_user.avatar.url, style: 'border-radius: 50%; height: 35px' %>
               </span>
           <% end %>
+          <% if current_user.location? %>
+             <strong> <%= current_user.location %> | </strong>
+          <% end %>
 
           <strong> <%= current_user.email %></strong>
 
