@@ -93,7 +93,7 @@ class Challenge < ActiveRecord::Base
 
   def add_question_by_category_name(category_name)
 
-    self.questions << Category.find_by_title(category_name).questions.shuffle[0]
+    self.questions << Category.find_by_title(category_name).questions.all_non_user_submitted.shuffle[0]
   end
 
   private

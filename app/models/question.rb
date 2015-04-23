@@ -4,7 +4,13 @@ class Question < ActiveRecord::Base
   has_many :players
 
   def self.get_questions_by_difficulty
-     Question.order(:average_difficulty_rating)
+
+     all_non_user_submitted.order(:average_difficulty_rating)
+  end
+
+  def self.all_non_user_submitted
+
+    where('user_submitted = ?', false)
   end
 
   def self.get_question_by_user_level(user)
