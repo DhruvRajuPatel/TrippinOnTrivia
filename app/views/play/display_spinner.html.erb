@@ -90,15 +90,6 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
 <% end %>
 <script type ="text/javascript" charset="utf-8">
 
-    <% if current_user.has_new_achievement %>
-    var newAchievement = "You have a new Achievement\n<%= current_user.achievements.last.title %>"
-    alert(newAchievement)
-    $.ajax({
-        url: "play/achievement_message_recieved",
-        type: 'PUT'
-    });
-    <% end %>
-
     jQuery(document).ready(function()
     {
         var rotations = Math.floor((Math.random() * 100000) + 80000);

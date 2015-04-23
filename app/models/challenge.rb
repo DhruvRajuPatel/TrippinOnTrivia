@@ -5,12 +5,11 @@ class Challenge < ActiveRecord::Base
   include SharedMethods
 
   has_and_belongs_to_many :players
+  has_and_belongs_to_many :questions
   has_one :challenger_player, class_name: 'Player', foreign_key: 'challenger_player_id'
   has_one :challenged_player, class_name: 'Player', foreign_key: 'challenged_player_id'
   has_one :bid_trophy, class_name: 'Trophy', foreign_key: 'bid_trophy_id'
   has_one :challenged_trophy, class_name: 'Trophy', foreign_key: 'challenged_trophy_id'
-  has_many :questions
-  has_many :answers
 
   def self.make_new_challenge(player)
     challenge = Challenge.create(question_counter: 1, is_first_round: true, challenger_score: 0, challenged_score: 0)
@@ -32,6 +31,7 @@ class Challenge < ActiveRecord::Base
     player.current_question = self.questions[self.question_counter]
     self.update_attribute(:question_counter, self.question_counter + 1)
     player.current_category = player.current_question.category
+    player.save
   end
 
   def end_challenge_round(player)
@@ -103,12 +103,14 @@ class Challenge < ActiveRecord::Base
     challenger_player.opponent.trophies.delete(self.challenged_trophy)
     challenger_player.trophies << self.challenged_trophy
     challenger_player.update_attribute(:is_current_turn, true)
+    challenger_player.save_current_players
   end
 
   def challenged_player_wins(challenged_player)
 
     challenged_player.opponent.trophies.delete(self.bid_trophy)
     challenged_player.update_attribute(:is_current_turn, true)
+    challenged_player.save_current_players
   end
 
   def decide_winner(player)

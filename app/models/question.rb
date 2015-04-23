@@ -1,6 +1,7 @@
 class Question < ActiveRecord::Base
   belongs_to :category, dependent: :destroy
   has_many :answers
+  has_many :players
 
   def self.get_questions_by_difficulty
      Question.order(:average_difficulty_rating)

@@ -22,7 +22,7 @@ class PlayController < ApplicationController
   end
 
   def display_user_profile
-    @users = User.all
+    current_user.update_attribute(:has_new_achievement, false)
     render :layout => false
   end
 
@@ -42,6 +42,7 @@ class PlayController < ApplicationController
 
     if current_user.active_player.challenges.first.nil?
       current_user.active_player.current_question = current_user.active_player.current_category.questions.get_question_by_user_level(current_user)
+      current_user.active_player.save
     end
 
     respond_to do |format|
