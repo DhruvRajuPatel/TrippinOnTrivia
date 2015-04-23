@@ -15,24 +15,24 @@
         </div>
     <% end %>
 
-    <%= f.association :category %>
+    <%= f.association :category, :required => true, :selected => '0', :class => 'text-center'  %>
 
     <div class="field">
-      <%= f.input :title, :label => 'Question' %>
+      <%= f.input :title, :label => 'Question', :required => true %>
     </div>
 
     <%= simple_fields_for @correct_answer do |a| %>
         <p>
-          <%= a.input :title, label: 'Correct Answer' %>
+          <%= a.input :title, label: 'Correct Answer', :required => true %>
           <% @correct_answer.is_correct = true %>
         </p>
     <% end %>
 
     <%= f.fields_for :answers do |answer| %>
-        <%= answer.input :title, :label => 'Answer' %>
+        <%= answer.input :title, :label => 'Answer', :required => true %>
     <% end %>
 
     <div class="actions">
-      <%= f.submit 'Submit Question For Review' %>
+      <%= f.submit 'Submit Question For Review', :required => true %>
     </div>
 <% end %>

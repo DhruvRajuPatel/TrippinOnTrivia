@@ -52,6 +52,7 @@
                     <%= link_to 'Approve', save_user_question_questions_path(:id => question.id), :method => :put %>
                 </td>
                 <td>
+                <td><%= link_to 'Deny', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
                 </td>
               </tr>
           <% end %>
