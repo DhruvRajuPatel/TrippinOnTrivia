@@ -44,17 +44,16 @@
                   <%= question.title %>
                 </td>
                 <% for answer in question.answers %>
-                    <% if answer.is_correct %>
                         <td>
                           <%= answer.title %>
                         </td>
-                    <% end %>
-                    <td>
-                      <%= answer.title %>
-                    </td>
                 <% end %>
+                <td>
+                    <%= link_to 'Approve', save_user_question_questions_path(:id => question.id), :method => :put %>
+                </td>
+                <td>
+                </td>
               </tr>
-
           <% end %>
       <% end %>
     </table>

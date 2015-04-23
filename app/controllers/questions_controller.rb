@@ -97,6 +97,20 @@ class QuestionsController < ApplicationController
     render nothing: true
   end
 
+  def save_user_question()
+    @question_to_save = Question.find(params[:id])
+    puts '====================================================='
+    puts  @question_to_save
+    puts '====================================================='
+    puts  @question_to_save.user_submitted
+    puts '====================================================='
+    @question_to_save.update_attribute(:user_submitted, :false)
+    puts '====================================================='
+    puts  @question_to_save.user_submitted
+    puts '====================================================='
+    redirect_to admin_dashboard_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question
