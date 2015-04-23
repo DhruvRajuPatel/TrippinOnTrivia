@@ -9,6 +9,24 @@
 
 
   <% if !@user %>
+
+<h4>Friends</h4>
+
+    <div content="center">
+      <% @friends.each do |friend| %>
+            <% if friend.present? %>
+
+              <%= image_tag friend.avatar.url, style: 'border-radius: 50%;' %>
+
+              <%= friend.email %>
+
+
+              <%= link_to "Delete Friend", Friendship.find_by_friend_id(friend), :method => :delete %>
+
+<% end %>
+      <% end %>
+      </div>
+
       <% for user in @users %>
           <% if user.id != current_user.id  %>
               <tr>
@@ -19,14 +37,7 @@
                 </td>
 
                 <td>
-                  <% if @friends.include? user %>
-
-                      <%= link_to "Delete Friend", Friendship.find_by_friend_id(user), :method => :delete %>
-
-                  <% else %>
-
-                      <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
-                  <% end %>
+                  <%= show_user_options(user) %>
                 </td>
 
               </tr>
@@ -42,7 +53,7 @@
         </td>
 
         <td>
-          <%= link_to "Add Friend", friendships_path(:friend_id => @user), :method => :post %>
+            <%= show_user_options(@user) %>
         </td>
 
       </tr>
