@@ -44,23 +44,24 @@
               name=<%= answer.title %>
                       value=<%= answer.is_correct %>
               class="btn btn-primary btn-lg btn-block">
-        <%=answer.title %></button><br>
+        <%= answer.title %></button>
+      <br>
     </div>
-    <script type ="text/javascript" charset="utf-8">
-        $(document).ready(function() {
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
             correctAnswer = <%=answer.is_correct %>;
             if (correctAnswer) {
                 correctButton = document.getElementById('<%= answer.title.gsub(/\s+/, '') %>');
             }
-            $(<%= answer.title.gsub(/\s+/, '') %>).click(function() {
+            $(<%= answer.title.gsub(/\s+/, '') %>).click(function () {
                 correctAnswer = <%=answer.is_correct %>;
-                if(correctAnswer) {
+                if (correctAnswer) {
                     $.ajax({
                         url: "players/handle_correct_response",
                         type: 'PUT'
                     });
                     <% if !current_user.muted %>
-                        correctSound.playclip();
+                    correctSound.playclip();
                     <% end %>
                     this.style.background = '#38cc07';
                     this.innerHTML = "Correct!!!";
@@ -71,13 +72,13 @@
                         type: 'PUT'
                     });
                     <% if !current_user.muted %>
-                        incorrectSound.playclip();
+                    incorrectSound.playclip();
                     <% end %>
                     this.style.background = '#ff0d00';
                     this.innerHTML = "Incorrect!!!";
                     correctButton.style.background = '#38cc07';
                 }
-                if (<%= current_user.active_player.is_current_turn && !current_user.active_player.challenges.first.nil? %>){
+                if (<%= current_user.active_player.is_current_turn && !current_user.active_player.challenges.first.nil? %>) {
                     $.ajax({
                         url: "challenges/continue_challenge",
                         type: 'PUT'
@@ -109,8 +110,8 @@
         $('#reroll').hide();
     }
 
-    $(function() {
-        $('#reroll').click(function(){
+    $(function () {
+        $('#reroll').click(function () {
             $.ajax({
                 url: "play/use_power_up",
                 type: 'PUT'
@@ -123,7 +124,7 @@
             $('body').load('/play/display_spinner.html');
         });
 
-        $('#phone_google').click(function(){
+        $('#phone_google').click(function () {
             $.ajax({
                 url: "play/use_power_up",
                 type: 'PUT'
@@ -134,7 +135,7 @@
             win.focus();
         });
 
-        $('#eliminate').click(function(){
+        $('#eliminate').click(function () {
             $('#eliminate').hide();
             $.ajax({
                 url: "play/use_power_up",
@@ -148,14 +149,13 @@
                 incorrectAnswers.push(button);
             }
             <% end %>
-            for (i = 0; i < incorrectAnswers.length-1; i++) {
-                $(incorrectAnswers[i]).fadeOut( 1600 );
+            for (i = 0; i < incorrectAnswers.length - 1; i++) {
+                $(incorrectAnswers[i]).fadeOut(1600);
             }
         });
     });
 
-    function ChangePage()
-    {
+    function ChangePage() {
         $('body').load('/play/display_question_rating.html');
     }
 </script>

@@ -75,12 +75,14 @@ class PlayersController < ApplicationController
   def handle_correct_response
 
     current_user.update_question_statistics
+    Scoreboard.first.update_scoreboard(current_user.active_player.current_category, true)
     current_user.active_player.respond_correctly
     render nothing: true
   end
 
   def handle_incorrect_response
 
+    Scoreboard.first.update_scoreboard(current_user.active_player.current_category, false)
     current_user.active_player.respond_incorrectly
     render nothing: true
   end

@@ -1,5 +1,6 @@
 <button style="background-color: #2541c3" onclick="GoBack()" type="button" class="btn btn-primary">
-  BACK</button><br>
+  BACK
+</button><br>
 <br>
 
 <table style="width: 75%; margin: 0 auto;">
@@ -10,25 +11,25 @@
 
   <% if !@user %>
 
-<h4>Friends</h4>
+      <h4>Friends</h4>
 
-    <div content="center">
-      <% @friends.each do |friend| %>
+      <div content="center">
+        <% @friends.each do |friend| %>
             <% if friend.present? %>
 
-              <%= image_tag friend.avatar.url, style: 'border-radius: 50%;' %>
+                <%= image_tag friend.avatar.url, style: 'border-radius: 50%;' %>
 
-              <%= friend.email %>
+                <%= friend.email %>
 
 
-              <%= link_to "Delete Friend", Friendship.find_by_friend_id(friend), :method => :delete %>
+                <%= link_to "Delete Friend", Friendship.find_by_friend_id(friend), :method => :delete %>
 
-<% end %>
-      <% end %>
+            <% end %>
+        <% end %>
       </div>
 
       <% for user in @users %>
-          <% if user.id != current_user.id  %>
+          <% if user.id != current_user.id %>
               <tr>
                 <td>
                   <%= image_tag user.avatar.url, style: 'border-radius: 50%;' %>
@@ -56,7 +57,7 @@
         </td>
 
         <td>
-            <%= show_user_options(@user) %>
+          <%= show_user_options(@user) %>
         </td>
       </tr>
 
@@ -64,7 +65,7 @@
 
 </table>
 
-<div style="text-align:center; padding: 15px;" >
+<div style="text-align:center; padding: 15px;">
   <%= form_tag play_display_friends_path, :method => 'get' do %>
       <p>
         <%= email_field_tag :search, params[:search] %>
@@ -74,8 +75,7 @@
 </div>
 
 <script>
-    function GoBack()
-    {
+    function GoBack() {
         window.location.replace("/");
     }
 </script>

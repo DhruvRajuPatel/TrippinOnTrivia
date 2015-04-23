@@ -59,6 +59,12 @@
                     <i class="fa fa-cog fa-3x fa-fw"></i>
               </span>
 
+            <span data-remote="<%= "play/display_game_stats" %>"
+                  data-toggle="modal"
+                  data-target="#basicModal">
+              <i class="fa fa-list-alt fa-3x fa-fw"></i>
+              </span>
+
             <% muteStatus = "fa fa-volume-up fa-3x fa-fw"
                if current_user.muted
                  muteStatus = "fa fa-volume-off fa-3x fa-fw"

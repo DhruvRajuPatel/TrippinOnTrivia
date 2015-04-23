@@ -1,56 +1,61 @@
 <script>
 
-var html5_audiotypes={ //define list of audio file extensions and their associated audio types. Add to it if your specified audio file isn't on this list:
-"mp3": "audio/mpeg",
-"mp4": "audio/mp4",
-"ogg": "audio/ogg",
-"wav": "audio/wav"
-};
+    var html5_audiotypes = { //define list of audio file extensions and their associated audio types. Add to it if your specified audio file isn't on this list:
+        "mp3": "audio/mpeg",
+        "mp4": "audio/mp4",
+        "ogg": "audio/ogg",
+        "wav": "audio/wav"
+    };
 
-function createSoundBite(sound){
-var html5audio=document.createElement('audio');
-if (html5audio.canPlayType){ //check support for HTML5 audio
-for (var i=0; i<arguments.length; i++){
-var sourceel=document.createElement('source');
-sourceel.setAttribute('src', arguments[i]);
-if (arguments[i].match(/\.(\w+)$/i))
-sourceel.setAttribute('type', html5_audiotypes[RegExp.$1]);
-html5audio.appendChild(sourceel)
-}
-html5audio.load();
-html5audio.playclip=function(){
-html5audio.pause();
-html5audio.currentTime=0;
-html5audio.play();
-};
-return html5audio
-}
-else{
-return {playclip:function(){throw new Error("Your browser doesn't support HTML5 audio unfortunately")}}
-}
-}
+    function createSoundBite(sound) {
+        var html5audio = document.createElement('audio');
+        if (html5audio.canPlayType) { //check support for HTML5 audio
+            for (var i = 0; i < arguments.length; i++) {
+                var sourceel = document.createElement('source');
+                sourceel.setAttribute('src', arguments[i]);
+                if (arguments[i].match(/\.(\w+)$/i))
+                    sourceel.setAttribute('type', html5_audiotypes[RegExp.$1]);
+                html5audio.appendChild(sourceel)
+            }
+            html5audio.load();
+            html5audio.playclip = function () {
+                html5audio.pause();
+                html5audio.currentTime = 0;
+                html5audio.play();
+            };
+            return html5audio
+        }
+        else {
+            return {
+                playclip: function () {
+                    throw new Error("Your browser doesn't support HTML5 audio unfortunately")
+                }
+            }
+        }
+    }
 
-var spinSound=createSoundBite("/sounds/spin.mp3");
-var correctSound=createSoundBite("/sounds/correct.mp3");
-var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
+    var spinSound = createSoundBite("/sounds/spin.mp3");
+    var correctSound = createSoundBite("/sounds/correct.mp3");
+    var incorrectSound = createSoundBite("/sounds/incorrect.mp3");
 </script>
 <button style="background-color: #2541c3" onclick="GoBack()" type="button" class="btn btn-primary">
-  BACK</button><br>
+  BACK
+</button><br>
 
 <% if !current_user.active_player.is_current_turn
      if !current_user.active_player.is_inactive %>
-    <h1>Awaiting opponent's turn</h1>
-    <img src= "/images/wait_centerspin.png" id="center">
-    <img src= "/images/spinner.png" id="spinner">
-        <% elsif current_user.active_player.has_won %>
-            <h1>You Won!!!</h1>
-        <% else %>
-            <h1>You Lost...</h1>
-        <% end
- elsif current_user.active_player.challenges.first.nil?%>
+        <h1>Awaiting opponent's turn</h1>
+        <img src="/images/wait_centerspin.png" id="center">
+        <img src="/images/spinner.png" id="spinner">
+    <% elsif current_user.active_player.has_won %>
+        <h1>You Won!!!</h1>
+    <% else %>
+        <h1>You Lost...</h1>
+    <% end
+       elsif current_user.active_player.challenges.first.nil? %>
     <h1>Spin the Wheel!!!</h1>
-    <img src= "/images/centerspin.png" id="center">
-    <img src= "/images/spinner.png" id="spinner">
+    <img src="/images/centerspin.png" id="center">
+    <img src="/images/spinner.png" id="spinner">
 <% else %>
     <h1>You have been challenged!</h1>
     <br>
@@ -59,55 +64,55 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
     </button>
     <br>
 <% end %>
-    <div id="bolt">
-    <% for i in 1..current_user.active_player.meter %>
-        <img src= "/images/bolt.png">
-    <% end %>
-    </div>
+<div id="bolt">
+  <% for i in 1..current_user.active_player.meter %>
+      <img src="/images/bolt.png">
+  <% end %>
+</div>
 
 <div id="trophy">
   <h3>My trophies:
-  <% if current_user.active_player.trophies.count == 0 %>
-    NONE
-  <% end %>
+    <% if current_user.active_player.trophies.count == 0 %>
+        NONE
+    <% end %>
   </h3>
-  <% current_user.active_player.trophies.each do |trophy|  %>
-      <img id="trophy" src= <%= trophy.icon_path%>>
+  <% current_user.active_player.trophies.each do |trophy| %>
+      <img id="trophy" src= <%= trophy.icon_path %>>
   <% end %>
 </div>
 <% if (!current_user.active_player.opponent.nil?) %>
-      <br><h3><%= current_user.active_player.opponent.user.email%>: </h3>
-      <% current_user.active_player.opponent.trophies.each do |trophy|  %>
+    <br><h3><%= current_user.active_player.opponent.user.email %>: </h3>
+    <% current_user.active_player.opponent.trophies.each do |trophy| %>
 
-          <img src= <%= trophy.icon_path%>>
-      <% end %>
-    <% else %>
+        <img src= <%= trophy.icon_path %>>
+    <% end %>
+<% else %>
     <h3>Awaiting opponent...</h3>
 <% end %>
 <% if !current_user.active_player.is_inactive %>
-<br><br><button style="background-color: #2541c3" onclick="Resign(); this.disabled = true" type="button" class="btn btn-primary" id="resign">
-  RESIGN</button>
+    <br><br>
+    <button style="background-color: #2541c3" onclick="Resign(); this.disabled = true" type="button" class="btn btn-primary" id="resign">
+      RESIGN
+    </button>
 <% end %>
-<script type ="text/javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
 
-    jQuery(document).ready(function()
-    {
+    jQuery(document).ready(function () {
         var rotations = Math.floor((Math.random() * 100000) + 80000);
         var category_number = rotations % 360;
         $("#center").rotate({
-            bind:
-            {
-                click: function(){
+            bind: {
+                click: function () {
                     $.ajax({
                         url: "play/get_random_category",
                         type: 'PUT',
                         dataType: 'json',
-                        data: {'rotations' : rotations}
+                        data: {'rotations': rotations}
                     });
                     <% if current_user.active_player.is_current_turn && current_user.active_player.challenges.first.nil?%>
-                     $("#spinner").rotate({ angle:0,animateTo: rotations,easing: $.easing.easeInOutExpo });
+                    $("#spinner").rotate({angle: 0, animateTo: rotations, easing: $.easing.easeInOutExpo});
                     <% if !current_user.muted %>
-                        spinSound.playclip();
+                    spinSound.playclip();
                     <% end %>
                     if (category_number >= 309 && category_number <= 359) {
                         setTimeout(GetFullMeterChoice, 1000);
@@ -120,17 +125,14 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
             }
         });
     });
-    function GetFullMeterChoice()
-    {
+    function GetFullMeterChoice() {
         $('body').load('/play/display_full_meter_choice.html');
     }
-    function GoBack()
-    {
+    function GoBack() {
         $('body').load('play/index');
     }
 
-    function StartChallenge()
-    {
+    function StartChallenge() {
         $.ajax({
             url: "challenges/continue_challenge",
             type: 'PUT'
@@ -138,14 +140,11 @@ var incorrectSound=createSoundBite("/sounds/incorrect.mp3");
         setTimeout(GetQuestions, 500);
     }
 
-    function GetQuestions()
-    {
+    function GetQuestions() {
         $('body').load('/play/display_questions.html');
     }
 
-    function Resign()
-
-    {
+    function Resign() {
         $.ajax({
             url: "players/resign_current_player",
             type: 'PUT'

@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
-      user.password = Devise.friendly_token[0,20]
+      user.password = Devise.friendly_token[0, 20]
       user.level = 1
       user.total_correct = 0
       user.avatar = auth.info.image
@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
       unless user
         user = User.create(
             email: data['email'],
-            password: Devise.friendly_token[0,20],
+            password: Devise.friendly_token[0, 20],
             level: 1,
             total_correct: 0,
         )
@@ -60,13 +60,13 @@ class User < ActiveRecord::Base
     user = User.where(:email => data["email"]).first
 
     unless user
-        user = User.create(
-           email: data['email'],
-           password: Devise.friendly_token[0,20],
-           level: 1,
-           total_correct: 0,
-           avatar: data['image'],
-        )
+      user = User.create(
+          email: data['email'],
+          password: Devise.friendly_token[0, 20],
+          level: 1,
+          total_correct: 0,
+          avatar: data['image'],
+      )
     end
 
     user
@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
 
   def change_muted_status
     muted = !self.muted
-    self.update_attribute(:muted,muted)
+    self.update_attribute(:muted, muted)
   end
 
   def get_max_level_progression

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get 'play/display_challenge_trophy_selection'
   get 'play/display_friends'
   get 'play/display_user_profile'
+  get 'play/display_game_stats'
 
   get 'admin/dashboard'
 

@@ -6,9 +6,9 @@ class WinKeeper < ActiveRecord::Base
     i = 0
     players.each do |player|
 
-          if player.user == opponent
-            i+=1
-          end
+      if player.user == opponent
+        i+=1
+      end
     end
     i
   end

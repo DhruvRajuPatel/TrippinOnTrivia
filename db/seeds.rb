@@ -100,6 +100,8 @@ music_question2.answers.create(title: "Keith Whitley", is_correct: false)
 music_question2.answers.create(title: "Bob Dylan", is_correct: false)
 music_question2.answers.create(title: "Shooter Jennings", is_correct: false)
 
+Scoreboard.create
+
 # Admins
 Admin.create(:email => 'admin@gmail.com', :password => 'admin')
 

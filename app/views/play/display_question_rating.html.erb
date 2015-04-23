@@ -1,35 +1,35 @@
 <div class="text-center">
-    <h1>How did you feel about that?</h1><br><br>
-    <button style="background-color: #2541c3"id="easy" type="button" class="btn btn-primary btn-lg btn-block">
-      Easy
-    </button>
-    <br>
-    <button style="background-color: #2541c3"id="moderate" type="button" class="btn btn-primary btn-lg btn-block">
-      Moderate
-    </button>
-    <br>
-    <button style="background-color: #2541c3"id="hard" type="button" class="btn btn-primary btn-lg btn-block">
-      Hard
-    </button>
+  <h1>How did you feel about that?</h1><br><br>
+  <button style="background-color: #2541c3" id="easy" type="button" class="btn btn-primary btn-lg btn-block">
+    Easy
+  </button>
   <br>
-    <button style="background-color: #2541c3"id="submit_question" type="button" class="btn btn-primary btn-lg btn-block">
-      Submit a Question!
-    </button>
-    <br>
+  <button style="background-color: #2541c3" id="moderate" type="button" class="btn btn-primary btn-lg btn-block">
+    Moderate
+  </button>
+  <br>
+  <button style="background-color: #2541c3" id="hard" type="button" class="btn btn-primary btn-lg btn-block">
+    Hard
+  </button>
+  <br>
+  <button style="background-color: #2541c3" id="submit_question" type="button" class="btn btn-primary btn-lg btn-block">
+    Submit a Question!
+  </button>
+  <br>
 </div>
 
 <script>
-    $(function() {
-        $('#easy').click(function() {
+    $(function () {
+        $('#easy').click(function () {
             GetRating(1);
         });
-        $('#moderate').click(function() {
+        $('#moderate').click(function () {
             GetRating(2);
         });
-        $('#hard').click(function() {
+        $('#hard').click(function () {
             GetRating(3);
         });
-        $('#submit_question').click(function() {
+        $('#submit_question').click(function () {
             $('body').load('<%= new_question_path %>');
         });
 
@@ -38,13 +38,12 @@
                 url: "questions/rate_current_question",
                 type: 'PUT',
                 dataType: 'json',
-                data: {'difficulty' : rating}
+                data: {'difficulty': rating}
             });
             setTimeout(ChangePage, 500);
         }
 
-        function ChangePage()
-        {
+        function ChangePage() {
             var meter = <%= current_user.active_player.meter %>;
 
             $.ajax({
@@ -55,7 +54,7 @@
             if (meter >= <%= Player::FULL_METER_AMOUNT%>) {
                 $('body').load('/play/display_full_meter_choice.html');
             }
-            else if (<%= current_user.active_player.is_current_turn && !current_user.active_player.challenges.first.nil? %>){
+            else if (<%= current_user.active_player.is_current_turn && !current_user.active_player.challenges.first.nil? %>) {
                 $('body').load('/play/display_questions.html');
             }
             else {

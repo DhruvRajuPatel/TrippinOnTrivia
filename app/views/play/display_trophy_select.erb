@@ -3,29 +3,29 @@
   <h1>Pick a trophy</h1>
 
   <% @categories.each do |category| %>
-    <% contains = false %>
-    <% current_user.active_player.trophies.each do |trophy| %>
-        <% if category == trophy.category %>
-          <% contains = true %>
-          <%end%>
-    <% end %>
+      <% contains = false %>
+      <% current_user.active_player.trophies.each do |trophy| %>
+          <% if category == trophy.category %>
+              <% contains = true %>
+          <% end %>
+      <% end %>
       <% if contains %>
-        <% next %>
-  <%end%>
+          <% next %>
+      <% end %>
       <div id="trophy">
-        <input id=<%= category.title.gsub(/\s+/, '') %> type="image" value=<%=category.id%> src=<%= category.trophy.icon_path%> >
+        <input id=<%= category.title.gsub(/\s+/, '') %> type="image" value=<%= category.id %> src=<%= category.trophy.icon_path %> >
       </div>
-      <script type ="text/javascript" charset="utf-8">
-          $(document).ready(function() {
-              $(<%= category.title.gsub(/\s+/, '') %>).click(function() {
+      <script type="text/javascript" charset="utf-8">
+          $(document).ready(function () {
+              $(<%= category.title.gsub(/\s+/, '') %>).click(function () {
                   var currentCategory = this.value;
                   $.ajax({
-                      url: "players/set_category_by_id",
-                      type: 'PUT',
-                      dataType: 'json',
-                      data: {'category_id' : currentCategory},
-                      complete: ChangePage
-                  }
+                              url: "players/set_category_by_id",
+                              type: 'PUT',
+                              dataType: 'json',
+                              data: {'category_id': currentCategory},
+                              complete: ChangePage
+                          }
                   )
               })
           });
@@ -35,7 +35,7 @@
 
 <script>
     function ChangePage() {
-                $('body').load('/play/display_questions.html');
+        $('body').load('/play/display_questions.html');
 
     }
 

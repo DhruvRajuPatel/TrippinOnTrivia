@@ -7,7 +7,7 @@ class Question < ActiveRecord::Base
 
   def self.get_questions_by_difficulty
 
-     all_non_user_submitted.order(:average_difficulty_rating)
+    all_non_user_submitted.order(:average_difficulty_rating)
   end
 
   def self.all_non_user_submitted

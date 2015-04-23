@@ -1,17 +1,20 @@
 <div class="text-center">
   <h1>Go for a trophy or challenge your opponent?</h1><br><br>
+
   <div id="meter">
-  <button style="background-color: #2541c3"onclick="ChangePageTrophy()" type="button" class="btn btn-danger">
-    Go For Trophy!</button>
+    <button style="background-color: #2541c3" onclick="ChangePageTrophy()" type="button" class="btn btn-danger">
+      Go For Trophy!
+    </button>
     <% if !current_user.active_player.opponent.nil? && current_user.active_player.trophies.count > 0
          if current_user.active_player.opponent.trophies.count > 0 %>
-  <button style="background-color: #2541c3"onclick="ChangePageChallenge()" type="button" class="btn btn-danger">
-    Challenge!</button>
-            <% end
-         end %>
+            <button style="background-color: #2541c3" onclick="ChangePageChallenge()" type="button" class="btn btn-danger">
+              Challenge!
+            </button>
+        <% end
+           end %>
   </div>
 </div>
-  <script>
+<script>
     function ChangePageTrophy() {
         $.ajax({
             url: "challenges/end_current_challenge",
@@ -21,8 +24,8 @@
 
     }
 
-  function ChangePageChallenge() {
-      setTimeout($('body').load('/play/display_challenge_trophy_selection.html'), 200);
-  }
+    function ChangePageChallenge() {
+        setTimeout($('body').load('/play/display_challenge_trophy_selection.html'), 200);
+    }
 
 </script>

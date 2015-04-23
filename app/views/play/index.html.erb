@@ -1,87 +1,92 @@
 <div id="main" class="text-center">
-  <button style="font-family: Arcade-Classic; font-size: 1.4em; background-color: #fd5400"onclick="Refresh()" type="button" class="btn btn-primary">
-    REFRESH</button><br>
+  <button style="font-family: Arcade-Classic; font-size: 1.4em; background-color: #fd5400" onclick="Refresh()" type="button" class="btn btn-primary">
+    REFRESH
+  </button>
+  <br>
+
   <h1>WELCOME TO TRIPPIN' ON TRIVIA</h1>
   <br><br>
-  <button style="font-family: Arcade-Classic; font-size: 2.3em; background-color: #2541c3"onclick="ChangePage()" type="button" class="btn btn-primary">
-    + NEW GAME</button>
-<div id="games">
-  <% active_players = current_user.players.all_active_players.order(updated_at: :desc)%>
-  <% active_players.each do |player|%>
+  <button style="font-family: Arcade-Classic; font-size: 2.3em; background-color: #2541c3" onclick="ChangePage()" type="button" class="btn btn-primary">
+    + NEW GAME
+  </button>
+  <div id="games">
+    <% active_players = current_user.players.all_active_players.order(updated_at: :desc) %>
+    <% active_players.each do |player| %>
 
-            <%assign_button_labels(player)%>
+        <% assign_button_labels(player) %>
 
-            <button style="background-color:#38cc07" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
-              READY <%=@has_opponent%> <%=player.trophies.count %>:<%= @opponent_trophies %></button><br>
+        <button style="background-color:#38cc07" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%= player.id %>" class="btn btn-primary btn-lg btn-block">
+          READY <%= @has_opponent %> <%= player.trophies.count %>:<%= @opponent_trophies %></button>
+        <br>
 
-            <script>
-                $(document).ready(function() {
-                    AssignFunctionality(<%= 'a' + player.id.to_s%>);
-                })
-            </script>
-  <% end %>
+        <script>
+            $(document).ready(function () {
+                AssignFunctionality(<%= 'a' + player.id.to_s%>);
+            })
+        </script>
+    <% end %>
 
-  <% waiting_players = current_user.players.all_waiting_players.order(updated_at: :desc)%>
-  <% waiting_players.each do |player|%>
+    <% waiting_players = current_user.players.all_waiting_players.order(updated_at: :desc) %>
+    <% waiting_players.each do |player| %>
 
-            <%assign_button_labels(player)%>
+        <% assign_button_labels(player) %>
 
-            <button style="background-color:#ff00dd" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
-              WAITING <%=@has_opponent%> <%=player.trophies.count %>:<%= @opponent_trophies %></button><br>
+        <button style="background-color:#ff00dd" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%= player.id %>" class="btn btn-primary btn-lg btn-block">
+          WAITING <%= @has_opponent %> <%= player.trophies.count %>:<%= @opponent_trophies %></button>
+        <br>
 
-            <script>
-                $(document).ready(function() {
-                    AssignFunctionality(<%= 'a' + player.id.to_s%>);
-                })
-            </script>
-  <% end %>
+        <script>
+            $(document).ready(function () {
+                AssignFunctionality(<%= 'a' + player.id.to_s%>);
+            })
+        </script>
+    <% end %>
 
-  <% closed_players = current_user.players.all_closed_players.order(updated_at: :desc).limit(5)%>
-  <% closed_players.each do |player|%>
+    <% closed_players = current_user.players.all_closed_players.order(updated_at: :desc).limit(5) %>
+    <% closed_players.each do |player| %>
 
-            <%assign_button_labels(player)%>
+        <% assign_button_labels(player) %>
 
-            <button style="background-color:#fcc603" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%=player.id%>" class="btn btn-primary btn-lg btn-block">
-              GAME OVER <%=@has_opponent%> <%=player.trophies.count %>:<%= @opponent_trophies %></button><br>
+        <button style="background-color:#fcc603" id="<%= 'a' + player.id.to_s %>" input type="button" name="<%= player.id %>" value="<%= player.id %>" class="btn btn-primary btn-lg btn-block">
+          GAME OVER <%= @has_opponent %> <%= player.trophies.count %>:<%= @opponent_trophies %></button>
+        <br>
 
-            <script>
-                $(document).ready(function() {
-                    AssignFunctionality(<%= 'a' + player.id.to_s%>);
-                })
-            </script>
-  <% end %>
-</div>
+        <script>
+            $(document).ready(function () {
+                AssignFunctionality(<%= 'a' + player.id.to_s%>);
+            })
+        </script>
+    <% end %>
+  </div>
 </div>
 
 <script>
 
-  function AssignFunctionality(id) {
+    function AssignFunctionality(id) {
 
-          $(id).click(function() {
-              var currentPlayer = this.value;
-              $.ajax({
-                          url: "play/get_selected_player",
-                          type: 'PUT',
-                          dataType: 'json',
-                          data: {'player_id' : currentPlayer},
-                          complete: PlayNow
-                      }
-              )
-          })
-  }
+        $(id).click(function () {
+            var currentPlayer = this.value;
+            $.ajax({
+                        url: "play/get_selected_player",
+                        type: 'PUT',
+                        dataType: 'json',
+                        data: {'player_id': currentPlayer},
+                        complete: PlayNow
+                    }
+            )
+        })
+    }
 
 
-    function ChangePage()
-    {
+    function ChangePage() {
         $('body').load('play/display_new_game_page.html');
     }
 
-    function PlayNow()
-    {
+    function PlayNow() {
         $('body').load('play/display_spinner.html');
     }
 
-        function Refresh() {
-            location.reload();
-        }
+    function Refresh() {
+        location.reload();
+    }
 </script>

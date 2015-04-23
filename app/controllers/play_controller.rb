@@ -4,6 +4,10 @@ class PlayController < ApplicationController
   SPINNER_DEGREES = 360
 
   def index
+
+    Scoreboard.first.check_if_reset_weekly
+    Scoreboard.first.check_if_reset_monthly
+
     current_user.players.all_active_players.each do |player|
       if player.current_question.present?
         player.detect_cheating
@@ -29,6 +33,10 @@ class PlayController < ApplicationController
 
   def display_user_profile
     current_user.update_attribute(:has_new_achievement, false)
+    render :layout => false
+  end
+
+  def display_game_stats
     render :layout => false
   end
 

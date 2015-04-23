@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423074723) do
+ActiveRecord::Schema.define(version: 20150423104328) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -71,17 +71,21 @@ ActiveRecord::Schema.define(version: 20150423074723) do
   end
 
   create_table "category_correct_counters", force: :cascade do |t|
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "uid"
     t.integer  "category_id"
-    t.integer  "questions_correct",     default: 0, null: false
+    t.integer  "questions_correct",     default: 0,   null: false
     t.integer  "aquatic_counter_id"
     t.integer  "memes_counter_id"
     t.integer  "basketball_counter_id"
     t.integer  "literature_counter_id"
     t.integer  "music_counter_id"
     t.integer  "cs_counter_id"
+    t.integer  "weekly_counter_id"
+    t.integer  "monthly_counter_id"
+    t.integer  "all_time_counter_id"
+    t.float    "questions_answered",    default: 0.0
   end
 
   create_table "challenges", force: :cascade do |t|
@@ -181,6 +185,14 @@ ActiveRecord::Schema.define(version: 20150423074723) do
 
   add_index "questions", ["answer_id"], name: "index_questions_on_answer_id"
   add_index "questions", ["category_id"], name: "index_questions_on_category_id"
+
+  create_table "scoreboards", force: :cascade do |t|
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "weekly_counter_id"
+    t.integer  "monthly_counter_id"
+    t.integer  "all_time_counter_id"
+  end
 
   create_table "trophies", force: :cascade do |t|
     t.integer  "category_id"
