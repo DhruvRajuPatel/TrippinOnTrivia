@@ -10,29 +10,41 @@
 
   <h4 class="text-center">QUESTIONS CORRECT</h4>
 
-  <h3>Weekly: <%= Scoreboard.first.get_total_correct(Scoreboard.first.weekly_counters) %></h3>
+  <h3>WEEKLY: </h3>
+  <ul>
+    <h3>TOTAL: <%= Scoreboard.first.get_total_correct(Scoreboard.first.weekly_counters) %></h3>
+
   <% Scoreboard.first.weekly_counters.each do |counter| %>
-      <%= counter.categories.first.title %>
-      <%= counter.questions_correct %>
-      <%= counter.questions_answered %>
-      <%= counter.get_percent_correct %>%
-  <% end %>
 
-  <h3>Monthly: <%= Scoreboard.first.get_total_correct(Scoreboard.first.monthly_counters) %></h3>
-  <% Scoreboard.first.monthly_counters.each do |counter| %>
-      <%= counter.categories.first.title %>
-      <%= counter.questions_correct %>
-      <%= counter.get_percent_correct %>%
-  <% end %>
+      <h3><%= counter.categories.first.title %>: </h3>
+        <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= counter.get_percent_correct %>%</h5>
 
-  <h3>All Time: <%= Scoreboard.first.get_total_correct(Scoreboard.first.all_time_counters) %></h3>
-  <% Scoreboard.first.all_time_counters.each do |counter| %>
-      <%= counter.categories.first.title %>
-      <%= counter.questions_correct %>
-      <%= counter.get_percent_correct %>%
+
   <% end %>
+  </ul>
+
+  <h3>MONTHLY: </h3>
+  <ul>
+    <h3>TOTAL: <%= Scoreboard.first.get_total_correct(Scoreboard.first.monthly_counters) %></h3>
+
+    <% Scoreboard.first.monthly_counters.each do |counter| %>
+
+        <h3><%= counter.categories.first.title %>: </h3>
+        <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= counter.get_percent_correct %>%</h5>
+    <% end %>
+  </ul>
+
+  <h3>ALL TIME: </h3>
+  <ul>
+    <h3>TOTAL: <%= Scoreboard.first.get_total_correct(Scoreboard.first.all_time_counters) %></h3>
+
+    <% Scoreboard.first.all_time_counters.each do |counter| %>
+
+        <h3><%= counter.categories.first.title %>: </h3>
+        <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= counter.get_percent_correct %>%</h5>
+    <% end %>
+  </ul>
 </div>
-
 
 <script>
     function GoBack() {
