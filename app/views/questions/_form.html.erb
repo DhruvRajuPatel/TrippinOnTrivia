@@ -21,6 +21,13 @@
       <%= f.input :title, :label => 'Question' %>
     </div>
 
+    <%= simple_fields_for @correct_answer do |a| %>
+        <p>
+          <%= a.input :title, label: 'Correct Answer' %>
+          <% @correct_answer.is_correct = true %>
+        </p>
+    <% end %>
+
     <%= f.fields_for :answers do |answer| %>
         <%= answer.input :title, :label => 'Answer' %>
     <% end %>
