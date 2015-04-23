@@ -1,12 +1,7 @@
-<button style="background-color: #2541c3" onclick="GoBack()" type="button" class="btn btn-primary">
-    BACK</button><br>
-  <br>
-
 <table style="width: 75%; margin: 0 auto;">
   <tr>
     <th colspan="3" style="text-align: center">Users</th>
   </tr>
-
 
   <% if !@user %>
       <% for user in @users %>
@@ -19,14 +14,7 @@
                 </td>
 
                 <td>
-                <% if @friends.include? user %>
-
-                      <%= link_to "Delete Friend", Friendship.find_by_friend_id(user), :method => :delete %>
-
-                  <% else %>
-
-                    <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
-                  <% end %>
+                  <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
                 </td>
 
               </tr>
@@ -54,15 +42,8 @@
 <div style="text-align:center; padding: 15px;" >
 <%= form_tag play_display_friends_path, :method => 'get' do %>
     <p>
-      <%= email_field_tag :search, params[:search] %>
+      <%= text_field_tag :search, params[:search] %>
       <%= submit_tag 'Search By Email', :name => nil, :class => 'btn' %>
     </p>
 <% end %>
 </div>
-
-<script>
-    function GoBack()
-    {
-        window.location.replace("/");
-    }
-</script>
