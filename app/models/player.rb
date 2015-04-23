@@ -188,6 +188,11 @@ class Player < ActiveRecord::Base
 
     self.update_attribute(:has_won, true)
     self.user.update_attribute(:win_count, self.user.win_count + 1)
+    self.user.wins.players << opponent
+    opponent.user.losses.players << self
+    self.user.save
+    opponent.user.save
+
     end_game
 
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423030100) do
+ActiveRecord::Schema.define(version: 20150423074723) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -119,6 +119,17 @@ ActiveRecord::Schema.define(version: 20150423030100) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "loss_keepers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "uid"
+  end
+
+  create_table "loss_keepers_players", id: false, force: :cascade do |t|
+    t.integer "loss_keeper_id"
+    t.integer "player_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.integer  "meter"
     t.boolean  "is_current_turn"
@@ -147,6 +158,11 @@ ActiveRecord::Schema.define(version: 20150423030100) do
   create_table "players_trophies", id: false, force: :cascade do |t|
     t.integer "player_id"
     t.integer "trophy_id"
+  end
+
+  create_table "players_win_keepers", id: false, force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "win_keeper_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -213,10 +229,18 @@ ActiveRecord::Schema.define(version: 20150423030100) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.boolean  "hide_image"
+    t.boolean  "hide_image",                  default: false, null: false
+    t.integer  "win_keeper_id"
+    t.integer  "loss_keeper_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "win_keepers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "uid"
+  end
 
 end

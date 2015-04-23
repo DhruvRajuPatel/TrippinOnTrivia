@@ -23,4 +23,24 @@ module PlayHelper
     link_to "Add Friend", friendships_path(:friend_id => user), :method => :post
         end
   end
+  
+  def get_opponent_losses
+    opponents  = Array.new(current_user.losses.players.count)
+    current_user.losses.players.each do |player|
+      if !opponents.include? player.user
+        opponents << player.user
+      end
+    end
+    opponents
+  end
+
+  def get_opponent_wins
+    opponents  = Array.new(current_user.wins.players.count)
+    current_user.wins.players.each do |player|
+      if !opponents.include? player.user
+        opponents << player.user
+      end
+    end
+    opponents
+  end
 end

@@ -1,11 +1,13 @@
-<div class="text-center" id="profile">
-    <button style="background-color: #2541c3" onclick="GoBack()" type="button" class="btn btn-primary">
-    BACK</button><br>
-    <br>
-  <h2>STATISTICS</h2>
+<div id="profile">
+<button style="background-color: #2541c3" onclick="GoBack()" type="button" class="btn btn-primary">
+  BACK</button><br>
+<br>
+  <h2 class="text-center">STATISTICS</h2>
   <br>
-  <h4>QUESTIONS CORRECT BY CATEGORY</h4>
-  <div class="text-justify">
+  <div id="questions-correct">
+  <h4 class="text-center">QUESTIONS CORRECT</h4>
+
+    <h3>Total: <%= current_user.total_correct %></h3>
   <h3>Computer Science: <%= current_user.cs_counter.questions_correct %></h3>
   <h3>Aquatic Animals: <%= current_user.aquatic_counter.questions_correct %></h3>
   <h3>Memes: <%= current_user.memes_counter.questions_correct %></h3>
@@ -13,26 +15,47 @@
   <h3>Literature: <%= current_user.literature_counter.questions_correct %></h3>
   <h3>Music: <%= current_user.music_counter.questions_correct %></h3>
   </div>
-  <br>
-  <h2>ACHIEVEMENTS</h2>
-  <% if current_user.achievements.count > 0 %>
-  <% current_user.achievements.each do |achievement|  %>
 
-        <h6 class="text-justify"><%= achievement.title %></h6>
-    <% end %>
-    <% current_user.achievements.each do |achievement|  %>
+  <h4 class="text-center">RECORDS AGAINST OPPONENTS</h4>
+  <h4>WINS</h4>
+  <ul>
+  <% opponents = get_opponent_wins %>
+  <% opponents.each do |opponent| %>
+    <% if !opponent.nil? %>
 
-        <% trophy = achievement.category.trophy %>
+    <%= opponent.email %>
+      <%= current_user.wins.get_wins_against_opponent(opponent) %>
 
-        <img id="trophy" src= <%= trophy.icon_path%>>
-
-    <% end %>
-      <% else %>
-      <br>
-  <h4>NONE</h4>
+  <% end %>
+  <% end %>
+  </ul>
+  <h4>LOSSES</h4>
+  <% opponents = get_opponent_losses %>
+  <% opponents.each do |opponent| %>
+      <% if !opponent.nil? %>
+          <%= opponent.email %>
+          <%= current_user.losses.get_losses_against_opponent(opponent) %>
       <% end %>
-</div>
+  <% end %>
+  <h2 class="text-center">ACHIEVEMENTS</h2>
+  <% if current_user.achievements.count > 0 %>
+      <% current_user.achievements.each do |achievement|  %>
 
+          <h6 class="text-justify"><%= achievement.title %></h6>
+      <% end %>
+      <% current_user.achievements.each do |achievement|  %>
+
+          <% trophy = achievement.category.trophy %>
+
+          <img id="trophy" src= <%= trophy.icon_path%>>
+
+      <% end %>
+  <% else %>
+      <br>
+      <h3 class="text-center">NONE</h3>
+  <% end %>
+  <br>
+</div>
 
 
 <script>

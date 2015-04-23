@@ -20,7 +20,10 @@ class User < ActiveRecord::Base
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
-  before_create :build_counters
+  has_one :wins, class_name: "WinKeeper", foreign_key: "uid"
+  has_one :losses, class_name: "LossKeeper", foreign_key: "uid"
+
+  before_create :build_counters, :build_keepers
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -180,6 +183,13 @@ class User < ActiveRecord::Base
     cs_counter.categories << Category.find_by_title("Computer Science")
     aquatic_counter.categories << Category.find_by_title("Aquatic Animals")
     true
+
+  end
+
+  def build_keepers
+
+    build_wins
+    build_losses
 
   end
 
