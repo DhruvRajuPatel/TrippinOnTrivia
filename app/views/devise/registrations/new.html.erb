@@ -9,6 +9,8 @@
     <br>
     <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable) %>
     <%= f.input :password_confirmation, required: true %>
+    <%= f.input :location, hint: "leave it blank if you want to keep your location private", required: false %>
+    <%= f.text_field :location%>
   </div>
 
   <div class="form-actions">
