@@ -17,7 +17,7 @@
   <% Scoreboard.first.weekly_counters.each do |counter| %>
 
       <h3><%= counter.categories.first.title %>: </h3>
-        <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= counter.get_percent_correct %>%</h5>
+        <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= (counter.get_percent_correct).round(2) %>%</h5>
 
 
   <% end %>
@@ -30,7 +30,7 @@
     <% Scoreboard.first.monthly_counters.each do |counter| %>
 
         <h3><%= counter.categories.first.title %>: </h3>
-        <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= counter.get_percent_correct %>%</h5>
+        <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= (counter.get_percent_correct).round(2) %>%</h5>
     <% end %>
   </ul>
 
@@ -41,7 +41,7 @@
     <% Scoreboard.first.all_time_counters.each do |counter| %>
 
         <h3><%= counter.categories.first.title %>: </h3>
-        <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= counter.get_percent_correct %>%</h5>
+        <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= (counter.get_percent_correct).round(2) %>%</h5>
     <% end %>
   </ul>
 </div>
