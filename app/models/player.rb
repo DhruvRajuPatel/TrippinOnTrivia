@@ -135,6 +135,7 @@ class Player < ActiveRecord::Base
       self.current_question = nil
       self.current_category = nil
     end
+    self.save
   end
 
   def respond_correctly
@@ -143,10 +144,12 @@ class Player < ActiveRecord::Base
 
       self.trophies << self.current_question.category.trophy
       self.update_attribute(:going_for_trophy, false)
+      self.save
 
     elsif has_active_challenge
 
       self.challenges.first.handle_correct_answer
+      self.save
 
     else
 
