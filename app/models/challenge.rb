@@ -14,12 +14,13 @@ class Challenge < ActiveRecord::Base
   def self.make_new_challenge(player)
     challenge = Challenge.create(question_counter: 1, is_first_round: true, challenger_score: 0, challenged_score: 0)
 
+    Category.all.each do |category|
+      challenge.add_question_by_category_name(category.title)
+      challenge.save
+    end
+
     player.challenges << challenge
     player.opponent.challenges << challenge
-
-    Category.all.each do |category|
-      player.challenges.first.add_question_by_category_name(category.title)
-    end
 
     player.current_question = player.challenges.first.questions[0]
 
@@ -28,10 +29,11 @@ class Challenge < ActiveRecord::Base
   end
 
   def get_next_challenge_question(player)
+
     player.current_question = self.questions[self.question_counter]
-    self.update_attribute(:question_counter, self.question_counter + 1)
     player.current_category = player.current_question.category
     player.save
+    self.update_attribute(:question_counter, self.question_counter + 1)
   end
 
   def end_challenge_round(player)
