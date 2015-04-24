@@ -28,7 +28,7 @@ class PlayController < ApplicationController
     end
 
     @users = User.all_searchable_users
-    @disable_nav = true
+    render :layout => false
   end
 
   def display_user_profile
