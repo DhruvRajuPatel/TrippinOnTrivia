@@ -20,7 +20,7 @@
   </button>
 </div>
 
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <h2 class="text-center">Friends</h2>
@@ -46,6 +46,9 @@
             type: 'PUT',
             data: {id: id}
         });
+        $('#modal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
     }
     function PlayNow() {
         $('body').load('play/display_spinner.html');

@@ -12,8 +12,8 @@
     Hard
   </button>
   <br>
-  <button style="background-color: #2541c3" id="submit_question" type="button" class="btn btn-primary btn-lg btn-block">
-    Submit a Question!
+  <button style="background-color: #2541c3" id="skip" type="button" class="btn btn-primary btn-lg btn-block">
+    Skip
   </button>
   <br>
 </div>
@@ -29,8 +29,8 @@
         $('#hard').click(function () {
             GetRating(3);
         });
-        $('#submit_question').click(function () {
-            $('body').load('<%= new_question_path %>');
+        $('#skip').click(function () {
+            ChangePage();
         });
 
         function GetRating(rating) {

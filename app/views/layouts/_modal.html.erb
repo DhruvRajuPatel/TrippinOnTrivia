@@ -1,7 +1,20 @@
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog">      <button style="background-color: #2541c3" onclick="GoBack()" type="button" class="btn btn-primary">
+    BACK
+  </button>
+    <br>
+    <br>
     <div class="modal-content">
+
 
     </div>
   </div>
 </div>
+
+<script>
+    function GoBack() {
+        $('#basicModal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    }
+</script>

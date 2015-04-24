@@ -18,6 +18,7 @@ class QuestionsController < ApplicationController
     @categories = Category.all
     @correct_answer = Answer.new
     3.times { @question.answers.build(:is_correct => false) }
+    render :layout => false
   end
 
   # GET /questions/1/edit
