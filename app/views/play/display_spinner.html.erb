@@ -38,7 +38,7 @@
     var correctSound = createSoundBite("/sounds/correct.mp3");
     var incorrectSound = createSoundBite("/sounds/incorrect.mp3");
 </script>
-<button style="background-color: #2541c3" onclick="GoBack()" type="button" class="btn btn-primary">
+<button style="background-color: #2541c3" onclick="Back()" type="button" class="btn btn-primary">
   BACK
 </button><br>
 
@@ -128,8 +128,8 @@
     function GetFullMeterChoice() {
         $('body').load('/play/display_full_meter_choice.html');
     }
-    function GoBack() {
-        $('body').load('play/index');
+    function Back() {
+        window.location.replace("/");
     }
 
     function StartChallenge() {
