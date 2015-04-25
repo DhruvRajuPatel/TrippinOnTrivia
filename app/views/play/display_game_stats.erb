@@ -9,13 +9,13 @@
   <ul>
     <h3>TOTAL: <%= Scoreboard.first.get_total_correct(Scoreboard.first.weekly_counters) %></h3>
 
-  <% Scoreboard.first.weekly_counters.each do |counter| %>
+    <% Scoreboard.first.weekly_counters.each do |counter| %>
 
-      <h3><%= counter.categories.first.title %>: </h3>
+        <h3><%= counter.categories.first.title %>: </h3>
         <h5>TOTAL <%= counter.questions_correct %><br> PERCENTAGE <%= (counter.get_percent_correct).round(2) %>%</h5>
 
 
-  <% end %>
+    <% end %>
   </ul>
 
   <h3>MONTHLY: </h3>
