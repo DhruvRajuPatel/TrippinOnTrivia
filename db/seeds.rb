@@ -104,3 +104,4 @@ Scoreboard.create
 
 # Admins
 User.create!(:email => 'admin@gmail.com', :password => 'admin123', :password_confirmation => 'admin123', :admin => true)
+User.create!(:email => 'reviewer@gmail.com', :password => 'reviewer', :password_confirmation => 'reviewer', :reviewer => true)

@@ -1,15 +1,18 @@
 class QuestionsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   # GET /questions
   # GET /questions.json
   def index
+    redirect_to "/", notice: 'You are not authorized to access that page.' unless current_user && current_user.admin?
     @questions = Question.all
   end
 
   # GET /questions/1
   # GET /questions/1.json
   def show
+    redirect_to "/", notice: 'You are not authorized to access that page.' unless current_user && current_user.admin?
   end
 
   # GET /questions/new
@@ -23,6 +26,8 @@ class QuestionsController < ApplicationController
 
   # GET /questions/1/edit
   def edit
+    redirect_to "/", notice: 'You are not authorized to access that page.' unless current_user && current_user.admin?
+    @correct_answer = Answer.new
   end
 
   # POST /questions
@@ -47,6 +52,7 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1
   # PATCH/PUT /questions/1.json
   def update
+    redirect_to "/", notice: 'You are not authorized to access that page.' unless current_user && current_user.admin?
     respond_to do |format|
       if @question.update(question_params)
         format.html { redirect_to @question, notice: 'Question was successfully updated.' }

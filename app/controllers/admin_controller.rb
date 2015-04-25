@@ -1,4 +1,8 @@
 class AdminController < ApplicationController
+  before_filter :authenticate_user!
+  before_filter do
+    redirect_to "/", notice: 'You are not authorized to access that page.' unless current_user && current_user.admin? || current_user.reviewer?
+  end
   def dashboard
       @users = User.all
       @questions = Question.all

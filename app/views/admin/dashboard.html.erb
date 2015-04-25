@@ -1,11 +1,17 @@
 <!--Display these fields if a admin is logged in.-->
 <button style="background-color: #2541c3" onclick="Back()" type="button" class="btn btn-primary">
   BACK
-</button><br>
+</button><br><br>
+<p id="notice"><%= notice %></p>
 <% if current_user.admin %>
     <h2 class="text-center">ADMIN DASHBOARD</h2>
-<table style="width: 100%; margin: 0 auto;border-spacing: 10px">
 
+<%= link_to "Edit Categories", categories_path %><br>
+<%= link_to "Edit Questions", questions_path %><br>
+<%= link_to "Edit Players", players_path %>
+
+
+<table style="width: 100%; margin: 0 auto;border-spacing: 10px">
   <tr>
     <th colspan="3" style="text-align: center;">
       Users
