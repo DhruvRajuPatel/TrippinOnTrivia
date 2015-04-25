@@ -1,4 +1,9 @@
+<button style="background-color: #2541c3" onclick="Back()" type="button" class="btn btn-primary">
+  BACK
+</button><br>
+
 <div class="text-center">
+
   <%= form_tag charges_path do %>
       <article>
         <label class="amount">
@@ -20,3 +25,9 @@
       </script>
   <% end %>
 </div>
+
+<script>
+    function Back() {
+        window.location.replace("/");
+    }
+</script>

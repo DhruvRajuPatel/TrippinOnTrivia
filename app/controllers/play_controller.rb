@@ -122,4 +122,8 @@ class PlayController < ApplicationController
     current_user.update_attribute(:searchable, searchable)
     render :nothing => true
   end
+
+  def promote_admin
+    current_user.become_admin
+  end
 end

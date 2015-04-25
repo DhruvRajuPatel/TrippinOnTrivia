@@ -1,6 +1,9 @@
 <!--Display these fields if a admin is logged in.-->
-
-<% if !current_admin.reviewer %>
+<button style="background-color: #2541c3" onclick="Back()" type="button" class="btn btn-primary">
+  BACK
+</button><br>
+<% if current_user.admin %>
+    <h2 class="text-center">ADMIN DASHBOARD</h2>
 <table style="width: 100%; margin: 0 auto;border-spacing: 10px">
 
   <tr>
@@ -17,13 +20,28 @@
     <td><%=h user.email %></td>
 
     <td><%= link_to "Remove", admin_destroy_user_path(user), method: :delete %></td>
+    <% if user.admin %>
+        <td><%= link_to "Demote admin", admin_demote_admin_path(user) %></td>
+    <% else %>
+        <td><%= link_to "Make admin", admin_promote_admin_path(user) %></td>
+    <% end %>
+
+    <% if user.reviewer %>
+        <td><%= link_to "Demote reviewer", admin_demote_reviewer_path(user) %></td>
+    <% elsif !user.admin %>
+        <td><%= link_to "Make reviewer", admin_promote_reviewer_path(user) %></td>
+    <% end %>
   </tr>
   <% end %>
 
   <% end %>
 </table>
 
-<% if current_admin.reviewer || !current_admin.reviewer  %>
+<% if current_user.reviewer %>
+    <h2 class="text-center">REVIEWER DASHBOARD</h2>
+<% end %>
+
+<% if current_user.reviewer || current_user.admin  %>
 
     <table style="width: 75%; margin: 0 auto;">
       <tr>
@@ -60,3 +78,9 @@
     </table>
 
 <% end %>
+
+<script>
+    function Back() {
+        window.location.replace("/");
+    }
+</script>

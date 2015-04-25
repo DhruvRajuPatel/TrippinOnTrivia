@@ -103,7 +103,4 @@ music_question2.answers.create(title: "Shooter Jennings", is_correct: false)
 Scoreboard.create
 
 # Admins
-Admin.create(:email => 'admin@gmail.com', :password => 'admin')
-
-# Reviewer
-Admin.create(:email => 'reviewer@gmail.com', :password => 'reviewer', :reviewer => true)
+User.create!(:email => 'admin@gmail.com', :password => 'admin123', :password_confirmation => 'admin123', :admin => true)

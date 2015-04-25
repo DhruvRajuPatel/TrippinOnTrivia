@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       put 'toggle_avatar'
       put 'toggle_searchable'
       put 'play_friend'
+      put 'promote_admin'
     end
   end
 
@@ -70,6 +71,10 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "registrations" }
   match 'users/:id' => 'admin#destroy', :via => :delete, :as => :admin_destroy_user
+  get 'admin/:id/promote_admin' => 'admin#promote_admin', :as => :admin_promote_admin
+  get 'admin/:id/demote_admin' => 'admin#demote_admin', :as => :admin_demote_admin
+  get 'admin/:id/promote_reviewer' => 'admin#promote_reviewer', :as => :admin_promote_reviewer
+  get 'admin/:id/demote_reviewer' => 'admin#demote_reviewer', :as => :admin_demote_reviewer
   resources :users
 
   root 'play#index'

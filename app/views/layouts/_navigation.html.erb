@@ -2,45 +2,43 @@
   <div class="account">
     <section>
       <p class="navbar-text">
-        <% if admin_signed_in? %>
-          <div class="text-center">
-            <h3>Admin Dashboard</h3>
-            <%= link_to "Logout Admin", destroy_admin_session_path, method: :delete %>
-          </div>
-      <% end %>
       <% if user_signed_in? %>
-          <% if current_user.hide_image %>
+
               <section style="text-align: center">
-               <span data-remote="play/display_user_profile"
+               <span data-remote="<%= play_display_user_profile_path%>"
                      data-toggle="modal"
                      data-target="#basicModal">
+                 <% if current_user.hide_image %>
                      <%= image_tag '/images/original/missing.png', style: 'border-radius: 50%; height: 35px' %>
+                 <% else %>
+                     <%= image_tag current_user.avatar.url, style: 'border-radius: 50%; height: 35px' %>
+                 <% end %>
                </span>
 
-          <% else %>
-              <section style="text-align: center">
-              <span data-remote="play/display_user_profile"
-                    data-toggle="modal"
-                    data-target="#basicModal">
-                    <%= image_tag current_user.avatar.url, style: 'border-radius: 50%; height: 35px' %>
-              </span>
-          <% end %>
           <% if current_user.location? %>
              <strong> <%= current_user.location %> | </strong>
           <% end %>
 
           <strong> <%= current_user.email %></strong>
 
-          | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-
           | Level: <%= current_user.level %>
 
           | Points: <%= current_user.points %>
 
-          | <%= link_to "Purchase Points", new_charge_path %>
+                | <%= link_to "Purchase Points", new_charge_path %>
 
+            <% if current_user.admin %>
+
+                    | <%= link_to "Admin Dashboard", admin_dashboard_path %>
+
+                <% elsif current_user.reviewer %>
+
+                    | <%= link_to "Reviewer Dashboard", admin_dashboard_path %>
+            <% end %>
+
+            | <%= link_to "Logout", destroy_user_session_path, method: :delete %>
           <section style="padding-top: 10px;text-align: center">
-              <span data-remote="play/display_user_profile"
+              <span data-remote="<%= play_display_user_profile_path%>"
                     data-toggle="modal"
                     data-target="#basicModal">
                     <% if current_user.has_new_achievement %>
@@ -50,7 +48,7 @@
                     <% end %>
               </span>
 
-              <span data-remote="play/display_friends"
+              <span data-remote="<%= play_display_friends_path%>"
                     data-toggle="modal"
                     data-target="#basicModal">
                 <i class="fa fa-users fa-3x fa-fw"></i>
@@ -68,7 +66,7 @@
                     <i class="fa fa-cog fa-3x fa-fw"></i>
               </span>
 
-            <span data-remote="<%= "play/display_game_stats" %>"
+            <span data-remote="<%= play_display_game_stats_path%>"
                   data-toggle="modal"
                   data-target="#basicModal">
               <i class="fa fa-list-alt fa-3x fa-fw"></i>

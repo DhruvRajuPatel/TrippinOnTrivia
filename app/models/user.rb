@@ -112,6 +112,12 @@ class User < ActiveRecord::Base
     progress
   end
 
+  def become_admin
+
+    self.update_attribute(:admin, true)
+    self.update_attribute(:reviewer, false)
+  end
+
   private
 
   def calculate_level_up_threshold
